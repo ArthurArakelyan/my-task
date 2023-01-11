@@ -45,6 +45,7 @@ export default {
 .side-menu {
   position: relative;
   z-index: 1;
+  min-width: 6.25rem;
   width: 6.25rem;
   height: 100vh;
   background-color: #1665d8;

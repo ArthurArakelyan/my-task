@@ -20,6 +20,13 @@
   text-overflow: ellipsis;
 }
 
+@mixin multilineEllipses($lines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 @mixin image($width: 2.5rem, $height: 2.5rem, $object-fit: cover) {
   display: block;
   width: $width;
@@ -34,7 +41,7 @@
   border-radius: $border-radius;
 }
 
-@mixin scroll() {
+@mixin scroll($color: $primary-color) {
   &::-webkit-scrollbar {
     width: 0.65rem;
     height: 0.65rem;
@@ -46,7 +53,7 @@
     border: 0.2rem solid transparent;
     background-clip: padding-box;
     border-radius: 6px;
-    background-color: $primary-color;
+    background-color: $color;
     box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
   }
 

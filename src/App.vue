@@ -2,10 +2,10 @@
   <div class="app">
     <the-header></the-header>
 
-    <div class="aside">
+    <side-menu-wrapper>
       <side-menu></side-menu>
       <side-menu-extension></side-menu-extension>
-    </div>
+    </side-menu-wrapper>
 
     <main class="main">
       <router-view></router-view>
@@ -15,19 +15,21 @@
 
 <script>
 import TheHeader from '@/components/layout/TheHeader.vue';
+import SideMenuWrapper from '@/components/layout/SideMenuWrapper.vue';
 import SideMenu from '@/components/layout/SideMenu.vue';
 import SideMenuExtension from '@/components/layout/SideMenuExtension.vue';
 
 export default {
   components: {
     TheHeader,
+    SideMenuWrapper,
     SideMenu,
     SideMenuExtension,
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 
 html, body, div, span, iframe,
@@ -52,6 +54,12 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
+body {
+  overflow-y: overlay;
+  scrollbar-gutter: stable;
+  @include scroll(#b4b4b4);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -62,11 +70,8 @@ html, body {
   background-color: #F6F7F8;
 }
 
-.aside {
-  display: flex;
-}
-
 .main {
+  min-height: 100vh;
   width: 1%;
   flex: 1 1;
   padding: 2rem;
