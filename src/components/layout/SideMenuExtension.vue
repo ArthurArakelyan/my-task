@@ -17,6 +17,10 @@
             </span>
           </div>
         </div>
+
+        <div class="side-menu-extension__label-add">
+          <base-icon class="side-menu-extension__label-add-icon" name="PlusIcon"></base-icon>
+        </div>
       </div>
     </div>
   </transition>
@@ -95,6 +99,36 @@ export default {
 .side-menu-extension__label-count-text {
   line-height: 1.063rem;
   @include font(0.625rem, 500, $white, center);
+}
+
+.side-menu-extension__label-add {
+  width: 100%;
+  background-color: $white;
+  margin-top: 0.1rem;
+  border-radius: 50px;
+  padding: 0.05rem 0;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  @include flex(row, center, center);
+  transition: background-color .3s ease-in-out;
+
+  &:hover {
+    background-color: $primary-color;
+
+    .side-menu-extension__label-add-icon {
+      fill: $white;
+    }
+  }
+
+  &:active {
+    background-color: $primary-color-active;
+  }
+}
+.side-menu-extension__label-add-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: #A2ACC0;
+  transition: fill .3s ease-in-out;
 }
 
 .menu-enter-from,

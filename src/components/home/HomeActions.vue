@@ -3,6 +3,10 @@
     <div class="home-actions__content">
       <div class="home-actions__filters">
         <button class="home-actions__action">
+          <base-icon class="home-actions__action-icon" name="PlusIcon"></base-icon>
+        </button>
+
+        <button class="home-actions__action">
           <base-icon class="home-actions__action-icon" name="FilterIcon"></base-icon>
         </button>
       </div>

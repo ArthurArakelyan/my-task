@@ -85,6 +85,10 @@ export default {
   &:hover {
     background-color: #1854a8;
   }
+
+  &:active {
+    background-color: #274e85;
+  }
 }
 .side-menu__content-add-icon {
   width: 2rem;
@@ -101,8 +105,8 @@ export default {
 }
 .side-menu__footer-logout {
   cursor: pointer;
-  width: 3rem;
-  height: 3rem;
+  width: 3.75rem;
+  height: 3.75rem;
   border-radius: 6.6px;
   @include flex(row, center, center);
   transition: background-color .3s ease-in-out;
@@ -113,6 +117,10 @@ export default {
     .side-menu__footer-logout-icon {
       stroke: $white;
     }
+  }
+
+  &:active {
+    background-color: #4285e5;
   }
 }
 .side-menu__footer-logout-icon {
