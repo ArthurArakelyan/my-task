@@ -1,23 +1,33 @@
 <template>
   <div class="app">
-    <the-header></the-header>
+    <template v-if="isAuth">
+      <the-header></the-header>
 
-    <side-menu-wrapper>
-      <side-menu></side-menu>
-      <side-menu-extension></side-menu-extension>
-    </side-menu-wrapper>
+      <side-menu-wrapper>
+        <side-menu></side-menu>
+        <side-menu-extension></side-menu-extension>
+      </side-menu-wrapper>
 
-    <main class="main">
-      <router-view></router-view>
-    </main>
+      <main class="main">
+        <router-view></router-view>
+      </main>
+    </template>
+
+    <router-view v-else></router-view>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
+// Components
 import TheHeader from '@/components/layout/TheHeader.vue';
 import SideMenuWrapper from '@/components/layout/SideMenuWrapper.vue';
 import SideMenu from '@/components/layout/SideMenu.vue';
 import SideMenuExtension from '@/components/layout/SideMenuExtension.vue';
+
+// Services
+import { AuthService } from '@/services';
 
 export default {
   components: {
@@ -25,6 +35,25 @@ export default {
     SideMenuWrapper,
     SideMenu,
     SideMenuExtension,
+  },
+  computed: {
+    ...mapGetters('auth', ['isAuth']),
+  },
+  methods: {
+    ...mapActions('auth', ['updateAuth']),
+  },
+  mounted() {
+    AuthService.onAuthChanged((user) => {
+      if (!user) {
+        localStorage.removeItem('token');
+      }
+
+      this.updateAuth();
+
+      if (this.$router.currentRoute.value.meta.auth) {
+        this.$router.push('/login');
+      }
+    });
   },
 };
 </script>

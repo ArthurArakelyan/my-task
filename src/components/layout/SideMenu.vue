@@ -13,7 +13,7 @@
     </div>
 
     <div class="side-menu__footer">
-      <div @click="handleLogout" class="side-menu__footer-logout">
+      <div @click="logout" class="side-menu__footer-logout">
         <base-icon name="LogoutIcon" class="side-menu__footer-logout-icon"></base-icon>
       </div>
     </div>
@@ -31,10 +31,8 @@ export default {
   },
   methods: {
     ...mapActions('ui', ['toggleSideMenu']),
+    ...mapActions('auth', ['logout']),
     handleAdd() {
-
-    },
-    handleLogout() {
 
     },
   },
