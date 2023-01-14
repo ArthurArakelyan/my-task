@@ -11,7 +11,10 @@ import { authErrors } from '@/constants';
 
 export default {
   updateAuth(context) {
-    context.commit('setIsAuth', !!localStorage.getItem('token'));
+    const token = !!localStorage.getItem('token');
+
+    context.commit('setId', token ? (localStorage.getItem('uid') || null) : null);
+    context.commit('setIsAuth', token);
     context.commit('setUser', AuthService.authUser());
   },
   async login(context, payload) {
@@ -20,6 +23,7 @@ export default {
 
       const response = await AuthService.login(payload.email, payload.password);
 
+      localStorage.setItem('uid', response.user.uid);
       localStorage.setItem('token', response._tokenResponse.idToken);
 
       await context.dispatch('updateAuth');
@@ -40,7 +44,15 @@ export default {
 
       const response = await AuthService.signup(payload.email, payload.password);
 
+      localStorage.setItem('uid', response.user.uid);
       localStorage.setItem('token', response._tokenResponse.idToken);
+
+      await context.dispatch('user/addUser', {
+        id: response.user.uid,
+        name: payload.name,
+        email: payload.email,
+        avatar: '',
+      }, { root: true });
 
       await context.dispatch('updateAuth');
 

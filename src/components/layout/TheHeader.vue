@@ -13,7 +13,7 @@
       </div>
 
       <div class="header__user">
-        <base-avatar src=""></base-avatar>
+        <base-avatar :src="userAvatar"></base-avatar>
       </div>
     </div>
   </header>
@@ -22,6 +22,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
+// Components
 import BaseAvatar from '@/components/UI/BaseAvatar.vue';
 
 export default {
@@ -35,6 +36,7 @@ export default {
   },
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen']),
+    ...mapGetters('user', ['userAvatar']),
   },
 };
 </script>

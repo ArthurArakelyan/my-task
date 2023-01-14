@@ -1,18 +1,6 @@
 <template>
   <div class="app">
-    <template v-if="isAuth">
-      <the-header></the-header>
-
-      <side-menu-wrapper>
-        <side-menu></side-menu>
-        <side-menu-extension></side-menu-extension>
-      </side-menu-wrapper>
-
-      <main class="main">
-        <router-view></router-view>
-      </main>
-    </template>
-
+    <user-layout v-if="isAuth"></user-layout>
     <router-view v-else></router-view>
   </div>
 </template>
@@ -21,20 +9,14 @@
 import { mapGetters, mapActions } from 'vuex';
 
 // Components
-import TheHeader from '@/components/layout/TheHeader.vue';
-import SideMenuWrapper from '@/components/layout/SideMenuWrapper.vue';
-import SideMenu from '@/components/layout/SideMenu.vue';
-import SideMenuExtension from '@/components/layout/SideMenuExtension.vue';
+import UserLayout from '@/components/layout/UserLayout.vue';
 
 // Services
 import { AuthService } from '@/services';
 
 export default {
   components: {
-    TheHeader,
-    SideMenuWrapper,
-    SideMenu,
-    SideMenuExtension,
+    UserLayout,
   },
   computed: {
     ...mapGetters('auth', ['isAuth']),
@@ -97,13 +79,5 @@ body {
   display: flex;
   flex-wrap: wrap;
   background-color: #F6F7F8;
-}
-
-.main {
-  min-height: 100vh;
-  width: 1%;
-  flex: 1 1;
-  padding: 2rem;
-  margin-top: 100px;
 }
 </style>
