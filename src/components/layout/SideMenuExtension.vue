@@ -2,7 +2,9 @@
   <transition name="menu">
     <div v-if="isSideMenuOpen" class="side-menu-extension">
       <div class="side-menu-extension__header">
-        <h1 class="side-menu-extension__header-title">My Task</h1>
+        <h1 class="side-menu-extension__header-title">
+          {{ selectedBoard ? selectedBoard.name : 'My Task' }}
+        </h1>
       </div>
 
       <div class="side-menu-extension__content">
@@ -46,6 +48,7 @@ export default {
   },
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen']),
+    ...mapGetters('boards', ['selectedBoard']),
   },
 };
 </script>
@@ -68,6 +71,8 @@ export default {
   @include flex(row, center, flex-start);
 }
 .side-menu-extension__header-title {
+  line-height: initial;
+  @include ellipsis();
   @include font(2rem, 600, $primary-text-color);
 }
 

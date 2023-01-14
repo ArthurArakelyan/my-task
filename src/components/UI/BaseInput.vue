@@ -107,6 +107,10 @@ export default {
     const { width } = placeholder.getBoundingClientRect();
 
     this.placeholderWidth = `${width}px`;
+
+    if (this.modelValue) {
+      this.isDivided = true;
+    }
   },
 };
 </script>

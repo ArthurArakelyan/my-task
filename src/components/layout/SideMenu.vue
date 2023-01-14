@@ -7,7 +7,13 @@
     </div>
 
     <div class="side-menu__content">
-      <div @click="handleAdd" class="side-menu__content-add">
+      <side-menu-item
+        v-for="board in boards"
+        :key="board.id"
+        :board="board"
+      ></side-menu-item>
+
+      <div @click="openAddModal" class="side-menu__content-add" title="Add a Board">
         <base-icon class="side-menu__content-add-icon" name="PlusIcon"></base-icon>
       </div>
     </div>
@@ -17,14 +23,46 @@
         <base-icon name="LogoutIcon" class="side-menu__footer-logout-icon"></base-icon>
       </div>
     </div>
+
+    <base-modal-wrapper>
+      <board-add v-if="isAddModalOpen" @close="closeAddModal"></board-add>
+    </base-modal-wrapper>
+
+    <base-modal-wrapper>
+      <confirm-modal
+        v-if="boardDeleteEntry"
+        content="Are you sure? Do you wanna delete this board?"
+        :loading="deleteBoardLoading"
+        @close="resetDeleteEntry"
+        @submit="deleteBoard(boardDeleteEntry.id)"
+      ></confirm-modal>
+    </base-modal-wrapper>
   </aside>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+
+// Components
+import BoardAdd from '@/components/modals/BoardAdd.vue';
+import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
+import SideMenuItem from '@/components/layout/SideMenuItem.vue';
+import ConfirmModal from '@/components/modals/ConfirmModal.vue';
 
 export default {
+  components: {
+    ConfirmModal,
+    BoardAdd,
+    BaseModalWrapper,
+    SideMenuItem,
+  },
+  data() {
+    return {
+      isAddModalOpen: false,
+    };
+  },
   computed: {
+    ...mapGetters('boards', ['boards', 'selectedBoard', 'boardEditEntry', 'boardDeleteEntry', 'deleteBoardLoading']),
     logoSrc() {
       return require('../../assets/images/logo.png');
     },
@@ -32,9 +70,24 @@ export default {
   methods: {
     ...mapActions('ui', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    handleAdd() {
-
+    ...mapActions('boards', ['getBoards', 'selectBoard', 'resetEditEntry', 'resetDeleteEntry', 'deleteBoard']),
+    openAddModal() {
+      this.isAddModalOpen = true;
     },
+    closeAddModal() {
+      this.isAddModalOpen = false;
+      this.resetEditEntry();
+    },
+  },
+  watch: {
+    boardEditEntry(value) {
+      if (value) {
+        this.openAddModal();
+      }
+    },
+  },
+  mounted() {
+    this.getBoards();
   },
 };
 </script>
@@ -69,12 +122,17 @@ export default {
 .side-menu__content {
   width: 100%;
   padding: 2rem 0;
-  @include flex(column, center, center);
+  max-height: calc(100vh - 12.5rem);
+  overflow-y: auto;
+  @include scroll(#ffffff);
 }
+
 .side-menu__content-add {
+  margin: 0 auto;
   cursor: pointer;
   width: 3.75rem;
   height: 3.75rem;
+  min-height: 3.75rem;
   border-radius: 6.6px;
   background-color: #145BC3;
   @include flex(row, center, center);

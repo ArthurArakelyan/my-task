@@ -12,6 +12,10 @@ import GridViewIcon from '@/components/icons/GridViewIcon.vue';
 import FilterIcon from '@/components/icons/FilterIcon.vue';
 import CommentIcon from '@/components/icons/CommentIcon.vue';
 import AttachmentIcon from '@/components/icons/AttachmentIcon.vue';
+import CloseIcon from '@/components/icons/CloseIcon.vue';
+import MenuIcon from '@/components/icons/MenuIcon.vue';
+import DeleteIcon from '@/components/icons/DeleteIcon.vue';
+import EditIcon from '@/components/icons/EditIcon.vue';
 
 export default {
   components: {
@@ -24,6 +28,10 @@ export default {
     FilterIcon,
     CommentIcon,
     AttachmentIcon,
+    CloseIcon,
+    MenuIcon,
+    DeleteIcon,
+    EditIcon,
   },
   props: {
     name: {

@@ -1,8 +1,12 @@
-import { doc, collection, getDocs, getDoc, setDoc, updateDoc, deleteDoc, getFirestore } from 'firebase/firestore';
+import { doc, collection, query, getDocs, setDoc, getDoc, addDoc, updateDoc, deleteDoc, getFirestore } from 'firebase/firestore';
 
 class FirestoreService {
-  static async get(path) {
-    const response = await getDocs(collection(this.db, path));
+  static async get(path, getQuery) {
+    const dbCollection = collection(this.db, path);
+
+    const pathWithQuery = getQuery ? query(dbCollection, getQuery) : dbCollection;
+
+    const response = await getDocs(pathWithQuery);
 
     const docs = response.docs;
 
@@ -29,9 +33,13 @@ class FirestoreService {
   }
 
   static async add(path, data, id) {
-    const newDoc = doc(this.db, path, id);
+    const newDoc = id ? doc(this.db, path, id) : collection(this.db, path);
 
-    return setDoc(newDoc, data);
+    if (id) {
+      return setDoc(newDoc, data);
+    }
+
+    return addDoc(newDoc, data);
   }
 
   static async edit(path, data, id) {
