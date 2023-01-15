@@ -48,10 +48,14 @@ export default {
       required: false,
       default: false,
     },
+    dropdownStyle: {
+      type: Object,
+      required: false,
+    },
   },
   data() {
     return {
-      isOpen: true,
+      isOpen: false,
       top: '',
       left: '',
     };
@@ -63,14 +67,17 @@ export default {
       };
     },
     dropdownStyles() {
+      const styles = this.dropdownStyle || {};
+
       if (this.fixed) {
         return {
+          ...styles,
           top: this.top,
           left: this.left,
         };
       }
 
-      return {};
+      return styles;
     },
   },
   methods: {

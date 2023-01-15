@@ -2,21 +2,25 @@
   <div
     class="input-wrapper"
     :class="wrapperClassName"
-    @click="focus"
-    @mousedown="handleMouseDown"
+    @click="handleClick"
   >
-    <span class="input__placeholder" ref="placeholder">
+    <div class="input__icon-wrapper">
+      <base-icon class="input__icon" name="AddPhotoIcon"></base-icon>
+    </div>
+
+    <span class="input__placeholder">
       {{ placeholder }}
+    </span>
+
+    <span class="input__value">
+      {{ modelValue?.name }}
     </span>
 
     <input
       class="input"
       ref="input"
-      :type="type"
+      type="file"
       :id="id"
-      :value="modelValue"
-      @focus="handleFocus"
-      @blur="handleBlur"
       @input="handleInput"
       @animationstart="checkAnimation"
     />
@@ -28,19 +32,15 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify';
+
 export default {
   props: {
     placeholder: {
       type: String,
       required: true,
     },
-    type: {
-      type: String,
-      required: false,
-      default: 'text',
-    },
     modelValue: {
-      type: String,
       required: true,
     },
     error: {
@@ -56,33 +56,24 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
-      isFocused: false,
       isDivided: false,
     };
   },
   methods: {
     handleInput(e) {
-      this.$emit('update:modelValue', e.target.value);
-    },
-    handleFocus() {
-      this.isFocused = true;
-      this.isDivided = true;
-    },
-    handleBlur() {
-      const input = this.$refs.input;
+      const file = e.target.files[0];
 
-      this.isDivided = !!input?.value;
+      if (!file || !file.type.includes('image')) {
+        return toast('The file should be an image.', {
+          type: 'error',
+          hideProgressBar: true,
+        });
+      }
 
-      this.isFocused = false;
+      this.$emit('update:modelValue', file);
     },
-    handleMouseDown() {
-      setTimeout(() => {
-        this.isFocused = true;
-        this.isDivided = true;
-      }, 0);
-    },
-    focus() {
-      this.$refs.input.focus();
+    handleClick() {
+      this.$refs.input.click();
     },
     checkAnimation(e) {
       if (e.animationName.includes('onAutoFillStart')) {
@@ -93,10 +84,16 @@ export default {
   computed: {
     wrapperClassName() {
       return {
-        ['input-wrapper--focus']: this.isFocused,
         ['input-wrapper--divided']: this.isDivided,
         ['input-wrapper--error']: this.error,
       };
+    },
+  },
+  watch: {
+    modelValue(value) {
+      if (value) {
+        this.isDivided = true;
+      }
     },
   },
   mounted() {
@@ -110,30 +107,24 @@ export default {
 <style scoped lang="scss">
 .input-wrapper {
   position: relative;
+  min-height: 3.25rem;
+  max-height: 3.25rem;
   z-index: 1;
   width: 100%;
   padding: 1rem 0.75rem;
   border: 1px solid #A2ACC0;
   border-radius: 3.3px;
-  cursor: text;
+  cursor: pointer;
   @include flex(row, center, flex-start);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
 
-  &--divided,
-  &--focus {
+  &--divided {
     .input__placeholder {
-      padding: 0 0.5rem;
       background-color: $white;
+      padding: 0 0.5rem;
+      left: initial;
       transform: translateY(-1.7rem) translateX(-0.5rem) scale(0.8);
-    }
-  }
-
-  &--focus {
-    border-color: $primary-color;
-
-    .input__placeholder {
-      color: $primary-color;
     }
   }
 
@@ -145,21 +136,34 @@ export default {
     }
   }
 }
+.input__icon-wrapper {
+  position: absolute;
+  transform: translateY(0.1rem);
+  width: 1.7rem;
+  height: 1.7rem;
+  @include flex(row, center, center);
+}
+.input__icon {
+  width: 100%;
+  height: 100%;
+  fill: $primary-text-color;
+}
 .input__placeholder {
   position: absolute;
   user-select: none;
   line-height: 1.125rem;
+  left: 2.8rem;
   @include font(1rem, 400, #A2ACC0);
   transition: all .2s ease-in-out;
 }
-.input {
-  border: none;
-  outline: none;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  line-height: 1.125rem;
+.input__value {
+  margin-left: 2rem;
+  line-height: initial;
+  @include ellipsis();
   @include font(1rem, 400, $primary-text-color);
+}
+.input {
+  display: none;
 }
 .input__error {
   position: absolute;

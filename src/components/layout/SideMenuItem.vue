@@ -4,7 +4,13 @@
     :class="className"
     @click="selectBoard(board)"
   >
-    <span class="side-menu__board-name">
+    <img
+      v-if="board.image"
+      class="side-menu__board-image"
+      :src="board.image"
+      :alt="board.name"
+    />
+    <span v-else class="side-menu__board-name">
       {{ board.name[0].toUpperCase() }}
     </span>
 
@@ -83,6 +89,13 @@ export default {
   &:active {
     background-color: #274e85;
   }
+}
+.side-menu__board-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 6.6px;
+  object-fit: cover;
+  display: block;
 }
 .side-menu__board-name {
   user-select: none;

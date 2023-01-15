@@ -1,6 +1,7 @@
 import { where } from 'firebase/firestore';
 
 import FirestoreService from './FirestoreService';
+import StorageService from './StorageService';
 
 class BoardsService {
   static path = 'boards';
@@ -23,6 +24,18 @@ class BoardsService {
 
   static deleteBoard(id) {
     return FirestoreService.delete(this.path, id);
+  }
+
+  static getImage(id) {
+    return StorageService.get(`${this.path}/${id}`);
+  }
+
+  static addImage(image, id) {
+    return StorageService.add(`${this.path}/${id}`, image);
+  }
+
+  static deleteImage(id) {
+    return StorageService.delete(`${this.path}/${id}`);
   }
 }
 

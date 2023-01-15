@@ -11,6 +11,12 @@
         :error="v$.name.$errors[0]?.$message"
       ></base-input>
 
+      <base-upload-input
+        v-model="image"
+        placeholder="Board Image"
+        id="board-image"
+      ></base-upload-input>
+
       <base-button :loading="addBoardLoading" class="board-add__submit">
         {{ boardEditEntry ? 'Edit' : 'Add' }}
       </base-button>
@@ -28,10 +34,12 @@ import { modalMixin } from '@/mixins';
 
 // Components
 import BaseModal from '@/components/UI/BaseModal.vue';
+import BaseUploadInput from '@/components/UI/BaseUploadInput.vue';
 
 export default {
   mixins: [modalMixin],
   components: {
+    BaseUploadInput,
     BaseModal,
   },
   setup() {
@@ -42,6 +50,7 @@ export default {
   data() {
     return {
       name: '',
+      image: null,
     };
   },
   computed: {
@@ -58,10 +67,12 @@ export default {
         await this.editBoard({
           ...this.boardEditEntry,
           name: this.name,
+          image: this.image,
         });
       } else {
         await this.addBoard({
           name: this.name,
+          image: this.image,
         });
       }
 
@@ -74,6 +85,10 @@ export default {
   created() {
     if (this.boardEditEntry) {
       this.name = this.boardEditEntry.name;
+
+      if (this.boardEditEntry.imageName) {
+        this.image = { name: this.boardEditEntry.imageName };
+      }
     }
   },
 };
@@ -82,10 +97,10 @@ export default {
 <style scoped lang="scss">
 .board-add {
   width: 100%;
+  row-gap: 2rem;
   @include flex(column, center, center);
 }
 .board-add__submit {
   margin-left: auto;
-  margin-top: 2rem;
 }
 </style>

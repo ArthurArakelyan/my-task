@@ -16,6 +16,7 @@ import CloseIcon from '@/components/icons/CloseIcon.vue';
 import MenuIcon from '@/components/icons/MenuIcon.vue';
 import DeleteIcon from '@/components/icons/DeleteIcon.vue';
 import EditIcon from '@/components/icons/EditIcon.vue';
+import AddPhotoIcon from '@/components/icons/AddPhotoIcon.vue';
 
 export default {
   components: {
@@ -32,6 +33,7 @@ export default {
     MenuIcon,
     DeleteIcon,
     EditIcon,
+    AddPhotoIcon,
   },
   props: {
     name: {

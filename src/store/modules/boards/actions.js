@@ -32,12 +32,21 @@ export default {
 
       const data = {
         ...payload,
+        image: '',
+        imageName: '',
         userId,
       };
 
       const response = await BoardsService.addBoard(data);
 
       const id = response.id;
+
+      if (payload.image?.size) {
+        await BoardsService.addImage(payload.image, id);
+        data.image = await BoardsService.getImage(id);
+        data.imageName = payload.image.name;
+        await BoardsService.editBoard(id, data);
+      }
 
       const board = {
         ...data,
@@ -67,22 +76,34 @@ export default {
     try {
       context.commit('setLoading', { name: 'addBoard', value: true });
 
-      const data = { ...payload };
+      const originalData = context.getters['boardEditEntry'];
+
+      const data = {
+        ...payload,
+        image: payload.image?.size ? originalData.image : payload.image,
+      };
 
       delete data.id;
 
       await BoardsService.editBoard(payload.id, data);
 
-      context.commit('changeBoards', payload);
+      if (payload.image?.size) {
+        await BoardsService.addImage(payload.image, payload.id);
+        data.image = await BoardsService.getImage(payload.id);
+        data.imageName = payload.image.name;
+        await BoardsService.editBoard(payload.id, data);
+      }
 
-      await context.dispatch('selectBoard', payload);
+      data.id = payload.id;
+
+      context.commit('changeBoards', data);
 
       toast('Board has been updated successfully.', {
         type: 'success',
         hideProgressBar: true,
       });
 
-      return payload;
+      return data;
     } catch (e) {
       toast(e.message, {
         type: 'error',
@@ -107,6 +128,8 @@ export default {
       context.commit('deleteBoard', payload);
 
       await context.dispatch('resetDeleteEntry');
+
+      await BoardsService.deleteImage(payload);
 
       toast('Board has been deleted successfully.', {
         type: 'success',
