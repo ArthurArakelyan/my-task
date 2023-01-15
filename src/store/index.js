@@ -5,6 +5,7 @@ import uiModule from './modules/ui';
 import authModule from './modules/auth';
 import userModule from './modules/user';
 import boardsModule from './modules/boards';
+import labelsModule from './modules/labels';
 
 const store = createStore({
   modules: {
@@ -12,6 +13,7 @@ const store = createStore({
     auth: authModule,
     user: userModule,
     boards: boardsModule,
+    labels: labelsModule,
   },
 });
 

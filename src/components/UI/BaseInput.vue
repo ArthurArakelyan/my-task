@@ -9,12 +9,16 @@
       {{ placeholder }}
     </span>
 
+    <div v-if="type === 'color'" class="input__color" :style="{ backgroundColor: this.modelValue }"></div>
+
     <input
       class="input"
+      :class="inputClassName"
       ref="input"
       :type="type"
       :id="id"
       :value="modelValue"
+      :autofocus="autoFocus"
       @focus="handleFocus"
       @blur="handleBlur"
       @input="handleInput"
@@ -52,6 +56,10 @@ export default {
       type: String,
       required: false,
     },
+    autoFocus: {
+      type: Boolean,
+      required: false,
+    },
   },
   emits: ['update:modelValue'],
   data() {
@@ -82,7 +90,11 @@ export default {
       }, 0);
     },
     focus() {
-      this.$refs.input.focus();
+      if (this.type === 'color') {
+        this.$refs.input.click();
+      } else {
+        this.$refs.input.focus();
+      }
     },
     checkAnimation(e) {
       if (e.animationName.includes('onAutoFillStart')) {
@@ -91,8 +103,14 @@ export default {
     },
   },
   computed: {
+    inputClassName() {
+      return {
+        ['input--color']: this.type === 'color',
+      };
+    },
     wrapperClassName() {
       return {
+        ['input-wrapper--color']: this.type === 'color',
         ['input-wrapper--focus']: this.isFocused,
         ['input-wrapper--divided']: this.isDivided,
         ['input-wrapper--error']: this.error,
@@ -119,6 +137,14 @@ export default {
   @include flex(row, center, flex-start);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+
+  &--color {
+    border-color: #A2ACC0 !important;
+
+    .input__placeholder {
+      color: #A2ACC0 !important;
+    }
+  }
 
   &--divided,
   &--focus {
@@ -160,6 +186,17 @@ export default {
   height: 100%;
   line-height: 1.125rem;
   @include font(1rem, 400, $primary-text-color);
+
+  &--color {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+  }
+}
+.input__color {
+  width: 100%;
+  height: 1.125rem;
+  border-radius: 3px;
 }
 .input__error {
   position: absolute;

@@ -8,6 +8,7 @@
         v-model="name"
         placeholder="Board Name"
         id="board-name"
+        auto-focus
         :error="v$.name.$errors[0]?.$message"
       ></base-input>
 

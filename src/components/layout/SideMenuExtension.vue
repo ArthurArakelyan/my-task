@@ -8,47 +8,85 @@
       </div>
 
       <div class="side-menu-extension__content">
-        <div class="side-menu-extension__label" v-for="label in labels" :key="label.id">
-          <p class="side-menu-extension__label-name">
-            {{ label.name }}
-          </p>
+        <p v-if="!getLabelsLoading && !hasLabels" class="side-menu-extension__empty">
+          There are no labels
+        </p>
+        <side-menu-extension-label
+          v-for="label in labels"
+          :key="label.id"
+          :label="label"
+        ></side-menu-extension-label>
 
-          <div class="side-menu-extension__label-count" :style="{ backgroundColor: label.color }">
-            <span class="side-menu-extension__label-count-text">
-              {{ label.count }}
-            </span>
-          </div>
-        </div>
-
-        <div class="side-menu-extension__label-add">
+        <div class="side-menu-extension__label-add" @click="openAddModal">
           <base-icon class="side-menu-extension__label-add-icon" name="PlusIcon"></base-icon>
         </div>
       </div>
+
+      <base-modal-wrapper>
+        <label-add v-if="isAddModalOpen" @close="closeAddModal"></label-add>
+      </base-modal-wrapper>
+
+      <base-modal-wrapper>
+        <confirm-modal
+          v-if="labelDeleteEntry"
+          content="Are you sure? Do you wanna delete this label?"
+          :loading="deleteLabelLoading"
+          @submit="handleDeleteLabel"
+          @close="resetDeleteEntry"
+        ></confirm-modal>
+      </base-modal-wrapper>
     </div>
   </transition>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+
+// Components
+import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
+import LabelAdd from '@/components/modals/LabelAdd.vue';
+import SideMenuExtensionLabel from '@/components/layout/SideMenuExtensionLabel.vue';
+import ConfirmModal from '@/components/modals/ConfirmModal.vue';
 
 export default {
+  components: {
+    ConfirmModal,
+    SideMenuExtensionLabel,
+    LabelAdd,
+    BaseModalWrapper,
+  },
   data() {
     return {
-      labels: [
-        { id: 1, name: 'All Tasks', count: 122, color: '#172B4D' },
-        { id: 2, name: 'Management', count: 20, color: '#1665D8' },
-        { id: 3, name: 'Sales', count: 32, color: '#F6C056' },
-        { id: 4, name: 'Operations', count: 27, color: '#F85252' },
-        { id: 5, name: 'Marketing', count: 20, color: '#6F48E1' },
-        { id: 6, name: 'Human Resources', count: 5, color: '#F19445' },
-        { id: 7, name: 'Finance', count: 8, color: '#60C354' },
-        { id: 8, name: 'Service', count: 10, color: '#AA44F6' },
-      ],
+      isAddModalOpen: false,
     };
   },
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen']),
     ...mapGetters('boards', ['selectedBoard']),
+    ...mapGetters('labels', ['labels', 'hasLabels', 'getLabelsLoading', 'labelEditEntry', 'deleteLabelLoading', 'labelDeleteEntry']),
+  },
+  methods: {
+    ...mapActions('labels', ['getLabels', 'deleteLabel', 'resetDeleteEntry', 'resetEditEntry']),
+    openAddModal() {
+      this.isAddModalOpen = true;
+    },
+    closeAddModal() {
+      this.isAddModalOpen = false;
+      this.resetEditEntry();
+    },
+    handleDeleteLabel() {
+      this.deleteLabel(this.labelDeleteEntry.id);
+    },
+  },
+  watch: {
+    labelEditEntry(value) {
+      if (value) {
+        this.openAddModal();
+      }
+    },
+  },
+  created() {
+    this.getLabels();
   },
 };
 </script>
@@ -84,26 +122,10 @@ export default {
   @include flex(column, flex-start, flex-start);
   @include scroll();
 }
-.side-menu-extension__label {
+.side-menu-extension__empty {
+  margin: 0.5rem 0;
   width: 100%;
-  padding: 0.75rem 0;
-  @include flex(row, center, space-between);
-}
-.side-menu-extension__label-name {
-  width: 80%;
-  line-height: initial;
-  @include ellipsis();
-  @include font(1rem, 400, $primary-text-color);
-}
-.side-menu-extension__label-count {
-  border-radius: 30px;
-  width: 2rem;
-  height: 1.2rem;
-  @include flex(row, center, center);
-}
-.side-menu-extension__label-count-text {
-  line-height: 1.063rem;
-  @include font(0.625rem, 500, $white, center);
+  @include font(1rem, 400, $primary-text-color, center);
 }
 
 .side-menu-extension__label-add {

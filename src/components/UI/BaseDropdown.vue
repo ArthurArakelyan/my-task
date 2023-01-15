@@ -142,6 +142,7 @@ export default {
   @include flex(column, center, center);
 }
 .dropdown__item {
+  cursor: pointer;
   padding: 0.5rem 0.7rem;
   width: 100%;
   background-color: $white;
