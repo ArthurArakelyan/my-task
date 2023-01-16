@@ -7,8 +7,6 @@ export default {
   state() {
     return {
       labels: [],
-      labelEditEntry: null,
-      labelDeleteEntry: null,
       loading: {
         getLabels: false,
         addLabel: false,

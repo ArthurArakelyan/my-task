@@ -11,10 +11,13 @@
         <p v-if="!getLabelsLoading && !hasLabels" class="side-menu-extension__empty">
           There are no labels
         </p>
+
         <side-menu-extension-label
           v-for="label in labels"
           :key="label.id"
           :label="label"
+          @edit="handleEdit"
+          @delete="handleDelete"
         ></side-menu-extension-label>
 
         <div class="side-menu-extension__label-add" @click="openAddModal">
@@ -23,16 +26,16 @@
       </div>
 
       <base-modal-wrapper>
-        <label-add v-if="isAddModalOpen" @close="closeAddModal"></label-add>
+        <label-add v-if="isAddModalOpen" @close="closeAddModal" :edit-entry="editEntry"></label-add>
       </base-modal-wrapper>
 
       <base-modal-wrapper>
         <confirm-modal
-          v-if="labelDeleteEntry"
+          v-if="deleteEntry"
           content="Are you sure? Do you wanna delete this label?"
           :loading="deleteLabelLoading"
-          @submit="handleDeleteLabel"
-          @close="resetDeleteEntry"
+          @submit="handleDeleteLabelOk"
+          @close="handleDeleteLabelCancel"
         ></confirm-modal>
       </base-modal-wrapper>
     </div>
@@ -57,32 +60,38 @@ export default {
   },
   data() {
     return {
+      editEntry: null,
+      deleteEntry: null,
       isAddModalOpen: false,
     };
   },
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen']),
     ...mapGetters('boards', ['selectedBoard']),
-    ...mapGetters('labels', ['labels', 'hasLabels', 'getLabelsLoading', 'labelEditEntry', 'deleteLabelLoading', 'labelDeleteEntry']),
+    ...mapGetters('labels', ['labels', 'hasLabels', 'getLabelsLoading', 'deleteLabelLoading']),
   },
   methods: {
-    ...mapActions('labels', ['getLabels', 'deleteLabel', 'resetDeleteEntry', 'resetEditEntry']),
+    ...mapActions('labels', ['getLabels', 'deleteLabel']),
     openAddModal() {
       this.isAddModalOpen = true;
     },
     closeAddModal() {
       this.isAddModalOpen = false;
-      this.resetEditEntry();
+      this.editEntry = null;
     },
-    handleDeleteLabel() {
-      this.deleteLabel(this.labelDeleteEntry.id);
+    handleEdit(data) {
+      this.editEntry = data;
+      this.openAddModal();
     },
-  },
-  watch: {
-    labelEditEntry(value) {
-      if (value) {
-        this.openAddModal();
-      }
+    handleDelete(data) {
+      this.deleteEntry = data;
+    },
+    handleDeleteLabelCancel() {
+      this.deleteEntry = null;
+    },
+    async handleDeleteLabelOk() {
+      await this.deleteLabel(this.deleteEntry.id);
+      this.handleDeleteLabelCancel();
     },
   },
   created() {

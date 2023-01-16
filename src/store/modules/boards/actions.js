@@ -76,23 +76,17 @@ export default {
     try {
       context.commit('setLoading', { name: 'addBoard', value: true });
 
-      const originalData = context.getters['boardEditEntry'];
-
-      const data = {
-        ...payload,
-        image: payload.image?.size ? originalData.image : payload.image,
-      };
+      const data = { ...payload };
 
       delete data.id;
-
-      await BoardsService.editBoard(payload.id, data);
 
       if (payload.image?.size) {
         await BoardsService.addImage(payload.image, payload.id);
         data.image = await BoardsService.getImage(payload.id);
         data.imageName = payload.image.name;
-        await BoardsService.editBoard(payload.id, data);
       }
+
+      await BoardsService.editBoard(payload.id, data);
 
       data.id = payload.id;
 
@@ -119,6 +113,8 @@ export default {
 
       await BoardsService.deleteBoard(payload);
 
+      await context.dispatch('deleteBoardLabels', payload);
+
       const selectedBoard = context.getters.selectedBoard;
 
       if (selectedBoard?.id === payload) {
@@ -126,8 +122,6 @@ export default {
       }
 
       context.commit('deleteBoard', payload);
-
-      await context.dispatch('resetDeleteEntry');
 
       await BoardsService.deleteImage(payload);
 
@@ -146,6 +140,17 @@ export default {
       context.commit('setLoading', { name: 'deleteBoard', value: false });
     }
   },
+  async deleteBoardLabels(context, payload) {
+    const labels = context.rootGetters['labels/labels'];
+
+    return Promise.all(
+      labels.map((label) => {
+        if (label.boardId === payload) {
+          return context.dispatch('labels/deleteLabel', label.id, { root: true });
+        }
+      }),
+    );
+  },
   selectBoard(context, payload) {
     localStorage.setItem('board', JSON.stringify(payload));
     context.commit('setBoard', payload);
@@ -153,17 +158,5 @@ export default {
   resetSelectedBoard(context) {
     localStorage.removeItem('board');
     context.commit('setBoard', null);
-  },
-  selectEditEntry(context, payload) {
-    context.commit('setBoardEditEntry', payload);
-  },
-  resetEditEntry(context) {
-    context.commit('setBoardEditEntry', null);
-  },
-  selectDeleteEntry(context, payload) {
-    context.commit('setBoardDeleteEntry', payload);
-  },
-  resetDeleteEntry(context) {
-    context.commit('setBoardDeleteEntry', null);
   },
 };

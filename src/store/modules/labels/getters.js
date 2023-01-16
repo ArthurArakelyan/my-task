@@ -5,12 +5,6 @@ export default {
   hasLabels(state) {
     return !!state.labels.length;
   },
-  labelEditEntry(state) {
-    return state.labelEditEntry;
-  },
-  labelDeleteEntry(state) {
-    return state.labelDeleteEntry;
-  },
   getLabelsLoading(state) {
     return state.loading.getLabels;
   },

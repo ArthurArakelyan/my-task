@@ -9,18 +9,16 @@ export default {
       ...state,
       ...payload,
     } : board);
+
+    if (state.board?.id === payload.id) {
+      state.board = payload;
+    }
   },
   deleteBoard(state, payload) {
     state.boards = state.boards.filter((board) => board.id !== payload);
   },
   setBoard(state, payload) {
     state.board = payload;
-  },
-  setBoardEditEntry(state, payload) {
-    state.boardEditEntry = payload;
-  },
-  setBoardDeleteEntry(state, payload) {
-    state.boardDeleteEntry = payload;
   },
   addBoard(state, payload) {
     state.boards.push(payload);

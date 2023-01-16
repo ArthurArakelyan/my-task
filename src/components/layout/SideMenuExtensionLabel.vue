@@ -17,14 +17,19 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
-// Components
 import BaseDropdown from '@/components/UI/BaseDropdown.vue';
 
 export default {
   components: {
     BaseDropdown,
+  },
+  emits: {
+    edit(data) {
+      return !!data?.id;
+    },
+    delete(data) {
+      return !!data?.id;
+    },
   },
   props: {
     label: {
@@ -40,12 +45,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions('labels', ['selectEditEntry', 'selectDeleteEntry']),
     handleEdit() {
-      this.selectEditEntry(this.label);
+      this.$emit('edit', this.label);
     },
     handleDelete() {
-      this.selectDeleteEntry(this.label);
+      this.$emit('delete', this.label);
     },
   },
 };

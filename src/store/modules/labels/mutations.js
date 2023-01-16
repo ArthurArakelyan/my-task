@@ -16,11 +16,5 @@ export default {
   deleteLabel(state, payload) {
     state.labels = state.labels.filter((label) => label.id !== payload);
   },
-  setLabelDeleteEntry(state, payload) {
-    state.labelDeleteEntry = payload;
-  },
-  setLabelEditEntry(state, payload) {
-    state.labelEditEntry = payload;
-  },
   setLoading,
 };

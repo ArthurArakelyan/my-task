@@ -11,6 +11,8 @@
         v-for="board in boards"
         :key="board.id"
         :board="board"
+        @edit="handleEdit"
+        @delete="handleDelete"
       ></side-menu-item>
 
       <div @click="openAddModal" class="side-menu__content-add" title="Add a Board">
@@ -25,16 +27,16 @@
     </div>
 
     <base-modal-wrapper>
-      <board-add v-if="isAddModalOpen" @close="closeAddModal"></board-add>
+      <board-add v-if="isAddModalOpen" @close="closeAddModal" :edit-entry="editEntry"></board-add>
     </base-modal-wrapper>
 
     <base-modal-wrapper>
       <confirm-modal
-        v-if="boardDeleteEntry"
+        v-if="deleteEntry"
         content="Are you sure? Do you wanna delete this board?"
         :loading="deleteBoardLoading"
-        @close="resetDeleteEntry"
-        @submit="deleteBoard(boardDeleteEntry.id)"
+        @close="handleDeleteCancel"
+        @submit="handleDeleteOk"
       ></confirm-modal>
     </base-modal-wrapper>
   </aside>
@@ -58,11 +60,13 @@ export default {
   },
   data() {
     return {
+      editEntry: null,
+      deleteEntry: null,
       isAddModalOpen: false,
     };
   },
   computed: {
-    ...mapGetters('boards', ['boards', 'selectedBoard', 'boardEditEntry', 'boardDeleteEntry', 'deleteBoardLoading']),
+    ...mapGetters('boards', ['boards', 'selectedBoard', 'deleteBoardLoading']),
     logoSrc() {
       return require('../../assets/images/logo.png');
     },
@@ -70,20 +74,27 @@ export default {
   methods: {
     ...mapActions('ui', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    ...mapActions('boards', ['getBoards', 'selectBoard', 'resetEditEntry', 'resetDeleteEntry', 'deleteBoard']),
+    ...mapActions('boards', ['getBoards', 'selectBoard', 'deleteBoard']),
     openAddModal() {
       this.isAddModalOpen = true;
     },
     closeAddModal() {
+      this.editEntry = null;
       this.isAddModalOpen = false;
-      this.resetEditEntry();
     },
-  },
-  watch: {
-    boardEditEntry(value) {
-      if (value) {
-        this.openAddModal();
-      }
+    handleEdit(data) {
+      this.editEntry = data;
+      this.openAddModal();
+    },
+    handleDelete(data) {
+      this.deleteEntry = data;
+    },
+    handleDeleteCancel() {
+      this.deleteEntry = null;
+    },
+    async handleDeleteOk() {
+      await this.deleteBoard(this.deleteEntry.id);
+      this.handleDeleteCancel();
     },
   },
   mounted() {

@@ -8,8 +8,6 @@ export default {
     return {
       boards: [],
       board: JSON.parse(localStorage.getItem('board')) || null,
-      boardEditEntry: null,
-      boardDeleteEntry: null,
       loading: {
         getBoards: false,
         addBoard: false,

@@ -1,6 +1,6 @@
 <template>
   <base-modal
-    :title="boardEditEntry ? 'Edit a Board' : 'Add a Board'"
+    :title="editEntry ? 'Edit a Board' : 'Add a Board'"
     @close="$emit('close')"
   >
     <form class="board-add" @submit.prevent="handleSubmit">
@@ -19,7 +19,7 @@
       ></base-upload-input>
 
       <base-button :loading="addBoardLoading" class="board-add__submit">
-        {{ boardEditEntry ? 'Edit' : 'Add' }}
+        {{ editEntry ? 'Edit' : 'Add' }}
       </base-button>
     </form>
   </base-modal>
@@ -48,6 +48,9 @@ export default {
       v$: useVuelidate(),
     };
   },
+  props: {
+    editEntry: {},
+  },
   data() {
     return {
       name: '',
@@ -55,7 +58,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('boards', ['addBoardLoading', 'boardEditEntry']),
+    ...mapGetters('boards', ['addBoardLoading']),
   },
   methods: {
     ...mapActions('boards', ['addBoard', 'editBoard']),
@@ -64,11 +67,11 @@ export default {
         return;
       }
 
-      if (this.boardEditEntry) {
+      if (this.editEntry) {
         await this.editBoard({
-          ...this.boardEditEntry,
+          ...this.editEntry,
           name: this.name,
-          image: this.image,
+          image: this.image?.size ? this.image : this.editEntry.image,
         });
       } else {
         await this.addBoard({
@@ -84,11 +87,11 @@ export default {
     name: { required, maxLength: maxLength(256) },
   },
   created() {
-    if (this.boardEditEntry) {
-      this.name = this.boardEditEntry.name;
+    if (this.editEntry) {
+      this.name = this.editEntry.name;
 
-      if (this.boardEditEntry.imageName) {
-        this.image = { name: this.boardEditEntry.imageName };
+      if (this.editEntry.imageName) {
+        this.image = { name: this.editEntry.imageName };
       }
     }
   },

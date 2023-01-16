@@ -10,6 +10,7 @@
       :src="board.image"
       :alt="board.name"
     />
+
     <span v-else class="side-menu__board-name">
       {{ board.name[0].toUpperCase() }}
     </span>
@@ -29,6 +30,14 @@ import BaseDropdown from '@/components/UI/BaseDropdown.vue';
 export default {
   components: {
     BaseDropdown,
+  },
+  emits: {
+    edit(data) {
+      return !!data?.id;
+    },
+    delete(data) {
+      return !!data?.id;
+    },
   },
   props: {
     board: {
@@ -50,12 +59,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions('boards', ['selectBoard', 'selectEditEntry', 'selectDeleteEntry']),
+    ...mapActions('boards', ['selectBoard']),
     handleEdit() {
-      this.selectEditEntry(this.board);
+      this.$emit('edit', this.board);
     },
     handleDelete() {
-      this.selectDeleteEntry(this.board);
+      this.$emit('delete', this.board);
     },
   },
 };

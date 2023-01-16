@@ -1,6 +1,6 @@
 <template>
   <base-modal
-    :title="labelEditEntry ? 'Edit a Label' : 'Add a Label'"
+    :title="editEntry ? 'Edit a Label' : 'Add a Label'"
     @close="close"
   >
     <form @submit.prevent="handleSubmit" class="label-add">
@@ -21,7 +21,7 @@
       ></base-input>
 
       <base-button :loading="addLabelLoading" class="label-add__submit">
-        {{ labelEditEntry ? 'Edit' : 'Add' }}
+        {{ editEntry ? 'Edit' : 'Add' }}
       </base-button>
     </form>
   </base-modal>
@@ -38,6 +38,9 @@ import { modalMixin } from '@/mixins';
 // Components
 import BaseModal from '@/components/UI/BaseModal.vue';
 
+// Utils
+import { getRandomColor } from '@/utils';
+
 export default {
   mixins: [modalMixin],
   components: {
@@ -48,14 +51,17 @@ export default {
       v$: useVuelidate(),
     };
   },
+  props: {
+    editEntry: {},
+  },
   data() {
     return {
       name: '',
-      color: '#000000',
+      color: getRandomColor(),
     };
   },
   computed: {
-    ...mapGetters('labels', ['addLabelLoading', 'labelEditEntry']),
+    ...mapGetters('labels', ['addLabelLoading']),
     ...mapGetters('boards', ['selectedBoard']),
   },
   methods: {
@@ -69,11 +75,12 @@ export default {
       }
 
       if (!this.selectedBoard) {
-        return;
+        throw new Error('The board is not selected.');
       }
 
-      if (this.labelEditEntry) {
+      if (this.editEntry) {
         await this.editLabel({
+          ...this.editEntry,
           name: this.name,
           color: this.color,
         });
@@ -94,9 +101,9 @@ export default {
     color: { required, maxLength: maxLength(256) },
   },
   created() {
-    if (this.labelEditEntry) {
-      this.name = this.labelEditEntry.name;
-      this.color = this.labelEditEntry.color;
+    if (this.editEntry) {
+      this.name = this.editEntry.name;
+      this.color = this.editEntry.color;
     }
   },
 };

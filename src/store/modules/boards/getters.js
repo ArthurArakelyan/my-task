@@ -5,12 +5,6 @@ export default {
   selectedBoard(state) {
     return state.board;
   },
-  boardEditEntry(state) {
-    return state.boardEditEntry;
-  },
-  boardDeleteEntry(state) {
-    return state.boardDeleteEntry;
-  },
   getBoardsLoading(state) {
     return state.loading.getBoards;
   },
