@@ -26,13 +26,9 @@ export default {
   },
   mounted() {
     AuthService.onAuthChanged((user) => {
-      if (!user) {
-        localStorage.removeItem('token');
-      }
-
       this.updateAuth();
 
-      if (this.$router.currentRoute.value.meta.auth) {
+      if (!user && this.$router.currentRoute.value.meta.auth) {
         this.$router.push('/login');
       }
     });

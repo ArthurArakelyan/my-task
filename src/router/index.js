@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // Components
 import HomePage from '@/pages/HomePage.vue';
+import TodoPage from '@/pages/TodoPage.vue';
 import TheLogin from '@/pages/TheLogin.vue';
 import TheSignup from '@/pages/TheSignup.vue';
 
@@ -15,6 +16,12 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomePage,
+      meta: { auth: true },
+    },
+    {
+      path: '/todos/:id',
+      props: true,
+      component: TodoPage,
       meta: { auth: true },
     },
     {

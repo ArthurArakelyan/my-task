@@ -11,20 +11,16 @@ import { authErrors } from '@/constants';
 
 export default {
   updateAuth(context) {
-    const token = !!localStorage.getItem('token');
+    const user = AuthService.authUser();
 
-    context.commit('setId', token ? (localStorage.getItem('uid') || null) : null);
-    context.commit('setIsAuth', token);
-    context.commit('setUser', AuthService.authUser());
+    context.commit('setId', user?.uid || null);
+    context.commit('setIsAuth', !!user);
   },
   async login(context, payload) {
     try {
       context.commit('setLoading', { name: 'login', value: true });
 
       const response = await AuthService.login(payload.email, payload.password);
-
-      localStorage.setItem('uid', response.user.uid);
-      localStorage.setItem('token', response._tokenResponse.idToken);
 
       await context.dispatch('updateAuth');
 
@@ -43,9 +39,6 @@ export default {
       context.commit('setLoading', { name: 'signup', value: true });
 
       const response = await AuthService.signup(payload.email, payload.password);
-
-      localStorage.setItem('uid', response.user.uid);
-      localStorage.setItem('token', response._tokenResponse.idToken);
 
       await context.dispatch('user/addUser', {
         id: response.user.uid,
@@ -68,8 +61,6 @@ export default {
   },
   async logout() {
     try {
-      localStorage.removeItem('token');
-
       await AuthService.logout();
     } catch (e) {
       console.log(e);

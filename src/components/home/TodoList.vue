@@ -1,36 +1,49 @@
 <template>
-  <transition-group tag="div" name="todo" class="todo-list">
+  <div v-if="!hasTodos && !getTodosLoading" class="todo-list-empty">
+    <p class="todo-list-empty__text">
+      There are no to-dos in <b>{{ selectedBoard.name }}</b> board.
+    </p>
+
+    <base-button @click="handleAdd">
+      Add To-do
+    </base-button>
+  </div>
+  <transition-group v-else tag="div" name="todo" class="todo-list">
     <todo-item
-      v-for="todo in todoList"
+      v-for="todo in todos"
       :key="todo.id"
+      :id="todo.id"
       :name="todo.name"
-      :label="todo.label"
-      :comments-count="todo.commentsCount"
-      :attachments-count="todo.attachmentsCount"
+      :label-id="todo.label"
+      :comments-count="todo.comments.length"
+      :attachments-count="todo.attachments.length"
     ></todo-item>
   </transition-group>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
+// Components
 import TodoItem from './TodoItem.vue';
 
 export default {
   components: {
     TodoItem,
   },
-  data() {
-    return {
-      todoList: [
-        { id: 1, name: 'Finalize the sales plan for new product marketing', label: { name: 'Marketing', color: '#1665D8' }, commentsCount: 4, attachmentsCount: 2 },
-        { id: 2, name: 'Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing Finalize the sales plan for new product marketing', label: { name: 'Sales', color: '#F6C056' }, commentsCount: 2, attachmentsCount: 1 },
-        { id: 3, name: 'Finalize the sales plan for new product marketing', label: { name: 'Operations', color: '#F85252' }, commentsCount: 4, attachmentsCount: 2 },
-        { id: 4, name: 'Finalize the sales plan for new product marketing', label: { name: 'Marketing', color: '#6F48E1' }, commentsCount: 3, attachmentsCount: 6 },
-        { id: 5, name: 'Finalize the sales plan for new product marketing', label: { name: 'Human Resources', color: '#F19445' }, commentsCount: 4, attachmentsCount: 2 },
-        { id: 6, name: 'Finalize the sales plan for new product marketing', label: { name: 'Management', color: '#1665D8' }, commentsCount: 5, attachmentsCount: 2 },
-        { id: 7, name: 'Finalize the sales plan for new product marketing', label: { name: 'Finance', color: '#60C354' }, commentsCount: 4, attachmentsCount: 3 },
-        { id: 8, name: 'Finalize the sales plan for new product marketing', label: { name: 'Customer Service', color: '#AA44F6' }, commentsCount: 4, attachmentsCount: 2 },
-      ],
-    };
+  emits: ['add'],
+  computed: {
+    ...mapGetters('todo', ['todos', 'hasTodos', 'getTodosLoading']),
+    ...mapGetters('boards', ['selectedBoard']),
+  },
+  methods: {
+    ...mapActions('todo', ['getTodos']),
+    handleAdd() {
+      this.$emit('add');
+    },
+  },
+  created() {
+    this.getTodos();
   },
 };
 </script>
@@ -42,6 +55,15 @@ export default {
   flex-wrap: wrap;
   gap: 1rem;
   @include flex(row, flex-start, flex-start);
+}
+.todo-list-empty {
+  width: 100%;
+  margin-top: 6rem;
+  @include flex(column, center, center);
+}
+.todo-list-empty__text {
+  margin-bottom: 1rem;
+  @include font(2rem, 300, $primary-text-color, center);
 }
 
 .todo-enter-from,

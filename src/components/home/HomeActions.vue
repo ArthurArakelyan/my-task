@@ -2,7 +2,7 @@
   <div class="home-actions">
     <div class="home-actions__content">
       <div class="home-actions__filters">
-        <button class="home-actions__action">
+        <button class="home-actions__action" @click="$emit('add')">
           <base-icon class="home-actions__action-icon" name="PlusIcon"></base-icon>
         </button>
 
@@ -34,6 +34,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+  emits: ['add'],
   computed: {
     ...mapGetters('ui', ['layout']),
   },
@@ -46,6 +47,7 @@ export default {
 <style scoped lang="scss">
 .home-actions {
   width: 100%;
+  margin-top: 0.5rem;
   @include flex(row, center, flex-end);
 }
 .home-actions__content {

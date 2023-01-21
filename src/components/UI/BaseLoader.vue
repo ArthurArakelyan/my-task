@@ -10,7 +10,7 @@ export default {
     color: {
       type: String,
       required: false,
-      default: '#ffffff',
+      default: '#1665D8',
     },
     size: {
       type: String,

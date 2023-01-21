@@ -2,6 +2,9 @@ export default {
   boards(state) {
     return state.boards;
   },
+  hasBoards(state) {
+    return !!state.boards.length;
+  },
   selectedBoard(state) {
     return state.board;
   },

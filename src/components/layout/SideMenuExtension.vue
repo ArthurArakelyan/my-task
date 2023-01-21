@@ -7,7 +7,7 @@
         </h1>
       </div>
 
-      <div class="side-menu-extension__content">
+      <div v-if="selectedBoard" class="side-menu-extension__content">
         <p v-if="!getLabelsLoading && !hasLabels" class="side-menu-extension__empty">
           There are no labels
         </p>

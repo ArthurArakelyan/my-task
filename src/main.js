@@ -9,6 +9,7 @@ import BaseLoader from './components/UI/BaseLoader.vue';
 
 import router from './router';
 import store from './store';
+import { clickOutside } from './directives';
 
 import { initializeFirebaseApp } from './utils';
 
@@ -18,6 +19,8 @@ import 'vue3-toastify/dist/index.css';
 initializeFirebaseApp();
 
 const app = createApp(App);
+
+app.directive('click-outside', clickOutside);
 
 app.component('base-icon', BaseIcon);
 app.component('base-button', BaseButton);

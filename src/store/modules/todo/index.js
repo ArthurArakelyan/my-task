@@ -1,20 +1,22 @@
 import mutations from './mutations';
-import getters from './getters';
 import actions from './actions';
+import getters from './getters';
 
 export default {
   namespaced: true,
   state() {
     return {
-      id: null,
-      isAuth: false,
+      todos: [],
+      todoEntry: null,
       loading: {
-        login: false,
-        signup: false,
+        getTodos: false,
+        getTodo: false,
+        addTodo: false,
+        deleteTodo: false,
       },
     };
   },
+  mutations,
   getters,
   actions,
-  mutations,
 };

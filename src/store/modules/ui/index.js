@@ -7,7 +7,7 @@ export default {
   state() {
     return {
       sideMenuOpen: true,
-      layout: localStorage.getItem('layout') || 'grid',
+      layout: 'grid',
     };
   },
   actions,

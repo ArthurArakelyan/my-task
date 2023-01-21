@@ -118,6 +118,10 @@ export default {
     },
   },
   mounted() {
+    if (this.autoFocus) {
+      this.$refs.input.focus();
+    }
+
     if (this.modelValue) {
       this.isDivided = true;
     }

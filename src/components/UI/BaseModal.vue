@@ -50,7 +50,10 @@ export default {
     document.addEventListener('keydown', this.handleEscClick);
   },
   unmounted() {
-    document.body.style.overflow = '';
+    setTimeout(() => {
+      document.body.style.overflow = '';
+    }, 300);
+
     document.removeEventListener('keydown', this.handleEscClick);
   },
 };

@@ -12,6 +12,12 @@ export default {
 
       const response = await BoardsService.getBoards(userId);
 
+      const selectedBoard = context.rootGetters['boards/selectedBoard'];
+
+      if (response.length && !selectedBoard) {
+        await context.dispatch('selectBoard', response[0]);
+      }
+
       context.commit('setBoards', response);
 
       return response;
@@ -114,6 +120,7 @@ export default {
       await BoardsService.deleteBoard(payload);
 
       await context.dispatch('deleteBoardLabels', payload);
+      await context.dispatch('deleteBoardTodos', payload);
 
       const selectedBoard = context.getters.selectedBoard;
 
@@ -124,6 +131,12 @@ export default {
       context.commit('deleteBoard', payload);
 
       await BoardsService.deleteImage(payload);
+
+      const boards = context.rootGetters['boards/boards'];
+
+      if (boards[0]) {
+        await context.dispatch('selectBoard', boards[0]);
+      }
 
       toast('Board has been deleted successfully.', {
         type: 'success',
@@ -151,9 +164,25 @@ export default {
       }),
     );
   },
-  selectBoard(context, payload) {
+  async deleteBoardTodos(context, payload) {
+    const todos = context.rootGetters['todo/todos'];
+
+    return Promise.all(
+      todos.map((todo) => {
+        if (todo.boardId === payload) {
+          return context.dispatch('todo/deleteTodo', todo.id, { root: true });
+        }
+      }),
+    );
+  },
+  async selectBoard(context, payload) {
     localStorage.setItem('board', JSON.stringify(payload));
     context.commit('setBoard', payload);
+
+    await Promise.all([
+      context.dispatch('todo/getTodos', {}, { root: true }),
+      context.dispatch('labels/getLabels', {}, { root: true }),
+    ]);
   },
   resetSelectedBoard(context) {
     localStorage.removeItem('board');

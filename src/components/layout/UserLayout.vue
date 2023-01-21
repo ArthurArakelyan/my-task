@@ -38,7 +38,7 @@ export default {
 
 <style scoped lang="scss">
 .main {
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   width: 1%;
   flex: 1 1;
   padding: 2rem;

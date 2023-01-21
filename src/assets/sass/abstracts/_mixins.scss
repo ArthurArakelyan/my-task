@@ -34,11 +34,11 @@
   object-fit: $object-fit;
 }
 
-@mixin card($border-radius: 4.4px) {
-  background-color: $white;
-  border: 1px solid $primary-border-color;
-  box-shadow: 0 0 15px #CEB9E829;
-  border-radius: $border-radius;
+@mixin absoluteCenter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @mixin scroll($color: $primary-color) {

@@ -1,9 +1,15 @@
 <template>
-  <div class="dropdown-wrapper" @mouseenter="open" @mouseleave="close">
+  <div
+    class="dropdown-wrapper"
+    v-click-outside="handleClickOutside"
+    @click.stop
+    @mouseenter="open"
+    @mouseleave="handleMouseLeave"
+  >
     <div
       class="dropdown-wrapper__content"
       ref="content"
-      @click="open('click')"
+      @click="toggle"
     >
       <slot></slot>
     </div>
@@ -103,6 +109,25 @@ export default {
     close() {
       this.isOpen = false;
     },
+    toggle() {
+      if (this.isOpen) {
+        this.close();
+      } else {
+        this.open('click');
+      }
+    },
+    handleMouseLeave() {
+      if (this.triggerClick) {
+        return;
+      }
+
+      this.close();
+    },
+    handleClickOutside() {
+      if (this.triggerClick && this.isOpen) {
+        this.isOpen = false;
+      }
+    },
     handleSelect(item) {
       this.$emit('select', item);
       item.action?.();
@@ -127,7 +152,7 @@ export default {
   top: 100%;
   width: 120px;
   min-height: 5rem;
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: $white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   transition: opacity .3s ease-in-out, transform .3s ease-in-out;

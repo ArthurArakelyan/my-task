@@ -2,7 +2,7 @@
   <div
     class="side-menu__board"
     :class="className"
-    @click="selectBoard(board)"
+    @click="handleSelectBoard"
   >
     <img
       v-if="board.image"
@@ -65,6 +65,15 @@ export default {
     },
     handleDelete() {
       this.$emit('delete', this.board);
+    },
+    handleSelectBoard() {
+      if (this.selectedBoard?.id === this.board.id) {
+        return;
+      }
+
+      this.$router.replace('/');
+
+      this.selectBoard(this.board);
     },
   },
 };

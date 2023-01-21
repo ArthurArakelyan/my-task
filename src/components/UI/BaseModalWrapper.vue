@@ -1,7 +1,9 @@
 <template>
-  <transition name="modal">
-    <slot></slot>
-  </transition>
+  <teleport to="#modal">
+    <transition name="modal">
+      <slot></slot>
+    </transition>
+  </teleport>
 </template>
 
 <script>

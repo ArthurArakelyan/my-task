@@ -1,32 +1,58 @@
 <template>
-  <div class="home">
+  <div v-if="selectedBoard" class="home">
     <h2 class="home__title" :class="titleClassName">
       Welcome back, <b>{{ userName }}</b>
     </h2>
 
-    <home-actions></home-actions>
+    <home-actions @add="openAddModal"></home-actions>
 
-    <todo-list></todo-list>
+    <todo-list @add="openAddModal"></todo-list>
+
+    <base-modal-wrapper>
+      <todo-add v-if="isAddModalOpen"  @close="closeAddModal"></todo-add>
+    </base-modal-wrapper>
   </div>
+  <empty-home-page v-else></empty-home-page>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
+// Components
 import HomeActions from '@/components/home/HomeActions.vue';
 import TodoList from '@/components/home/TodoList.vue';
+import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
+import TodoAdd from '@/components/modals/TodoAdd.vue';
+import EmptyHomePage from '@/components/home/EmptyHomePage.vue';
 
 export default {
   components: {
+    EmptyHomePage,
+    TodoAdd,
+    BaseModalWrapper,
     HomeActions,
     TodoList,
   },
+  data() {
+    return {
+      isAddModalOpen: false,
+    };
+  },
   computed: {
     ...mapGetters('user', ['userName']),
+    ...mapGetters('boards', ['selectedBoard']),
     titleClassName() {
       return {
         ['home__title--hide']: !this.userName,
       };
+    },
+  },
+  methods: {
+    openAddModal() {
+      this.isAddModalOpen = true;
+    },
+    closeAddModal() {
+      this.isAddModalOpen = false;
     },
   },
 };

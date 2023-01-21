@@ -2,9 +2,10 @@
   <button class="button" :class="buttonClassName" :disabled="loading">
     <transition name="loader">
       <base-loader
-          v-if="loading"
-          size="medium"
-          class="button__loader"
+        v-if="loading"
+        size="medium"
+        class="button__loader"
+        color="#ffffff"
       ></base-loader>
     </transition>
 
