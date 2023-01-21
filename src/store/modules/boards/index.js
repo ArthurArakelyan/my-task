@@ -7,7 +7,7 @@ export default {
   state() {
     return {
       boards: [],
-      board: JSON.parse(localStorage.getItem('board')) || null,
+      board: null,
       loading: {
         getBoards: false,
         addBoard: false,

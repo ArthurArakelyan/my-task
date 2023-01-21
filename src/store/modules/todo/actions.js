@@ -20,6 +20,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('getTodos', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: false,
@@ -38,6 +39,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('getTodo', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: false,
@@ -90,6 +92,7 @@ export default {
 
       return data;
     } catch (e) {
+      console.log('addTodo', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: false,
@@ -125,6 +128,7 @@ export default {
 
       return data;
     } catch (e) {
+      console.log('editTodo', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: false,
@@ -160,6 +164,7 @@ export default {
 
       return payload;
     } catch (e) {
+      console.log('deleteTodo', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: false,

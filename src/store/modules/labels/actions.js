@@ -20,6 +20,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('getLabels', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -48,6 +49,7 @@ export default {
 
       return data;
     } catch (e) {
+      console.log('addLabel', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -77,6 +79,7 @@ export default {
 
       return data;
     } catch (e) {
+      console.log('editLabel', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -100,6 +103,7 @@ export default {
 
       return payload;
     } catch (e) {
+      console.log('deleteLabel', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,

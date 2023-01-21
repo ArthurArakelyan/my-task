@@ -26,6 +26,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('login', e);
       toast(getError(e.message, authErrors), {
         type: 'error',
         hideProgressBar: true,
@@ -51,6 +52,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('signup', e);
       toast(getError(e.message, authErrors), {
         type: 'error',
         hideProgressBar: true,
@@ -63,7 +65,7 @@ export default {
     try {
       await AuthService.logout();
     } catch (e) {
-      console.log(e);
+      console.log('logout', e);
     }
   },
 };

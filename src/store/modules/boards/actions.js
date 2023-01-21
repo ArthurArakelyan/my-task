@@ -22,6 +22,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('getBoards', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -70,6 +71,7 @@ export default {
 
       return board;
     } catch (e) {
+      console.log('addBoard', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -105,6 +107,7 @@ export default {
 
       return data;
     } catch (e) {
+      console.log('editBoard', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -145,6 +148,7 @@ export default {
 
       return payload;
     } catch (e) {
+      console.log('deleteBoard', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -176,7 +180,6 @@ export default {
     );
   },
   async selectBoard(context, payload) {
-    localStorage.setItem('board', JSON.stringify(payload));
     context.commit('setBoard', payload);
 
     await Promise.all([
@@ -185,7 +188,6 @@ export default {
     ]);
   },
   resetSelectedBoard(context) {
-    localStorage.removeItem('board');
     context.commit('setBoard', null);
   },
 };

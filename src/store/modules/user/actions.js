@@ -20,6 +20,7 @@ export default {
 
       return response;
     } catch (e) {
+      console.log('getUser', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
@@ -36,6 +37,7 @@ export default {
 
       await UsersService.addUser(data, payload.id);
     } catch (e) {
+      console.log('addUser', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,

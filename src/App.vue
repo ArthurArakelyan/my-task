@@ -1,7 +1,6 @@
 <template>
   <div class="app">
-    <user-layout v-if="isAuth"></user-layout>
-    <router-view v-else></router-view>
+    <user-layout></user-layout>
   </div>
 </template>
 
