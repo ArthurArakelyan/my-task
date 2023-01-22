@@ -1,7 +1,7 @@
 <template>
   <div class="home-empty">
     <p v-if="hasBoards" class="home-empty__text">Please select a board</p>
-    <div v-else class="home-empty__info">
+    <div v-if="!hasBoards && !getBoardsLoading" class="home-empty__info">
       <p class="home-empty__info-text">You have no boards</p>
 
       <base-button @click="open">
@@ -33,7 +33,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('boards', ['hasBoards']),
+    ...mapGetters('boards', ['hasBoards', 'getBoardsLoading']),
   },
   methods: {
     open() {

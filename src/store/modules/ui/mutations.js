@@ -1,3 +1,5 @@
+import { setState } from '@/utils';
+
 export default {
   setSideMenuOpen(state, payload) {
     state.sideMenuOpen = payload;
@@ -11,4 +13,5 @@ export default {
   setDeviceTypes(state, payload) {
     state.deviceTypes = payload;
   },
+  setState,
 };

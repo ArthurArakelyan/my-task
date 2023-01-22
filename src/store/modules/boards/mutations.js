@@ -1,4 +1,4 @@
-import { setLoading } from '@/utils';
+import { setLoading, setState } from '@/utils';
 
 export default {
   setBoards(state, payload) {
@@ -24,4 +24,5 @@ export default {
     state.boards.push(payload);
   },
   setLoading,
+  setState,
 };

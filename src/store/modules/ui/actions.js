@@ -1,3 +1,6 @@
+// State
+import { getUiState } from './index';
+
 // Utils
 import { initializeDeviceTypes } from '@/utils';
 
@@ -17,5 +20,8 @@ export default {
   },
   changeDeviceTypes(context) {
     context.commit('setDeviceTypes', initializeDeviceTypes());
+  },
+  reset(context) {
+    context.commit('setState', getUiState());
   },
 };

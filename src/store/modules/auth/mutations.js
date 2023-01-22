@@ -1,4 +1,4 @@
-import { setLoading } from '@/utils';
+import { setLoading, setState } from '@/utils';
 
 export default {
   setIsAuth(state, payload) {
@@ -8,4 +8,5 @@ export default {
     state.id = payload;
   },
   setLoading,
+  setState,
 };

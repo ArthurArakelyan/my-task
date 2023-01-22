@@ -1,5 +1,8 @@
 import { toast } from 'vue3-toastify';
 
+// Store
+import { getBoardsState } from './index';
+
 // Services
 import { BoardsService } from '@/services';
 
@@ -189,5 +192,8 @@ export default {
   },
   resetSelectedBoard(context) {
     context.commit('setBoard', null);
+  },
+  reset(context) {
+    context.commit('setState', getBoardsState());
   },
 };

@@ -1,5 +1,8 @@
 import { toast } from 'vue3-toastify';
 
+// Store
+import { getAuthState } from './index';
+
 // Services
 import { AuthService } from '@/services';
 
@@ -61,11 +64,15 @@ export default {
       context.commit('setLoading', { name: 'signup', value: false });
     }
   },
-  async logout() {
+  async logout(context) {
     try {
       await AuthService.logout();
+      await context.dispatch('resetState', {}, { root: true });
     } catch (e) {
       console.log('logout', e);
     }
+  },
+  reset(context) {
+    context.commit('setState', getAuthState());
   },
 };

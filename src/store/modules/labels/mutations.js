@@ -1,4 +1,4 @@
-import { setLoading } from '@/utils';
+import { setLoading, setState } from '@/utils';
 
 export default {
   setLabels(state, payload) {
@@ -17,4 +17,5 @@ export default {
     state.labels = state.labels.filter((label) => label.id !== payload);
   },
   setLoading,
+  setState,
 };

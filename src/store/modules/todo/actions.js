@@ -1,5 +1,8 @@
 import { toast } from 'vue3-toastify';
 
+// Store
+import { getTodoState } from './index';
+
 // Services
 import { TodoService } from '@/services';
 
@@ -175,5 +178,8 @@ export default {
   },
   resetTodoEntry(context) {
     context.commit('setTodoEntry', null);
+  },
+  reset(context) {
+    context.commit('setState', getTodoState());
   },
 };

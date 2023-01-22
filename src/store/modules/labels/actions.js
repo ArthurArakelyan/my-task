@@ -1,5 +1,8 @@
 import { toast } from 'vue3-toastify';
 
+// Store
+import { getLabelsState } from './index';
+
 // Services
 import { LabelsService } from '@/services';
 
@@ -111,5 +114,8 @@ export default {
     } finally {
       context.commit('setLoading', { name: 'deleteLabel', value: false });
     }
+  },
+  reset(context) {
+    context.commit('setState', getLabelsState());
   },
 };

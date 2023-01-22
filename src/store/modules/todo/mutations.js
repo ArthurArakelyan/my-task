@@ -1,5 +1,5 @@
 // Utils
-import { setLoading } from '@/utils';
+import { setLoading, setState } from '@/utils';
 
 export default {
   setTodos(state, payload) {
@@ -21,4 +21,5 @@ export default {
     } : todo);
   },
   setLoading,
+  setState,
 };

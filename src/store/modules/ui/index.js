@@ -3,16 +3,24 @@ import getters from './getters';
 import mutations from './mutations';
 
 // Utils
-import { initializeDeviceTypes } from '@/utils';
+import { copyObject, initializeDeviceTypes } from '@/utils';
+
+const initialState = {
+  sideMenuOpen: true,
+  responsiveSideMenuOpen: false,
+  layout: 'grid',
+  deviceTypes: initializeDeviceTypes(),
+};
+
+export const getUiState = () => {
+  return copyObject(initialState);
+};
 
 export default {
   namespaced: true,
   state() {
     return {
-      sideMenuOpen: true,
-      responsiveSideMenuOpen: false,
-      layout: 'grid',
-      deviceTypes: initializeDeviceTypes(),
+      ...initialState,
     };
   },
   actions,

@@ -1,5 +1,8 @@
 import { toast } from 'vue3-toastify';
 
+// Store
+import { getUserState } from './index';
+
 // Services
 import { UsersService } from '@/services';
 
@@ -43,5 +46,8 @@ export default {
         hideProgressBar: true,
       });
     }
+  },
+  reset(context) {
+    context.commit('setState', getUserState());
   },
 };

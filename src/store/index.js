@@ -1,6 +1,9 @@
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
+// Store
+import actions from './actions';
+
 // Modules
 import uiModule from './modules/ui';
 import authModule from './modules/auth';
@@ -20,6 +23,7 @@ const store = createStore({
   },
   plugins: [createPersistedState()],
   strict: true,
+  actions,
 });
 
 export default store;
