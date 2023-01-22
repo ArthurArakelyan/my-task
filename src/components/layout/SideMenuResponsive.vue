@@ -10,16 +10,41 @@
 import { mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      touchStart: 0,
+      touchEnd: 0,
+    };
+  },
   methods: {
     ...mapActions('ui', ['closeResponsiveSideMenuOpen']),
+    handleTouchStart(e) {
+      this.touchStart = e.targetTouches[0].clientX;
+    },
+    handleTouchMove(e) {
+      this.touchEnd = e.targetTouches[0].clientX;
+    },
+    handleTouchEnd() {
+      if (this.touchStart - this.touchEnd > 90) {
+        this.closeResponsiveSideMenuOpen();
+      }
+    },
   },
   mounted() {
     document.body.style.overflow = 'hidden';
+
+    window.addEventListener('touchstart', this.handleTouchStart);
+    window.addEventListener('touchmove', this.handleTouchMove);
+    window.addEventListener('touchend', this.handleTouchEnd);
   },
   unmounted() {
     setTimeout(() => {
       document.body.style.overflow = '';
     }, 300);
+
+    window.removeEventListener('touchstart', this.handleTouchStart);
+    window.removeEventListener('touchmove', this.handleTouchMove);
+    window.removeEventListener('touchend', this.handleTouchEnd);
   },
 };
 </script>

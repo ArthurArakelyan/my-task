@@ -127,6 +127,12 @@ export default {
   }
 }
 
+@include mobile-media {
+  .header {
+    padding-right: 1.5rem;
+  }
+}
+
 @media (max-width: 540px) {
   .header__search-input {
     width: 12rem;

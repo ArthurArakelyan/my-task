@@ -117,6 +117,8 @@ export default {
 .todo-add__label {
   width: 1.2rem;
   height: 1.2rem;
+  min-width: 1.2rem;
+  min-height: 1.2rem;
   border-radius: 50%;
   margin-right: 0.5rem;
 }
