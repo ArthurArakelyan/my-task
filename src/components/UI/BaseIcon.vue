@@ -18,6 +18,7 @@ import DeleteIcon from '@/components/icons/DeleteIcon.vue';
 import EditIcon from '@/components/icons/EditIcon.vue';
 import AddPhotoIcon from '@/components/icons/AddPhotoIcon.vue';
 import ArrowBackIcon from '@/components/icons/ArrowBackIcon.vue';
+import BurgerMenuIcon from '@/components/icons/BurgerMenuIcon.vue';
 
 export default {
   components: {
@@ -36,6 +37,7 @@ export default {
     EditIcon,
     AddPhotoIcon,
     ArrowBackIcon,
+    BurgerMenuIcon,
   },
   props: {
     name: {

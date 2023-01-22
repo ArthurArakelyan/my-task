@@ -22,8 +22,11 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['updateAuth']),
+    ...mapActions('ui', ['changeDeviceTypes']),
   },
   mounted() {
+    window.addEventListener('resize', this.changeDeviceTypes);
+
     AuthService.onAuthChanged((user) => {
       this.updateAuth();
 
@@ -74,5 +77,41 @@ body {
   display: flex;
   flex-wrap: wrap;
   background-color: #F6F7F8;
+}
+
+@media (min-width: 1919px) {
+  html, body {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 2399px) {
+  html, body {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 2999px) {
+  html, body {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 3499px) {
+  html, body {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 3999px) {
+  html, body {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 4400px) {
+  html, body {
+    font-size: 40px;
+  }
 }
 </style>

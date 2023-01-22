@@ -77,9 +77,12 @@ export default {
 
 <style scoped lang="scss">
 .todo-wrapper {
-  width: calc(25% - 0.8rem);
   height: 12.5rem;
   transition: all .5s ease-in-out;
+
+  &--grid {
+    width: calc(25% - 0.8rem);
+  }
 
   &--agenda {
     width: 100%;
@@ -177,5 +180,43 @@ export default {
 .todo__footer-counter-text {
   margin-left: 0.4rem;
   @include font(0.9rem, 400, $secondary-text-color);
+}
+
+@media (max-width: 1250px) {
+  .todo-wrapper {
+    &--grid {
+      width: calc(33.3% - 0.7rem);
+    }
+  }
+}
+
+@media (max-width: 725px) {
+  .todo-wrapper {
+    &--grid {
+      width: calc(50% - 0.5rem);
+    }
+  }
+  .todo__name {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .todo-wrapper {
+    &--grid {
+      height: 10rem;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .todo-wrapper {
+    height: 12rem;
+
+    &--grid {
+      width: 100%;
+      height: 12rem;
+    }
+  }
 }
 </style>

@@ -1,15 +1,26 @@
 <template>
-  <div class="aside" :class="asideClassName">
+  <div v-if="isDesktop" class="aside" :class="asideClassName">
     <slot></slot>
   </div>
+  <transition name="aside-overlay">
+    <side-menu-responsive v-if="!isDesktop && isResponsiveSideMenuOpen">
+      <slot></slot>
+    </side-menu-responsive>
+  </transition>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
+// Components
+import SideMenuResponsive from '@/components/layout/SideMenuResponsive.vue';
+
 export default {
+  components: {
+    SideMenuResponsive,
+  },
   computed: {
-    ...mapGetters('ui', ['isSideMenuOpen']),
+    ...mapGetters('ui', ['isSideMenuOpen', 'isResponsiveSideMenuOpen', 'isDesktop']),
     asideClassName() {
       return {
         ['aside--close']: !this.isSideMenuOpen,

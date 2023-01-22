@@ -143,4 +143,18 @@ export default {
     transform: scale(1);
   }
 }
+
+@media (max-width: 750px) {
+  .modal__content {
+    max-width: initial;
+    margin: 40px 2rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .modal__content {
+    padding: 1rem;
+    margin: 40px 1rem;
+  }
+}
 </style>

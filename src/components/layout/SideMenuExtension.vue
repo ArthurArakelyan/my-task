@@ -180,4 +180,13 @@ export default {
   opacity: 1;
   transform: translateX(0);
 }
+
+@include small-desktop-media {
+  .side-menu-extension__header {
+    height: 5rem;
+  }
+  .side-menu-extension__content {
+    max-height: calc(100vh - 5rem);
+  }
+}
 </style>

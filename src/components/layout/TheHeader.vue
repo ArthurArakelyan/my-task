@@ -1,5 +1,9 @@
 <template>
   <header class="header" :class="{ ['header--menu-closed']: !isSideMenuOpen }">
+    <div v-if="!isDesktop" class="header__menu" @click="openResponsiveSideMenuOpen">
+      <base-icon class="header__menu-icon" name="BurgerMenuIcon"></base-icon>
+    </div>
+
     <div class="header__content">
       <div class="header__search">
         <base-icon @click="handleSearchIcon" class="header__search-icon" name="SearchIcon"></base-icon>
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import BaseAvatar from '@/components/UI/BaseAvatar.vue';
@@ -32,12 +36,13 @@ export default {
     BaseAvatar,
   },
   methods: {
+    ...mapActions('ui', ['openResponsiveSideMenuOpen']),
     handleSearchIcon() {
       this.$refs.searchInput.focus();
     },
   },
   computed: {
-    ...mapGetters('ui', ['isSideMenuOpen']),
+    ...mapGetters('ui', ['isSideMenuOpen', 'isDesktop']),
     ...mapGetters('user', ['userAvatar']),
     dropdownItems() {
       return [];
@@ -68,6 +73,20 @@ export default {
   @include flex(row, center, space-between);
 }
 
+.header__menu {
+  width: 6.25rem;
+  height: 100%;
+  cursor: pointer;
+  border-right: 1px solid $secondary-text-color;
+  @include flex(row, center, center);
+}
+.header__menu-icon {
+  width: 2.7rem;
+  height: 2.7rem;
+  fill: $primary-text-color;
+  stroke: $primary-text-color;
+}
+
 .header__search {
   @include flex(row, center, center);
 }
@@ -94,6 +113,35 @@ export default {
 
   &::placeholder {
     @include font(1rem, 400, #9FA9BE);
+  }
+}
+
+@include small-desktop-media {
+  .header {
+    width: 100%;
+    height: 5rem;
+    padding-left: 0;
+  }
+  .header__content {
+    padding-left: 1rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .header__search-input {
+    width: 12rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .header__search-input {
+    width: 9rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .header__search-input {
+    width: 7rem;
   }
 }
 </style>

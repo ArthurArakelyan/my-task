@@ -150,7 +150,7 @@ export default {
   position: absolute;
   z-index: 10;
   top: 100%;
-  width: 120px;
+  width: 7.5rem;
   min-height: 5rem;
   border-radius: 6px;
   background-color: $white;

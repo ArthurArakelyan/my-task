@@ -31,6 +31,7 @@ export default {
   },
   computed: {
     ...mapGetters('auth', ['isAuth']),
+    ...mapGetters('ui', ['isDesktop']),
     mainClassName() {
       return {
         main: this.isAuth,
@@ -58,13 +59,21 @@ export default {
 
 <style scoped lang="scss">
 .main {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 6.25rem);
   width: 1%;
   flex: 1 1;
   padding: 2rem;
-  margin-top: 100px;
+  margin-top: 6.25rem;
 }
 .auth-main {
   width: 100%;
+}
+
+@include small-desktop-media {
+  .main {
+    padding: 1.5rem;
+    min-height: calc(100vh - 5rem);
+    margin-top: 5rem;
+  }
 }
 </style>

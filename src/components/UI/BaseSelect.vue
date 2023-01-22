@@ -1,5 +1,5 @@
 <template>
-  <div class="select-wrapper" v-click-outside="close">
+  <div class="select-wrapper" ref="selectWrapper" v-click-outside="close">
     <div
       class="select"
       :class="selectClassName"
@@ -19,7 +19,7 @@
     </div>
 
     <transition name="select">
-      <div v-if="isOpen" class="select-list">
+      <div v-if="isOpen" class="select-list" :class="selectListClassName">
         <p v-if="!list.length" class="select-list__empty">
           No results available
         </p>
@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      reverse: false,
     };
   },
   methods: {
@@ -95,9 +96,22 @@ export default {
         ['select--error']: this.error,
       };
     },
+    selectListClassName() {
+      return {
+        ['select-list--reverse']: this.reverse,
+      };
+    },
     selectedItem() {
       return this.list.find((item) => item[this.keyName] === this.modelValue);
     },
+  },
+  mounted() {
+    const selectWrapperElement = this.$refs.selectWrapper;
+    const rect = selectWrapperElement.getBoundingClientRect();
+    const top = rect.top + window.scrollY + 192;
+    const screenHeight = window.screen.height;
+
+    this.reverse = top > (screenHeight / 2);
   },
 };
 </script>
@@ -173,6 +187,12 @@ export default {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 0 0 6px 6px;
   transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+
+  &--reverse {
+    top: initial;
+    border-radius: 6px 6px 0 0;
+    bottom: calc(100% - 0.3rem);
+  }
 }
 .select-list__empty {
   @include absoluteCenter();

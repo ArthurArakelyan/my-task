@@ -196,4 +196,13 @@ export default {
   stroke: #6EA0E7;
   transition: stroke .3s ease-in-out;
 }
+
+@include small-desktop-media {
+  .side-menu__header {
+    height: 5rem;
+  }
+  .side-menu__footer {
+    height: 5rem;
+  }
+}
 </style>

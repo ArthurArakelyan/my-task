@@ -11,18 +11,30 @@
         </button>
       </div>
 
-      <div class="home-actions__divider"></div>
+      <div v-if="!isMobile" class="home-actions__divider"></div>
 
-      <div class="home-actions__layout-actions">
-        <button @click="changeLayout('grid')" class="home-actions__action" :class="{ ['home-actions__action--active']: layout === 'grid' }">
+      <div v-if="!isMobile" class="home-actions__layout-actions">
+        <button
+          @click="changeLayout('grid')"
+          class="home-actions__action"
+          :class="{ ['home-actions__action--active']: layout === 'grid' }"
+        >
           <base-icon class="home-actions__action-icon" name="GridViewIcon"></base-icon>
         </button>
 
-        <button @click="changeLayout('agenda')" class="home-actions__action" :class="{ ['home-actions__action--active']: layout === 'agenda' }">
+        <button
+          @click="changeLayout('agenda')"
+          class="home-actions__action"
+          :class="{ ['home-actions__action--active']: layout === 'agenda' }"
+        >
           <base-icon class="home-actions__action-icon" name="AgendaViewIcon"></base-icon>
         </button>
 
-        <button @click="changeLayout('column')" class="home-actions__action" :class="{ ['home-actions__action--active']: layout === 'column' }">
+        <button
+          @click="changeLayout('column')"
+          class="home-actions__action home-actions__action--column"
+          :class="{ ['home-actions__action--active']: layout === 'column' }"
+        >
           <base-icon class="home-actions__action-icon" name="ColumnViewIcon"></base-icon>
         </button>
       </div>
@@ -36,10 +48,17 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   emits: ['add'],
   computed: {
-    ...mapGetters('ui', ['layout']),
+    ...mapGetters('ui', ['layout', 'isMobile']),
   },
   methods: {
     ...mapActions('ui', ['changeLayout']),
+  },
+  watch: {
+    isMobile(current) {
+      if (current) {
+        this.changeLayout('grid');
+      }
+    },
   },
 };
 </script>
@@ -47,7 +66,7 @@ export default {
 <style scoped lang="scss">
 .home-actions {
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   @include flex(row, center, flex-end);
 }
 .home-actions__content {
@@ -109,5 +128,19 @@ export default {
   height: 1.5rem;
   fill: #A2ACC0;
   transition: stroke .3s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .home-actions__action {
+    &--column {
+      display: none;
+    }
+  }
+}
+
+@include mobile-media {
+  .home-actions {
+    margin-top: 0;
+  }
 }
 </style>

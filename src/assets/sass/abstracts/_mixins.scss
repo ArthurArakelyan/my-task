@@ -69,7 +69,7 @@
 }
 
 @mixin mobile-media {
-  @media (max-width: 575px) {
+  @media (max-width: 450px) {
     @content
   }
 }
@@ -81,7 +81,7 @@
 }
 
 @mixin small-desktop-media {
-  @media (max-width: 1200px) {
+  @media (max-width: 1250px) {
     @content
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedBoard" class="home">
-    <h2 class="home__title" :class="titleClassName">
+    <h2 v-if="!isMobile" class="home__title" :class="titleClassName">
       Welcome back, <b>{{ userName }}</b>
     </h2>
 
@@ -39,6 +39,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('ui', ['isMobile']),
     ...mapGetters('user', ['userName']),
     ...mapGetters('boards', ['selectedBoard']),
     titleClassName() {

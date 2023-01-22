@@ -86,4 +86,11 @@ export default {
     color: $primary-text-color;
   }
 }
+
+@media (max-width: 510px) {
+  .auth__content {
+    width: 100%;
+    margin: 0 1rem;
+  }
+}
 </style>
