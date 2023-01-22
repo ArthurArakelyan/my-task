@@ -1,5 +1,5 @@
 <template>
-  <div class="aside-overlay" @click.self="closeResponsiveSideMenuOpen">
+  <div class="aside-overlay" ref="overlay" @click.self="closeResponsiveSideMenuOpen">
     <div class="aside-responsive">
       <slot></slot>
     </div>
@@ -19,13 +19,12 @@ export default {
   methods: {
     ...mapActions('ui', ['closeResponsiveSideMenuOpen']),
     handleTouchStart(e) {
-      this.touchStart = e.targetTouches[0].clientX;
+      this.touchStart = e.changedTouches[0].clientX;
     },
-    handleTouchMove(e) {
-      this.touchEnd = e.targetTouches[0].clientX;
-    },
-    handleTouchEnd() {
-      if (this.touchStart - this.touchEnd > 90) {
+    handleTouchEnd(e) {
+      this.touchEnd = e.changedTouches[0].clientX;
+
+      if (this.touchStart - 90 > this.touchEnd) {
         this.closeResponsiveSideMenuOpen();
       }
     },
@@ -33,18 +32,17 @@ export default {
   mounted() {
     document.body.style.overflow = 'hidden';
 
-    window.addEventListener('touchstart', this.handleTouchStart);
-    window.addEventListener('touchmove', this.handleTouchMove);
-    window.addEventListener('touchend', this.handleTouchEnd);
+    this.$refs.overlay.addEventListener('touchstart', this.handleTouchStart);
+    this.$refs.overlay.addEventListener('touchend', this.handleTouchEnd);
+  },
+  beforeUnmount() {
+    this.$refs.overlay.removeEventListener('touchstart', this.handleTouchStart);
+    this.$refs.overlay.removeEventListener('touchend', this.handleTouchEnd);
   },
   unmounted() {
     setTimeout(() => {
       document.body.style.overflow = '';
     }, 300);
-
-    window.removeEventListener('touchstart', this.handleTouchStart);
-    window.removeEventListener('touchmove', this.handleTouchMove);
-    window.removeEventListener('touchend', this.handleTouchEnd);
   },
 };
 </script>
