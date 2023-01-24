@@ -8,6 +8,9 @@ export default {
   layout(state) {
     return state.layout;
   },
+  completedTodosOpen(state) {
+    return state.completedTodosOpen;
+  },
   isMobile(state) {
     return state.deviceTypes.isMobile;
   },

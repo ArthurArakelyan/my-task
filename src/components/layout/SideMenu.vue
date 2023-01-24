@@ -74,7 +74,7 @@ export default {
   methods: {
     ...mapActions('ui', ['toggleSideMenu']),
     ...mapActions('auth', ['logout']),
-    ...mapActions('boards', ['getBoards', 'selectBoard', 'deleteBoard']),
+    ...mapActions('boards', ['selectBoard', 'deleteBoard']),
     openAddModal() {
       this.isAddModalOpen = true;
     },
@@ -96,9 +96,6 @@ export default {
       await this.deleteBoard(this.deleteEntry.id);
       this.handleDeleteCancel();
     },
-  },
-  mounted() {
-    this.getBoards();
   },
 };
 </script>

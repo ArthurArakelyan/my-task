@@ -10,6 +10,9 @@ export default {
   setLayout(state, payload) {
     state.layout = payload;
   },
+  setCompletedTodosOpen(state, payload) {
+    state.completedTodosOpen = payload;
+  },
   setDeviceTypes(state, payload) {
     state.deviceTypes = payload;
   },

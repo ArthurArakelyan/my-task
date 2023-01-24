@@ -7,7 +7,11 @@ class TodoService {
   static path = 'todos';
 
   static getTodos(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId), orderBy('createdAt', 'desc'));
+    return FirestoreService.get(this.path, where('boardId', '==', boardId), where('completed', '==', false), orderBy('createdAt', 'desc'));
+  }
+
+  static getCompletedTodos(boardId) {
+    return FirestoreService.get(this.path, where('boardId', '==', boardId), where('completed', '==', true), orderBy('createdAt', 'desc'));
   }
 
   static getTodo(id) {

@@ -32,6 +32,31 @@ export default {
       context.commit('setLoading', { name: 'getTodos', value: false });
     }
   },
+  async getCompletedTodos(context) {
+    try {
+      context.commit('setLoading', { name: 'getCompletedTodos', value: true });
+
+      const board = context.rootGetters['boards/selectedBoard'];
+
+      if (!board?.id) {
+        return;
+      }
+
+      const response = await TodoService.getCompletedTodos(board.id);
+
+      context.commit('setCompletedTodos', response);
+
+      return response;
+    } catch (e) {
+      console.log('getCompletedTodos', e);
+      toast(e.message, {
+        type: 'error',
+        hideProgressBar: true,
+      });
+    } finally {
+      context.commit('setLoading', { name: 'getCompletedTodos', value: false });
+    }
+  },
   async getTodo(context, payload) {
     try {
       context.commit('setLoading', { name: 'getTodo', value: true });
@@ -174,6 +199,56 @@ export default {
       });
     } finally {
       context.commit('setLoading', { name: 'deleteTodo', value: false });
+    }
+  },
+  async completeTodo(context, payload) {
+    try {
+      const { id, completed } = payload;
+
+      const todos = context.getters.todos;
+      const completedTodos = context.getters.completedTodos;
+      const todoEntry = context.getters.todoEntry;
+
+      const found = completed
+        ? todos.find((todo) => todo.id === id)
+        : completedTodos.find((todo) => todo.id === id);
+
+      if (!found) {
+        return;
+      }
+
+      const data = {
+        ...found,
+        completed,
+      };
+
+      delete data.id;
+
+      await TodoService.editTodo(id, data);
+
+      data.id = id;
+
+      if (todoEntry) {
+        context.commit('setTodoEntry', data);
+      }
+
+      await Promise.all([
+        context.dispatch('getTodos'),
+        context.dispatch('getCompletedTodos'),
+      ]);
+
+      toast(`To-do has been ${!completed ? 'un' : ''}completed successfully.`, {
+        type: 'success',
+        hideProgressBar: true,
+      });
+
+      return data;
+    } catch (e) {
+      console.log('completeTodo', e);
+      toast(e.message, {
+        type: 'error',
+        hideProgressBar: false,
+      });
     }
   },
   resetTodoEntry(context) {

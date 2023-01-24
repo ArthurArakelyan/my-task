@@ -187,6 +187,7 @@ export default {
 
     await Promise.all([
       context.dispatch('todo/getTodos', {}, { root: true }),
+      context.dispatch('todo/getCompletedTodos', {}, { root: true }),
       context.dispatch('labels/getLabels', {}, { root: true }),
     ]);
   },

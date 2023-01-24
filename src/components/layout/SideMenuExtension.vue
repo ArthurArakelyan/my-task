@@ -71,7 +71,7 @@ export default {
     ...mapGetters('labels', ['labels', 'hasLabels', 'getLabelsLoading', 'deleteLabelLoading']),
   },
   methods: {
-    ...mapActions('labels', ['getLabels', 'deleteLabel']),
+    ...mapActions('labels', ['deleteLabel']),
     openAddModal() {
       this.isAddModalOpen = true;
     },
@@ -93,9 +93,6 @@ export default {
       await this.deleteLabel(this.deleteEntry.id);
       this.handleDeleteLabelCancel();
     },
-  },
-  created() {
-    this.getLabels();
   },
 };
 </script>

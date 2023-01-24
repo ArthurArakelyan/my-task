@@ -9,6 +9,7 @@ const initialState = {
   sideMenuOpen: true,
   responsiveSideMenuOpen: false,
   layout: 'grid',
+  completedTodosOpen: true,
   deviceTypes: initializeDeviceTypes(),
 };
 

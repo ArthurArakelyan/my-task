@@ -39,7 +39,7 @@
       <confirm-modal
         v-if="isDelete"
         content="Are you sure? Do you wanna delete this to-do?"
-        :loading="false"
+        :loading="deleteTodoLoading"
         @close="handleDeleteCancel"
         @submit="handleDeleteOk"
       ></confirm-modal>
@@ -81,7 +81,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('todo', ['todoEntry', 'getTodoLoading']),
+    ...mapGetters('todo', ['todoEntry', 'getTodoLoading', 'deleteTodoLoading']),
     ...mapGetters('labels', ['labels']),
     label() {
       if (!this.todoEntry) {

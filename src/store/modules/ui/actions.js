@@ -18,6 +18,9 @@ export default {
   changeLayout(context, payload) {
     context.commit('setLayout', payload);
   },
+  toggleCompletedTodosOpen(context) {
+    context.commit('setCompletedTodosOpen', !context.getters.completedTodosOpen);
+  },
   changeDeviceTypes(context) {
     context.commit('setDeviceTypes', initializeDeviceTypes());
   },

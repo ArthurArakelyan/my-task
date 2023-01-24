@@ -7,9 +7,11 @@ import { copyObject } from '@/utils';
 
 const initialState = {
   todos: [],
+  completedTodos: [],
   todoEntry: null,
   loading: {
     getTodos: false,
+    getCompletedTodos: false,
     getTodo: false,
     addTodo: false,
     deleteTodo: false,

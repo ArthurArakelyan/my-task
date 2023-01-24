@@ -8,6 +8,8 @@
 
     <todo-list @add="openAddModal"></todo-list>
 
+    <completed-todo-list></completed-todo-list>
+
     <base-modal-wrapper>
       <todo-add v-if="isAddModalOpen"  @close="closeAddModal"></todo-add>
     </base-modal-wrapper>
@@ -24,6 +26,7 @@ import TodoList from '@/components/home/TodoList.vue';
 import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
 import TodoAdd from '@/components/modals/TodoAdd.vue';
 import EmptyHomePage from '@/components/home/EmptyHomePage.vue';
+import CompletedTodoList from '@/components/home/CompletedTodoList.vue';
 
 export default {
   components: {
@@ -32,6 +35,7 @@ export default {
     BaseModalWrapper,
     HomeActions,
     TodoList,
+    CompletedTodoList,
   },
   data() {
     return {

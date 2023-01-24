@@ -1,24 +1,27 @@
 <template>
-  <div v-if="!hasTodos && !getTodosLoading" class="todo-list-empty">
-    <p class="todo-list-empty__text">
-      There are no to-dos in <b>{{ selectedBoard.name }}</b> board.
-    </p>
+  <transition name="list" mode="out-in">
+    <div v-if="emptyCondition" class="todo-list-empty">
+      <p class="todo-list-empty__text">
+        There are no to-dos in <b>{{ selectedBoard.name }}</b> board.
+      </p>
 
-    <base-button @click="handleAdd">
-      Add To-do
-    </base-button>
-  </div>
-  <transition-group v-else tag="div" name="todo" class="todo-list">
-    <todo-item
-      v-for="todo in todos"
-      :key="todo.id"
-      :id="todo.id"
-      :name="todo.name"
-      :label-id="todo.label"
-      :comments-count="todo.comments.length"
-      :attachments-count="todo.attachments.length"
-    ></todo-item>
-  </transition-group>
+      <base-button @click="handleAdd">
+        Add To-do
+      </base-button>
+    </div>
+    <transition-group v-else tag="div" name="todo" class="todo-list">
+      <todo-item
+        v-for="todo in todos"
+        :key="todo.id"
+        :id="todo.id"
+        :name="todo.name"
+        :label-id="todo.label"
+        :completed="todo.completed"
+        :comments-count="todo.comments.length"
+        :attachments-count="todo.attachments.length"
+      ></todo-item>
+    </transition-group>
+  </transition>
 </template>
 
 <script>
@@ -33,8 +36,11 @@ export default {
   },
   emits: ['add'],
   computed: {
-    ...mapGetters('todo', ['todos', 'hasTodos', 'getTodosLoading']),
+    ...mapGetters('todo', ['todos', 'hasTodos', 'getTodosLoading', 'hasCompletedTodos', 'getCompletedTodosLoading']),
     ...mapGetters('boards', ['selectedBoard']),
+    emptyCondition() {
+      return (!this.hasTodos && !this.getTodosLoading) && (!this.hasCompletedTodos && !this.getCompletedTodosLoading);
+    },
   },
   methods: {
     ...mapActions('todo', ['getTodos']),
@@ -64,6 +70,19 @@ export default {
 .todo-list-empty__text {
   margin-bottom: 1rem;
   @include font(2rem, 300, $primary-text-color, center);
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: opacity .5s ease-in-out;
+}
+.list-enter-to,
+.list-leave-from {
+  opacity: 1;
 }
 
 .todo-enter-from,

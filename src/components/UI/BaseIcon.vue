@@ -19,6 +19,8 @@ import EditIcon from '@/components/icons/EditIcon.vue';
 import AddPhotoIcon from '@/components/icons/AddPhotoIcon.vue';
 import ArrowBackIcon from '@/components/icons/ArrowBackIcon.vue';
 import BurgerMenuIcon from '@/components/icons/BurgerMenuIcon.vue';
+import CheckmarkIcon from '@/components/icons/CheckmarkIcon.vue';
+import ExpandIcon from '@/components/icons/ExpandIcon.vue';
 
 export default {
   components: {
@@ -38,6 +40,8 @@ export default {
     AddPhotoIcon,
     ArrowBackIcon,
     BurgerMenuIcon,
+    CheckmarkIcon,
+    ExpandIcon,
   },
   props: {
     name: {

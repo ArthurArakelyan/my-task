@@ -9,6 +9,13 @@
             {{ label.name }}
           </span>
         </div>
+
+        <base-checkbox
+          class="todo__header-checkbox"
+          :value="completed"
+          :disabled="statusChangeLoading"
+          @check="handleComplete"
+        ></base-checkbox>
       </div>
 
       <h3 class="todo__name">{{ name }}</h3>
@@ -29,13 +36,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+
+// Components
+import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
 
 export default {
-  components: {},
+  components: {
+    BaseCheckbox,
+  },
   props: {
     id: {
       type: String,
@@ -48,6 +60,10 @@ export default {
     labelId: {
       required: true,
     },
+    completed: {
+      type: Boolean,
+      required: true,
+    },
     commentsCount: {
       type: Number,
       required: true,
@@ -56,6 +72,11 @@ export default {
       type: Number,
       required: true,
     },
+  },
+  data() {
+    return {
+      statusChangeLoading: false,
+    };
   },
   computed: {
     ...mapGetters('ui', ['layout']),
@@ -66,10 +87,24 @@ export default {
     todoClassName() {
       return {
         [`todo-wrapper--${this.layout}`]: true,
+        [`todo-wrapper--completed`]: this.completed,
       };
     },
     label() {
       return this.labels.find((label) => label.id === this.labelId) || defaultLabel;
+    },
+  },
+  methods: {
+    ...mapActions('todo', ['completeTodo']),
+    async handleComplete(value) {
+      this.statusChangeLoading = true;
+
+      await this.completeTodo({
+        id: this.id,
+        completed: value,
+      });
+
+      this.statusChangeLoading = false;
     },
   },
 };
@@ -95,6 +130,10 @@ export default {
     .todo__name {
       -webkit-line-clamp: 7;
     }
+  }
+
+  &--completed {
+    opacity: 0.6;
   }
 }
 .todo {
@@ -144,16 +183,8 @@ export default {
   line-height: initial;
   @include font(0.9rem, 500, initial);
 }
-.todo__header-menu {
+.todo__header-checkbox {
   margin-left: auto;
-  width: 1rem;
-  height: 1rem;
-  @include flex(row, center, center);
-}
-.todo__header-menu-icon {
-  width: 100%;
-  height: 100%;
-  fill: $primary-text-color;
 }
 
 .todo__name {

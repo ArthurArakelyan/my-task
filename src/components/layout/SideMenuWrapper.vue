@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import SideMenuResponsive from '@/components/layout/SideMenuResponsive.vue';
@@ -26,6 +26,14 @@ export default {
         ['aside--close']: !this.isSideMenuOpen,
       };
     },
+  },
+  methods: {
+    ...mapActions('boards', ['getBoards']),
+    ...mapActions('labels', ['getLabels']),
+  },
+  mounted() {
+    this.getBoards();
+    this.getLabels();
   },
 };
 </script>
