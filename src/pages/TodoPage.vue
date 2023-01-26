@@ -7,6 +7,14 @@
     <div v-if="!getTodoLoading && todoEntry" class="todo__content">
       <base-dropdown-button class="todo__dropdown" :items="dropdownItems"></base-dropdown-button>
 
+      <div class="todo__header">
+        <base-checkbox
+          :value="todoEntry.completed"
+          :disabled="statusChangeLoading"
+          @check="handleComplete"
+        ></base-checkbox>
+      </div>
+
       <h2 class="todo__name">{{ todoEntry.name }}</h2>
 
       <div class="todo__label" :style="{ backgroundColor: `${label.color}33` }">
@@ -25,6 +33,8 @@
           <todo-description :is-edit="isDescriptionEdit" @edit="changeDescriptionEdit"></todo-description>
         </div>
       </div>
+
+      <todo-actions-bar></todo-actions-bar>
     </div>
 
     <base-modal-wrapper>
@@ -57,6 +67,8 @@ import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
 import TodoAdd from '@/components/modals/TodoAdd.vue';
 import ConfirmModal from '@/components/modals/ConfirmModal.vue';
 import TodoDescription from '@/components/todo/TodoDescription.vue';
+import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
+import TodoActionsBar from '@/components/todo/TodoActionsBar.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
@@ -69,6 +81,8 @@ export default {
     BaseModalWrapper,
     BaseDropdownButton,
     BaseBack,
+    BaseCheckbox,
+    TodoActionsBar,
   },
   props: {
     id: {},
@@ -78,6 +92,7 @@ export default {
       isEdit: false,
       isDelete: null,
       isDescriptionEdit: false,
+      statusChangeLoading: false,
     };
   },
   computed: {
@@ -98,7 +113,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo']),
+    ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo', 'completeTodo']),
     changeDescriptionEdit(is) {
       this.isDescriptionEdit = is;
     },
@@ -119,6 +134,16 @@ export default {
       this.handleDeleteCancel();
       this.$router.replace('/');
     },
+    async handleComplete(value) {
+      this.statusChangeLoading = true;
+
+      await this.completeTodo({
+        id: this.id,
+        completed: value,
+      });
+
+      this.statusChangeLoading = false;
+    },
   },
   created() {
     this.getTodo(this.id);
@@ -137,7 +162,7 @@ export default {
   @include flex(column, flex-start, flex-start);
 }
 .todo__back {
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
 }
 .todo__loader {
   padding-bottom: 5rem;
@@ -156,6 +181,12 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.todo__header {
+  width: 100%;
+  margin-bottom: 0.4rem;
+  @include flex(row, center, flex-start);
 }
 
 .todo__label {
@@ -191,6 +222,7 @@ export default {
 .todo__section-content {
   width: 100%;
   margin-top: 1rem;
+  margin-bottom: 4rem;
   @include flex(column, flex-start, flex-start);
 }
 

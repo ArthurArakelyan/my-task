@@ -21,6 +21,8 @@ import ArrowBackIcon from '@/components/icons/ArrowBackIcon.vue';
 import BurgerMenuIcon from '@/components/icons/BurgerMenuIcon.vue';
 import CheckmarkIcon from '@/components/icons/CheckmarkIcon.vue';
 import ExpandIcon from '@/components/icons/ExpandIcon.vue';
+import TagIcon from '@/components/icons/TagIcon.vue';
+import ChecklistIcon from '@/components/icons/ChecklistIcon.vue';
 
 export default {
   components: {
@@ -42,6 +44,8 @@ export default {
     BurgerMenuIcon,
     CheckmarkIcon,
     ExpandIcon,
+    TagIcon,
+    ChecklistIcon,
   },
   props: {
     name: {

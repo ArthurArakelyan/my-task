@@ -12,11 +12,18 @@
   <form v-if="isEdit" class="todo__description-form" @submit.prevent="handleSave">
     <textarea-auto-resize
       class="todo__description-form-textarea"
+      :class="textareaClassName"
       placeholder="Add a more detailed description..."
       v-model="description"
       autofocus
       @mount="handleTextareaMount"
     ></textarea-auto-resize>
+
+    <transition name="error-message">
+      <p v-if="v$.description.$errors[0]?.$message" class="todo__description-form-error">
+        {{ v$.description.$errors[0].$message }}
+      </p>
+    </transition>
 
     <div class="todo__description-form-actions">
       <base-button :loading="addTodoLoading">Save</base-button>
@@ -29,6 +36,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { useVuelidate } from '@vuelidate/core';
+import { maxLength } from '@vuelidate/validators';
 
 // Components
 import TextareaAutoResize from '@/components/UI/TextareaAutoResize.vue';
@@ -47,6 +56,11 @@ export default {
       return typeof payload === 'boolean';
     },
   },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   data() {
     return {
       description: '',
@@ -54,6 +68,11 @@ export default {
   },
   computed: {
     ...mapGetters('todo', ['todoEntry', 'addTodoLoading']),
+    textareaClassName() {
+      return {
+        ['todo__description-form-textarea--error']: this.v$.description.$errors[0]?.$message,
+      };
+    },
   },
   watch: {
     isEdit(current) {
@@ -74,6 +93,10 @@ export default {
       this.$emit('edit', false);
     },
     async handleSave() {
+      if (!(await this.v$.$validate())) {
+        return;
+      }
+
       await this.editTodo({
         ...this.todoEntry,
         description: this.description,
@@ -81,6 +104,9 @@ export default {
 
       this.handleCancelEdit();
     },
+  },
+  validations: {
+    description: { maxLength: maxLength(1028) },
   },
 };
 </script>
@@ -134,10 +160,20 @@ export default {
   overflow: hidden;
   border: 1px solid $primary-text-color;
   @include font(1rem, 400, $primary-text-color);
+  transition: border-color .3s ease-in-out;
 
   &::placeholder {
     @include font(1rem, 400, $secondary-text-color);
   }
+
+  &--error {
+    border-color: red;
+  }
+}
+.todo__description-form-error {
+  margin-top: 0.25rem;
+  @include font(1rem, 400, red);
+  transition: opacity .3s ease-in-out;
 }
 .todo__description-form-actions {
   width: 100%;
@@ -155,5 +191,14 @@ export default {
   &:active {
     background-color: #858484;
   }
+}
+
+.error-message-enter-from,
+.error-message-leave-to {
+  opacity: 0;
+}
+.error-message-enter-to,
+.error-message-leave-from {
+  opacity: 1;
 }
 </style>
