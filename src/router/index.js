@@ -5,6 +5,7 @@ import HomePage from '@/pages/HomePage.vue';
 import TodoPage from '@/pages/TodoPage.vue';
 import TheLogin from '@/pages/TheLogin.vue';
 import TheSignup from '@/pages/TheSignup.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 // Store
 import store from '@/store';
@@ -35,6 +36,11 @@ const router = createRouter({
       name: 'signup',
       component: TheSignup,
       meta: { auth: false },
+    },
+    {
+      path: '/:notFound(.*)',
+      name: 'notFound',
+      component: NotFoundPage,
     },
   ],
 });
