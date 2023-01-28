@@ -25,7 +25,7 @@
         </template>
       </base-select>
 
-      <base-button :loading="addTodoLoading" class="todo-add__submit">
+      <base-button :loading="addTodoLoading || addLabelLoading" class="todo-add__submit">
         {{ editEntry ? 'Edit' : 'Add' }}
       </base-button>
     </form>
@@ -65,13 +65,43 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('labels', ['labels']),
+    ...mapGetters('labels', ['labels', 'addLabelLoading']),
     ...mapGetters('todo', ['addTodoLoading']),
   },
   methods: {
     ...mapActions('todo', ['addTodo', 'editTodo']),
+    ...mapActions('labels', ['editLabel']),
     close() {
       this.$emit('close');
+    },
+    async handleUpdateLabelsCount() {
+      const previousLabelId = this.editEntry.label;
+      const nextLabelId = this.label;
+
+      if (previousLabelId === nextLabelId) {
+        return;
+      }
+
+      let previousLabel = this.labels.find((label) => label.id === previousLabelId);
+      let nextLabel = this.labels.find((label) => label.id === nextLabelId);
+
+      if (!previousLabel || !nextLabel) {
+        return;
+      }
+
+      previousLabel = { ...previousLabel };
+      nextLabel = { ...nextLabel };
+
+      return await Promise.all([
+        this.editLabel({
+          ...previousLabel,
+          count: previousLabel.count - 1,
+        }),
+        this.editLabel({
+          ...nextLabel,
+          count: nextLabel.count + 1,
+        }),
+      ]);
     },
     async handleSubmit() {
       if (!(await this.v$.$validate())) {
@@ -84,6 +114,8 @@ export default {
       };
 
       if (this.editEntry) {
+        await this.handleUpdateLabelsCount();
+
         await this.editTodo({
           ...this.editEntry,
           ...data,

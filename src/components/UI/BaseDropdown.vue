@@ -24,7 +24,11 @@
             @click="handleSelect(item)"
           >
             <div class="dropdown__item-icon-wrapper">
-              <base-icon class="dropdown__item-icon" :name="item.icon"></base-icon>
+              <base-icon
+                class="dropdown__item-icon"
+                :class="{ 'dropdown__item-icon--fill': item.iconFill }"
+                :name="item.icon"
+              ></base-icon>
             </div>
 
             <span class="dropdown__item-name">
@@ -151,7 +155,7 @@ export default {
   z-index: 10;
   top: 100%;
   width: 7.5rem;
-  min-height: 5rem;
+  min-height: 4rem;
   border-radius: 6px;
   background-color: $white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -191,6 +195,11 @@ export default {
   width: 1rem;
   height: 1rem;
   stroke: $primary-text-color;
+
+  &--fill {
+    fill: $primary-text-color;
+    stroke: transparent !important;
+  }
 }
 .dropdown__item-name {
   user-select: none;
