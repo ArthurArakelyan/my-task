@@ -25,6 +25,8 @@ export default {
     ...mapActions('ui', ['changeDeviceTypes']),
   },
   mounted() {
+    this.changeDeviceTypes();
+
     window.addEventListener('resize', this.changeDeviceTypes);
 
     AuthService.onAuthChanged((user) => {
