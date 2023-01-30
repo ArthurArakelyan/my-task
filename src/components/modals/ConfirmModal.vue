@@ -13,7 +13,7 @@
           Cancel
         </base-button>
 
-        <base-button :loading="loading" @click="$emit('submit')">
+        <base-button :loading="loading" @click="$emit('submit')" class="confirm-modal__footer-submit">
           Confirm
         </base-button>
       </div>
@@ -64,7 +64,7 @@ export default {
   column-gap: 1rem;
   @include flex(row, center, flex-end);
 }
-.confirm-modal__footer-close {
+.confirm-modal__footer-submit {
   background-color: #e11717 !important;
 
   &:hover {

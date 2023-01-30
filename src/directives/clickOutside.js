@@ -1,12 +1,16 @@
 const clickOutside = {
-  beforeMount: (el, binding) => {
+  mounted: (el, binding) => {
     el.clickOutsideEvent = (event) => {
       if (!(el == event.target || el.contains(event.target))) {
-        binding.value();
+        if (binding?.value) {
+          binding.value();
+        }
       }
     };
 
-    document.addEventListener('click', el.clickOutsideEvent);
+    setTimeout(() => {
+      document.addEventListener('click', el.clickOutsideEvent);
+    }, 100);
   },
   unmounted: (el) => {
     document.removeEventListener('click', el.clickOutsideEvent);

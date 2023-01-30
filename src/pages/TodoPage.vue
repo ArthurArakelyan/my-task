@@ -34,7 +34,23 @@
         </div>
       </div>
 
-      <todo-actions-bar></todo-actions-bar>
+      <div v-if="isChecklistOpen || hasTodoChecklistItem" class="todo__section">
+        <div class="todo__section-header">
+          <h3 class="todo__section-header-title">Check List</h3>
+        </div>
+
+        <div class="todo__section-content">
+          <todo-checklist
+            :is-scroll="scrollToChecklist"
+            @close="handleChecklistClose"
+            @stop-scroll="handleStopChecklistScroll"
+          ></todo-checklist>
+        </div>
+      </div>
+
+      <todo-actions-bar
+        @checklist="handleChecklistOpen"
+      ></todo-actions-bar>
     </div>
 
     <base-modal-wrapper>
@@ -69,6 +85,7 @@ import ConfirmModal from '@/components/modals/ConfirmModal.vue';
 import TodoDescription from '@/components/todo/TodoDescription.vue';
 import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
 import TodoActionsBar from '@/components/todo/TodoActionsBar.vue';
+import TodoChecklist from '@/components/todo/TodoChecklist.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
@@ -83,9 +100,10 @@ export default {
     BaseBack,
     BaseCheckbox,
     TodoActionsBar,
+    TodoChecklist,
   },
   props: {
-    id: {},
+    id: String,
   },
   data() {
     return {
@@ -93,11 +111,17 @@ export default {
       isDelete: null,
       isDescriptionEdit: false,
       statusChangeLoading: false,
+      isChecklistOpen: false,
+      scrollToChecklist: false,
     };
   },
   computed: {
     ...mapGetters('todo', ['todoEntry', 'getTodoLoading', 'deleteTodoLoading']),
     ...mapGetters('labels', ['labels']),
+    ...mapGetters('checklist', ['checklist', 'hasChecklist']),
+    hasTodoChecklistItem() {
+      return this.checklist.find((item) => item.todoId === this.todoEntry.id);
+    },
     label() {
       if (!this.todoEntry) {
         return null;
@@ -114,6 +138,7 @@ export default {
   },
   methods: {
     ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo', 'completeTodo']),
+    ...mapActions('checklist', ['getChecklist']),
     changeDescriptionEdit(is) {
       this.isDescriptionEdit = is;
     },
@@ -129,9 +154,24 @@ export default {
     handleDeleteCancel() {
       this.isDelete = false;
     },
+    handleChecklistOpen() {
+      if (this.isChecklistOpen || this.hasTodoChecklistItem) {
+        return this.scrollToChecklist = true;
+      }
+
+      this.isChecklistOpen = true;
+    },
+    handleChecklistClose() {
+      this.isChecklistOpen = false;
+    },
+    handleStopChecklistScroll() {
+      this.scrollToChecklist = false;
+    },
     async handleDeleteOk() {
       await this.deleteTodo(this.id);
+
       this.handleDeleteCancel();
+
       this.$router.replace('/');
     },
     async handleComplete(value) {
@@ -147,6 +187,10 @@ export default {
   },
   created() {
     this.getTodo(this.id);
+
+    if (!this.hasChecklist) {
+      this.getChecklist();
+    }
   },
   unmounted() {
     this.resetTodoEntry();
@@ -174,6 +218,7 @@ export default {
 }
 .todo__content {
   width: 100%;
+  margin-bottom: 4rem;
   @include flex(column, flex-start, flex-start);
 }
 
@@ -221,8 +266,7 @@ export default {
 }
 .todo__section-content {
   width: 100%;
-  margin-top: 1rem;
-  margin-bottom: 4rem;
+  margin: 1rem 0;
   @include flex(column, flex-start, flex-start);
 }
 

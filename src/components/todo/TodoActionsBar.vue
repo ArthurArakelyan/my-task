@@ -11,7 +11,7 @@
         </button>
       </base-dropdown>
 
-      <button class="todo-actions-bar__action" title="Check List">
+      <button class="todo-actions-bar__action" title="Check List" @click="handleChecklist">
         <base-icon name="ChecklistIcon" class="todo-actions-bar__action-icon"></base-icon>
       </button>
 
@@ -56,6 +56,7 @@ export default {
     BaseDropdown,
     BaseModalWrapper,
   },
+  emits: ['checklist'],
   data() {
     return {
       isLabelModalOpen: false,
@@ -109,6 +110,9 @@ export default {
     },
     handleCloseDeleteLabel() {
       this.isLabelDeleteOpen = false;
+    },
+    handleChecklist() {
+      this.$emit('checklist');
     },
     async handleOkDeleteLabel() {
       const label = this.labels.find((label) => label.id === this.todoEntry.label);

@@ -9,7 +9,7 @@
       {{ todoEntry.description }}
     </p>
   </div>
-  <form v-if="isEdit" class="todo__description-form" @submit.prevent="handleSave">
+  <form v-if="isEdit" class="todo__description-form" @submit.prevent="handleSave" v-click-outside="handleSave">
     <textarea-auto-resize
       class="todo__description-form-textarea"
       :class="textareaClassName"
@@ -97,6 +97,10 @@ export default {
         return;
       }
 
+      if (this.description === this.todoEntry.description) {
+        return this.handleCancelEdit();
+      }
+
       await this.editTodo({
         ...this.todoEntry,
         description: this.description,
@@ -141,7 +145,7 @@ export default {
   width: 100%;
   word-break: break-word;
   line-height: 1.5;
-  white-space: pre;
+  white-space: pre-line;
   @include font(0.875rem, 400, $primary-text-color);
 }
 
@@ -159,7 +163,7 @@ export default {
   resize: none;
   overflow: hidden;
   border: 1px solid $primary-text-color;
-  @include font(1rem, 400, $primary-text-color);
+  @include font(0.875rem, 400, $primary-text-color);
   transition: border-color .3s ease-in-out;
 
   &::placeholder {

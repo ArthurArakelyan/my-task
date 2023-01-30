@@ -65,7 +65,7 @@ export default {
 
     &:hover,
     &:active {
-      background-color: $primary-color !important;
+      background-color: $primary-color;
     }
   }
 }

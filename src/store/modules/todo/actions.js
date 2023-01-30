@@ -26,7 +26,7 @@ export default {
       console.log('getTodos', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     } finally {
       context.commit('setLoading', { name: 'getTodos', value: false });
@@ -70,7 +70,7 @@ export default {
       console.log('getTodo', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     } finally {
       context.commit('setLoading', { name: 'getTodo', value: false });
@@ -123,7 +123,7 @@ export default {
       console.log('addTodo', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     } finally {
       context.commit('setLoading', { name: 'addTodo', value: false });
@@ -159,7 +159,7 @@ export default {
       console.log('editTodo', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     } finally {
       context.commit('setLoading', { name: 'addTodo', value: false });
@@ -195,7 +195,7 @@ export default {
       console.log('deleteTodo', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     } finally {
       context.commit('setLoading', { name: 'deleteTodo', value: false });
@@ -203,11 +203,13 @@ export default {
   },
   async completeTodo(context, payload) {
     try {
-      const { id, completed } = payload;
+      const { id, completed, fromChecklist = false } = payload;
 
+      // collecting data
       const todos = context.getters.todos;
       const completedTodos = context.getters.completedTodos;
       const todoEntry = context.getters.todoEntry;
+      const checklist = context.rootGetters['checklist/checklist'];
 
       const found = completed
         ? todos.find((todo) => todo.id === id)
@@ -224,10 +226,22 @@ export default {
 
       delete data.id;
 
+      // request
       await TodoService.editTodo(id, data);
 
       data.id = id;
 
+      if (!fromChecklist) {
+        const todoChecklist = checklist.filter((item) => (item.todoId === id) && (item.completed !== completed))
+
+        if (todoChecklist.length) {
+          await Promise.all(todoChecklist.map((item) => {
+            return context.dispatch('checklist/completeChecklistItem', { id: item.id, completed, fromTodo: true }, { root: true });
+          }));
+        }
+      }
+
+      // changing state
       if (todoEntry) {
         context.commit('setTodoEntry', data);
       }
@@ -247,7 +261,7 @@ export default {
       console.log('completeTodo', e);
       toast(e.message, {
         type: 'error',
-        hideProgressBar: false,
+        hideProgressBar: true,
       });
     }
   },

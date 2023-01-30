@@ -11,22 +11,38 @@
         </div>
 
         <base-checkbox
+          v-if="!hasChecklist"
           class="todo__header-checkbox"
           :value="completed"
           :disabled="statusChangeLoading"
           @check="handleComplete"
         ></base-checkbox>
+        <base-progress-circle
+          v-else
+          class="todo__header-progress"
+          :percent="percent"
+          :indicator-color="progressColor"
+          :size="26"
+          :line-width="2"
+        ></base-progress-circle>
       </div>
 
       <h3 class="todo__name">{{ name }}</h3>
 
       <div class="todo__footer">
-        <div class="todo__footer-counter" v-if="commentsCount">
+        <div class="todo__footer-counter" title="Check List" v-if="hasChecklist">
+          <base-icon class="todo__footer-counter-icon" name="ChecklistIcon"></base-icon>
+          <span class="todo__footer-counter-text">
+            {{ todoCompletedChecklist.length }}/{{ todoChecklist.length }}
+          </span>
+        </div>
+
+        <div class="todo__footer-counter" title="Comments" v-if="commentsCount">
           <base-icon class="todo__footer-counter-icon" name="CommentIcon"></base-icon>
           <span class="todo__footer-counter-text">{{ commentsCount }}</span>
         </div>
 
-        <div class="todo__footer-counter" v-if="commentsCount">
+        <div class="todo__footer-counter" title="Attachments" v-if="attachmentsCount">
           <base-icon class="todo__footer-counter-icon" name="AttachmentIcon"></base-icon>
           <span class="todo__footer-counter-text">{{ attachmentsCount }}</span>
         </div>
@@ -43,9 +59,11 @@ import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
+import BaseProgressCircle from "@/components/UI/BaseProgressCircle.vue";
 
 export default {
   components: {
+    BaseProgressCircle,
     BaseCheckbox,
   },
   props: {
@@ -81,6 +99,7 @@ export default {
   computed: {
     ...mapGetters('ui', ['layout']),
     ...mapGetters('labels', ['labels']),
+    ...mapGetters('checklist', ['checklist']),
     todoLink() {
       return `/todos/${this.id}`;
     },
@@ -92,6 +111,25 @@ export default {
     },
     label() {
       return this.labels.find((label) => label.id === this.labelId) || defaultLabel;
+    },
+    progressColor() {
+      if (!this.label || this.label.color === '#bebebe') {
+        return undefined;
+      }
+
+      return this.label.color;
+    },
+    todoChecklist() {
+      return this.checklist.filter((item) => item.todoId === this.id);
+    },
+    todoCompletedChecklist() {
+      return this.todoChecklist.filter((item) => item.completed);
+    },
+    hasChecklist() {
+      return !!this.todoChecklist.length;
+    },
+    percent() {
+      return (this.todoCompletedChecklist.length / this.todoChecklist.length) * 100;
     },
   },
   methods: {
@@ -184,6 +222,9 @@ export default {
   @include font(0.9rem, 500, initial);
 }
 .todo__header-checkbox {
+  margin-left: auto;
+}
+.todo__header-progress {
   margin-left: auto;
 }
 

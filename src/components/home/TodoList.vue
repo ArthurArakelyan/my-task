@@ -44,12 +44,14 @@ export default {
   },
   methods: {
     ...mapActions('todo', ['getTodos']),
+    ...mapActions('checklist', ['getChecklist']),
     handleAdd() {
       this.$emit('add');
     },
   },
   created() {
     this.getTodos();
+    this.getChecklist();
   },
 };
 </script>

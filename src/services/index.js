@@ -5,3 +5,4 @@ export { default as BoardsService } from './BoardsService';
 export { default as StorageService } from './StorageService';
 export { default as LabelsService } from './LabelsService';
 export { default as TodoService } from './TodoService';
+export { default as ChecklistService } from './ChecklistService';

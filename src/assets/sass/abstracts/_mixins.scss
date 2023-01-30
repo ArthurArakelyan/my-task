@@ -12,6 +12,7 @@
   font-weight: $weight;
   color: $color;
   text-align: $align;
+  font-family: 'Open Sans', sans-serif;
 }
 
 @mixin ellipsis() {
