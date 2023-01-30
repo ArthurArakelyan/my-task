@@ -75,6 +75,32 @@ export default {
       context.commit('setLoading', { name: 'addChecklistItem', value: false });
     }
   },
+  async editChecklistItem(context, payload) {
+    try {
+      const data = { ...payload };
+
+      delete data.id;
+
+      await ChecklistService.editChecklistItem(payload.id, data);
+
+      data.id = payload.id;
+
+      context.commit('changeChecklistItem', data);
+
+      toast('Check list item has been updated successfully.', {
+        type: 'success',
+        hideProgressBar: true,
+      });
+
+      return data;
+    } catch (e) {
+      console.log('editChecklistItem', e);
+      toast(e.message, {
+        type: 'error',
+        hideProgressBar: true,
+      });
+    }
+  },
   async deleteChecklistItem(context, payload) {
     try {
       context.commit('setLoading', { name: 'deleteChecklistItem', value: true });
@@ -156,9 +182,10 @@ export default {
   async checkTodoCompletionAfterDelete(context, payload) {
     const checklist = context.getters.checklist;
     const checklistItem = checklist.find((item) => item.id === payload);
-    const notCompletedChecklist = checklist.filter((item) => !item.completed && item.todoId === checklistItem.todoId);
+    const todoChecklist = checklist.filter((item) => item.todoId === checklistItem.todoId);
+    const notCompletedChecklist = todoChecklist.filter((item) => !item.completed);
 
-    if (notCompletedChecklist.length === 1 && notCompletedChecklist[0].id === checklistItem.id) {
+    if (todoChecklist.length > 1 && notCompletedChecklist.length === 1 && notCompletedChecklist[0].id === checklistItem.id) {
       await context.dispatch('todo/completeTodo', { id: checklistItem.todoId, completed: true, fromChecklist: true }, { root: true });
     }
   },

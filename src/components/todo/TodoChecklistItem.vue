@@ -1,14 +1,20 @@
 <template>
-  <div class="todo-checklist-item" :class="formClassName">
+  <div class="todo-checklist-item" :class="itemClassName">
     <base-checkbox
       :value="completed"
       :disabled="isCompleteLoading"
       @check="handleComplete"
     ></base-checkbox>
 
-    <p class="todo-checklist-item__name">
+    <p v-if="!isEdit" class="todo-checklist-item__name" @click="handleEdit">
       {{ name }}
     </p>
+    <todo-checklist-item-input
+      v-else
+      :id="id"
+      :name="name"
+      @close="handleCloseEdit"
+    ></todo-checklist-item-input>
 
     <button class="todo-checklist-item__delete" @click="handleDelete">
       <base-icon name="CloseIcon" class="todo-checklist-item__delete-icon"></base-icon>
@@ -21,10 +27,12 @@ import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
+import TodoChecklistItemInput from '@/components/todo/TodoChecklistItemInput.vue';
 
 export default {
   components: {
     BaseCheckbox,
+    TodoChecklistItemInput,
   },
   emits: ['delete'],
   props: {
@@ -35,12 +43,13 @@ export default {
   data() {
     return {
       isCompleteLoading: false,
+      isEdit: false,
     };
   },
   computed: {
     ...mapGetters('todo', ['todoEntry']),
     ...mapGetters('checklist', ['addChecklistItemLoading']),
-    formClassName() {
+    itemClassName() {
       return {
         ['todo-checklist-item--completed']: this.completed,
       };
@@ -60,6 +69,12 @@ export default {
     },
     handleDelete() {
       this.$emit('delete', this.id);
+    },
+    handleEdit() {
+      this.isEdit = true;
+    },
+    handleCloseEdit() {
+      this.isEdit = false;
     },
   },
 };
@@ -85,7 +100,18 @@ export default {
   width: 80%;
   word-break: break-word;
   margin-left: 1rem;
+  cursor: text;
   line-height: 1.5rem;
+  @include font(1rem, 400, $primary-text-color);
+}
+.todo-checklist-item__input {
+  width: 80%;
+  margin-left: 1rem;
+  line-height: 1.5rem;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
   @include font(1rem, 400, $primary-text-color);
 }
 .todo-checklist-item__delete {

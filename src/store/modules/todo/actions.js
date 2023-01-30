@@ -183,6 +183,8 @@ export default {
         }, { root: true });
       }
 
+      await context.dispatch('deleteTodoChecklist', payload);
+
       context.commit('deleteTodo', payload);
 
       toast('To-do has been deleted successfully.', {
@@ -259,6 +261,22 @@ export default {
       return data;
     } catch (e) {
       console.log('completeTodo', e);
+      toast(e.message, {
+        type: 'error',
+        hideProgressBar: true,
+      });
+    }
+  },
+  deleteTodoChecklist(context, payload) {
+    try {
+      const checklist = context.rootGetters['checklist/checklist'];
+      const todoChecklist = checklist.filter((item) => item.todoId === payload);
+
+      return Promise.all(todoChecklist.map((item) => {
+        return context.dispatch('checklist/deleteChecklistItem', item.id, { root: true });
+      }));
+    } catch (e) {
+      console.log('deleteTodoChecklist', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,
