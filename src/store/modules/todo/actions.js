@@ -92,8 +92,6 @@ export default {
       const data = {
         completed: false,
         description: '',
-        comments: [],
-        attachments: [],
         userId: user.id,
         boardId: board.id,
         createdAt: Date.now(),
@@ -183,7 +181,10 @@ export default {
         }, { root: true });
       }
 
-      await context.dispatch('deleteTodoChecklist', payload);
+      await Promise.all([
+        context.dispatch('deleteTodoChecklist', payload),
+        context.dispatch('deleteTodoAttachments', payload),
+      ]);
 
       context.commit('deleteTodo', payload);
 
@@ -277,6 +278,22 @@ export default {
       }));
     } catch (e) {
       console.log('deleteTodoChecklist', e);
+      toast(e.message, {
+        type: 'error',
+        hideProgressBar: true,
+      });
+    }
+  },
+  deleteTodoAttachments(context, payload) {
+    try {
+      const attachments = context.rootGetters['attachments/attachments'];
+      const todoAttachments = attachments.filter((attachment) => attachment.todoId === payload);
+
+      return Promise.all(todoAttachments.map((attachment) => {
+        return context.dispatch('attachments/deleteAttachment', attachment.id, { root: true });
+      }));
+    } catch (e) {
+      console.log('deleteTodoAttachments', e);
       toast(e.message, {
         type: 'error',
         hideProgressBar: true,

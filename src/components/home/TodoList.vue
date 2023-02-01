@@ -17,8 +17,6 @@
         :name="todo.name"
         :label-id="todo.label"
         :completed="todo.completed"
-        :comments-count="todo.comments.length"
-        :attachments-count="todo.attachments.length"
       ></todo-item>
     </transition-group>
   </transition>
@@ -45,6 +43,7 @@ export default {
   methods: {
     ...mapActions('todo', ['getTodos']),
     ...mapActions('checklist', ['getChecklist']),
+    ...mapActions('attachments', ['getAttachments']),
     handleAdd() {
       this.$emit('add');
     },
@@ -52,6 +51,7 @@ export default {
   created() {
     this.getTodos();
     this.getChecklist();
+    this.getAttachments();
   },
 };
 </script>

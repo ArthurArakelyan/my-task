@@ -33,6 +33,7 @@
 
 <script>
 import { toast } from 'vue3-toastify';
+import {maxFileSize} from "@/constants";
 
 export default {
   props: {
@@ -65,6 +66,13 @@ export default {
 
       if (!file || !file.type.includes('image')) {
         return toast('The file should be an image.', {
+          type: 'error',
+          hideProgressBar: true,
+        });
+      }
+
+      if (file.size > maxFileSize) {
+        return toast('The file should be less than 3MB', {
           type: 'error',
           hideProgressBar: true,
         });

@@ -6,3 +6,4 @@ export { default as autoResize } from './autoResize';
 export { default as initializeDeviceTypes } from './initializeDeviceTypes';
 export { default as copyObject } from './copyObject';
 export { default as setState } from './setState';
+export { default as formatBytes } from './formatBytes';

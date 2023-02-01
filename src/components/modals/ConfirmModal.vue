@@ -57,6 +57,8 @@ export default {
 }
 .confirm-modal__title {
   margin-bottom: 3rem;
+  line-height: 1.4;
+  word-break: break-word;
   @include font(1.5rem, 500, $primary-text-color, center);
 }
 .confirm-modal__footer {

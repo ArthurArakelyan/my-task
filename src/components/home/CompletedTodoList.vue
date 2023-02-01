@@ -22,8 +22,6 @@
         :name="todo.name"
         :label-id="todo.label"
         :completed="todo.completed"
-        :comments-count="todo.comments.length"
-        :attachments-count="todo.attachments.length"
       ></todo-item>
     </transition-group>
   </div>

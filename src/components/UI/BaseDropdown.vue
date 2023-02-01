@@ -113,7 +113,9 @@ export default {
     close() {
       this.isOpen = false;
     },
-    toggle() {
+    toggle(e) {
+      e.stopPropagation();
+
       if (this.isOpen) {
         this.close();
       } else {

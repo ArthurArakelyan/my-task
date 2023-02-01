@@ -37,11 +37,6 @@
           </span>
         </div>
 
-        <div class="todo__footer-counter" title="Comments" v-if="commentsCount">
-          <base-icon class="todo__footer-counter-icon" name="CommentIcon"></base-icon>
-          <span class="todo__footer-counter-text">{{ commentsCount }}</span>
-        </div>
-
         <div class="todo__footer-counter" title="Attachments" v-if="attachmentsCount">
           <base-icon class="todo__footer-counter-icon" name="AttachmentIcon"></base-icon>
           <span class="todo__footer-counter-text">{{ attachmentsCount }}</span>
@@ -56,10 +51,10 @@ import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
+import BaseProgressCircle from '@/components/UI/BaseProgressCircle.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
-import BaseProgressCircle from "@/components/UI/BaseProgressCircle.vue";
 
 export default {
   components: {
@@ -82,14 +77,6 @@ export default {
       type: Boolean,
       required: true,
     },
-    commentsCount: {
-      type: Number,
-      required: true,
-    },
-    attachmentsCount: {
-      type: Number,
-      required: true,
-    },
   },
   data() {
     return {
@@ -100,6 +87,7 @@ export default {
     ...mapGetters('ui', ['layout']),
     ...mapGetters('labels', ['labels']),
     ...mapGetters('checklist', ['checklist']),
+    ...mapGetters('attachments', ['attachments']),
     todoLink() {
       return `/todos/${this.id}`;
     },
@@ -130,6 +118,9 @@ export default {
     },
     percent() {
       return (this.todoCompletedChecklist.length / this.todoChecklist.length) * 100;
+    },
+    attachmentsCount() {
+      return this.attachments.filter((attachment) => attachment.todoId === this.id).length;
     },
   },
   methods: {

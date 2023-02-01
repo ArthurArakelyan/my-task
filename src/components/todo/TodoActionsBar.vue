@@ -15,7 +15,15 @@
         <base-icon name="ChecklistIcon" class="todo-actions-bar__action-icon"></base-icon>
       </button>
 
-      <button class="todo-actions-bar__action" title="Attachments">
+      <button class="todo-actions-bar__action" :class="attachmentButtonClassName" title="Attachments" @click="handleAttachment">
+        <input
+          v-show="false"
+          type="file"
+          ref="attachment"
+          class="todo-actions-bar__action-file"
+          @change="handleFileChange"
+        />
+
         <base-icon name="AttachmentIcon" class="todo-actions-bar__action-icon"></base-icon>
       </button>
     </div>
@@ -42,12 +50,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { toast } from 'vue3-toastify';
 
 // Components
 import BaseDropdown from '@/components/UI/BaseDropdown.vue';
 import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
 import TodoLabelAdd from '@/components/modals/TodoLabelAdd.vue';
 import ConfirmModal from "@/components/modals/ConfirmModal.vue";
+
+// Constants
+import { maxFileSize } from '@/constants';
 
 export default {
   components: {
@@ -67,6 +79,7 @@ export default {
   computed: {
     ...mapGetters('todo', ['todoEntry', 'addTodoLoading']),
     ...mapGetters('labels', ['labels']),
+    ...mapGetters('attachments', ['addAttachmentLoading']),
     label() {
       return this.labels.find((label) => label.id === this.todoEntry.label);
     },
@@ -90,10 +103,16 @@ export default {
         left: '0',
       };
     },
+    attachmentButtonClassName() {
+      return {
+        ['todo-actions-bar__action--loading']: this.addAttachmentLoading,
+      };
+    },
   },
   methods: {
     ...mapActions('todo', ['editTodo']),
     ...mapActions('labels', ['editLabel']),
+    ...mapActions('attachments', ['addAttachment']),
     handleOpenLabelModal() {
       this.isLabelModalOpen = true;
     },
@@ -113,6 +132,32 @@ export default {
     },
     handleChecklist() {
       this.$emit('checklist');
+    },
+    handleAttachment() {
+      if (this.addAttachmentLoading) {
+        return;
+      }
+
+      this.$refs.attachment.click();
+    },
+    async handleFileChange(e) {
+      const file = e.target.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      if (file.size > maxFileSize) {
+        return toast('The file should be less than 3MB', {
+          type: 'error',
+          hideProgressBar: true,
+        });
+      }
+
+      await this.addAttachment({
+        file,
+        todoId: this.todoEntry.id,
+      });
     },
     async handleOkDeleteLabel() {
       const label = this.labels.find((label) => label.id === this.todoEntry.label);
@@ -168,7 +213,7 @@ export default {
   border: none;
   background-color: transparent;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color .3s ease-in-out, opacity .3s ease-in-out;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -177,6 +222,15 @@ export default {
   &:active {
     background-color: rgba(0, 0, 0, 0.2);
   }
+
+  &--loading {
+    cursor: default;
+    opacity: 0.6;
+    background-color: transparent !important;
+  }
+}
+.todo-actions-bar__action-file {
+  display: none;
 }
 .todo-actions-bar__action-icon {
   width: 1.5rem;

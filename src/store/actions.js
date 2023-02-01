@@ -7,5 +7,6 @@ export default {
     context.dispatch('labels/reset');
     context.dispatch('todo/reset');
     context.dispatch('checklist/reset');
+    context.dispatch('attachments/reset');
   },
 };

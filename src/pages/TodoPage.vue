@@ -48,6 +48,16 @@
         </div>
       </div>
 
+      <div v-if="hasTodoAttachment" class="todo__section">
+        <div class="todo__section-header">
+          <h3 class="todo__section-header-title">Attachments</h3>
+        </div>
+
+        <div class="todo__section-content">
+          <todo-attachments></todo-attachments>
+        </div>
+      </div>
+
       <todo-actions-bar
         @checklist="handleChecklistOpen"
       ></todo-actions-bar>
@@ -86,6 +96,7 @@ import TodoDescription from '@/components/todo/TodoDescription.vue';
 import BaseCheckbox from '@/components/UI/BaseCheckbox.vue';
 import TodoActionsBar from '@/components/todo/TodoActionsBar.vue';
 import TodoChecklist from '@/components/todo/TodoChecklist.vue';
+import TodoAttachments from '@/components/todo/TodoAttachments.vue';
 
 // Constants
 import { defaultLabel } from '@/constants';
@@ -101,6 +112,7 @@ export default {
     BaseCheckbox,
     TodoActionsBar,
     TodoChecklist,
+    TodoAttachments,
   },
   props: {
     id: String,
@@ -119,8 +131,12 @@ export default {
     ...mapGetters('todo', ['todoEntry', 'getTodoLoading', 'deleteTodoLoading']),
     ...mapGetters('labels', ['labels']),
     ...mapGetters('checklist', ['checklist', 'hasChecklist']),
+    ...mapGetters('attachments', ['attachments', 'hasAttachments']),
     hasTodoChecklistItem() {
       return this.checklist.find((item) => item.todoId === this.todoEntry.id);
+    },
+    hasTodoAttachment() {
+      return this.attachments.find((item) => item.todoId === this.todoEntry.id);
     },
     label() {
       if (!this.todoEntry) {
@@ -139,6 +155,7 @@ export default {
   methods: {
     ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo', 'completeTodo']),
     ...mapActions('checklist', ['getChecklist']),
+    ...mapActions('attachments', ['getAttachments']),
     changeDescriptionEdit(is) {
       this.isDescriptionEdit = is;
     },
@@ -190,6 +207,10 @@ export default {
 
     if (!this.hasChecklist) {
       this.getChecklist();
+    }
+
+    if (!this.hasAttachments) {
+      this.getAttachments();
     }
   },
   unmounted() {

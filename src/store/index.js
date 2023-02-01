@@ -12,6 +12,7 @@ import boardsModule from './modules/boards';
 import labelsModule from './modules/labels';
 import todoModule from './modules/todo';
 import checklistModule from './modules/checklist';
+import attachmentsModule from './modules/attachments';
 
 const store = createStore({
   modules: {
@@ -22,6 +23,7 @@ const store = createStore({
     labels: labelsModule,
     todo: todoModule,
     checklist: checklistModule,
+    attachments: attachmentsModule,
   },
   plugins: [createPersistedState()],
   strict: true,
