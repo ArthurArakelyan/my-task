@@ -137,4 +137,10 @@ export default {
   height: 100%;
   stroke: $primary-text-color;
 }
+
+@include small-desktop-media {
+  .todo-attachment__delete {
+    margin-right: 0.5rem;
+  }
+}
 </style>

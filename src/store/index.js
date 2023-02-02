@@ -26,7 +26,6 @@ const store = createStore({
     attachments: attachmentsModule,
   },
   plugins: [createPersistedState()],
-  strict: true,
   actions,
 });
 
