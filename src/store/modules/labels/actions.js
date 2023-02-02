@@ -36,12 +36,21 @@ export default {
     try {
       context.commit('setLoading', { name: 'addLabel', value: true });
 
-      const response = await LabelsService.addLabel(payload);
+      const board = context.rootGetters['boards/selectedBoard'];
+
+      if (!board) {
+        throw new Error('Before create a label, make sure you do have a selected board.');
+      }
 
       const data = {
         ...payload,
-        id: response.id,
+        boardId: board.id,
+        createdAt: Date.now(),
       };
+
+      const response = await LabelsService.addLabel(data);
+
+      data.id = response.id;
 
       context.commit('addLabel', data);
 

@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { where, orderBy } from 'firebase/firestore';
 
 import FirestoreService from './FirestoreService';
 import StorageService from './StorageService';
@@ -7,7 +7,7 @@ class BoardsService {
   static path = 'boards';
 
   static getBoards(userId) {
-    return FirestoreService.get(this.path, where('userId', '==', userId));
+    return FirestoreService.get(this.path, where('userId', '==', userId), orderBy('createdAt', 'asc'));
   }
 
   static getBoard(id) {

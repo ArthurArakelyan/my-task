@@ -1,4 +1,4 @@
-import { where } from 'firebase/firestore';
+import { where, orderBy } from 'firebase/firestore';
 
 // Services
 import FirestoreService from './FirestoreService';
@@ -7,7 +7,7 @@ class LabelsService {
   static path = 'labels';
 
   static getLabels(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId));
+    return FirestoreService.get(this.path, where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
   }
 
   static getLabel(id) {

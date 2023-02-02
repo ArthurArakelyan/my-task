@@ -45,6 +45,7 @@ export default {
         image: '',
         imageName: '',
         userId,
+        createdAt: Date.now(),
       };
 
       const response = await BoardsService.addBoard(data);
@@ -124,6 +125,7 @@ export default {
       context.commit('setLoading', { name: 'deleteBoard', value: true });
 
       await BoardsService.deleteBoard(payload);
+      await BoardsService.deleteImage(payload);
 
       await context.dispatch('deleteBoardLabels', payload);
       await context.dispatch('deleteBoardTodos', payload);
@@ -135,8 +137,6 @@ export default {
       }
 
       context.commit('deleteBoard', payload);
-
-      await BoardsService.deleteImage(payload);
 
       const boards = context.rootGetters['boards/boards'];
 

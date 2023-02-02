@@ -62,7 +62,6 @@ export default {
   },
   computed: {
     ...mapGetters('labels', ['addLabelLoading']),
-    ...mapGetters('boards', ['selectedBoard']),
   },
   methods: {
     ...mapActions('labels', ['addLabel', 'editLabel']),
@@ -72,10 +71,6 @@ export default {
     async handleSubmit() {
       if (!(await this.v$.$validate())) {
         return;
-      }
-
-      if (!this.selectedBoard) {
-        throw new Error('The board is not selected.');
       }
 
       if (this.editEntry) {
@@ -88,7 +83,6 @@ export default {
         await this.addLabel({
           name: this.name,
           color: this.color,
-          boardId: this.selectedBoard.id,
           count: 0,
         });
       }
