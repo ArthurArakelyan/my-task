@@ -6,12 +6,12 @@ import FirestoreService from './FirestoreService';
 class TodoService {
   static path = 'todos';
 
-  static getTodos(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId), where('completed', '==', false), orderBy('createdAt', 'desc'));
+  static getTodos(boardId, userId) {
+    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), where('completed', '==', false), orderBy('createdAt', 'desc'));
   }
 
-  static getCompletedTodos(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId), where('completed', '==', true), orderBy('createdAt', 'desc'));
+  static getCompletedTodos(boardId, userId) {
+    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), where('completed', '==', true), orderBy('createdAt', 'desc'));
   }
 
   static getTodo(id) {

@@ -6,8 +6,8 @@ import FirestoreService from './FirestoreService';
 class LabelsService {
   static path = 'labels';
 
-  static getLabels(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
+  static getLabels(boardId, userId) {
+    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
   }
 
   static getLabel(id) {

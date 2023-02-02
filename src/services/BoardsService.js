@@ -30,8 +30,8 @@ class BoardsService {
     return StorageService.get(`${this.path}/${id}`);
   }
 
-  static addImage(image, id) {
-    return StorageService.add(`${this.path}/${id}`, image);
+  static addImage(image, id, userId) {
+    return StorageService.add(`${this.path}/${id}`, image, userId);
   }
 
   static deleteImage(id) {

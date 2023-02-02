@@ -5,8 +5,8 @@ import FirestoreService from './FirestoreService';
 class ChecklistService {
   static path = 'checklist';
 
-  static getChecklist(boardId) {
-    return FirestoreService.get(this.path, where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
+  static getChecklist(boardId, userId) {
+    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
   }
 
   static getTodoChecklist(todoId) {

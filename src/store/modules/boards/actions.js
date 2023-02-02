@@ -53,7 +53,7 @@ export default {
       const id = response.id;
 
       if (payload.image?.size) {
-        await BoardsService.addImage(payload.image, id);
+        await BoardsService.addImage(payload.image, id, userId);
         data.image = await BoardsService.getImage(id);
         data.imageName = payload.image.name;
         await BoardsService.editBoard(id, data);
@@ -88,12 +88,14 @@ export default {
     try {
       context.commit('setLoading', { name: 'addBoard', value: true });
 
+      const user = context.rootGetters['user/user'];
+
       const data = { ...payload };
 
       delete data.id;
 
-      if (payload.image?.size) {
-        await BoardsService.addImage(payload.image, payload.id);
+      if (payload.image?.size && user) {
+        await BoardsService.addImage(payload.image, payload.id, user.id);
         data.image = await BoardsService.getImage(payload.id);
         data.imageName = payload.image.name;
       }

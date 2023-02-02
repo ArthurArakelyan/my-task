@@ -12,12 +12,13 @@ export default {
       context.commit('setLoading', { name: 'getLabels', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board?.id) {
+      if (!board?.id || !user?.id) {
         return;
       }
 
-      const response = await LabelsService.getLabels(board.id);
+      const response = await LabelsService.getLabels(board.id, user.id);
 
       context.commit('setLabels', response);
 

@@ -5,10 +5,14 @@ class StorageService {
     return getDownloadURL(ref(this.storage, path));
   }
 
-  static add(path, file) {
+  static add(path, file, userId) {
     const storageRef = ref(this.storage, path);
 
-    return uploadBytes(storageRef, file);
+    return uploadBytes(storageRef, file, {
+      customMetadata: {
+        userId,
+      },
+    });
   }
 
   static delete(path) {

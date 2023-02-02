@@ -12,12 +12,13 @@ export default {
       context.commit('setLoading', { name: 'getChecklist', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board) {
+      if (!board || !user) {
         return;
       }
 
-      const response = await ChecklistService.getChecklist(board.id);
+      const response = await ChecklistService.getChecklist(board.id, user.id);
 
       context.commit('setChecklist', response);
 

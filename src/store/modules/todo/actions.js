@@ -12,12 +12,13 @@ export default {
       context.commit('setLoading', { name: 'getTodos', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board?.id) {
+      if (!board?.id || !user?.id) {
         return;
       }
 
-      const response = await TodoService.getTodos(board.id);
+      const response = await TodoService.getTodos(board.id, user.id);
 
       context.commit('setTodos', response);
 
@@ -37,12 +38,13 @@ export default {
       context.commit('setLoading', { name: 'getCompletedTodos', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board?.id) {
+      if (!board?.id || !user?.id) {
         return;
       }
 
-      const response = await TodoService.getCompletedTodos(board.id);
+      const response = await TodoService.getCompletedTodos(board.id, user.id);
 
       context.commit('setCompletedTodos', response);
 

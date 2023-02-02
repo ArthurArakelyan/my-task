@@ -12,12 +12,13 @@ export default {
       context.commit('setLoading', { name: 'getAttachments', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board) {
+      if (!board || !user) {
         return;
       }
 
-      const response = await AttachmentService.getAttachments(board.id);
+      const response = await AttachmentService.getAttachments(board.id, user.id);
 
       context.commit('setAttachments', response);
 
@@ -60,7 +61,7 @@ export default {
 
       const id = response.id;
 
-      await AttachmentService.addFile(file, id);
+      await AttachmentService.addFile(file, id, userId);
 
       data.path = await AttachmentService.getFile(id);
 
