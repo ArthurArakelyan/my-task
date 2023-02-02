@@ -9,7 +9,8 @@
   </template>
 
   <main :class="mainClassName">
-    <router-view></router-view>
+    <router-view v-if="connection"></router-view>
+    <no-internet v-else></no-internet>
   </main>
 </template>
 
@@ -21,6 +22,7 @@ import TheHeader from './TheHeader.vue';
 import SideMenuWrapper from './SideMenuWrapper.vue';
 import SideMenu from './SideMenu.vue';
 import SideMenuExtension from './SideMenuExtension.vue';
+import NoInternet from './NoInternet.vue';
 
 export default {
   components: {
@@ -28,10 +30,11 @@ export default {
     SideMenuWrapper,
     SideMenu,
     SideMenuExtension,
+    NoInternet,
   },
   computed: {
     ...mapGetters('auth', ['isAuth']),
-    ...mapGetters('ui', ['isDesktop']),
+    ...mapGetters('ui', ['isDesktop', 'connection']),
     mainClassName() {
       return {
         main: this.isAuth,

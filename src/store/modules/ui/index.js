@@ -10,6 +10,7 @@ const initialState = {
   responsiveSideMenuOpen: false,
   layout: 'grid',
   completedTodosOpen: true,
+  connection: navigator.onLine,
   deviceTypes: initializeDeviceTypes(),
 };
 

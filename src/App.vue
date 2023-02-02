@@ -22,12 +22,17 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['updateAuth']),
-    ...mapActions('ui', ['changeDeviceTypes']),
+    ...mapActions('ui', ['changeDeviceTypes', 'changeConnection']),
   },
   mounted() {
     this.changeDeviceTypes();
+    this.changeConnection();
 
     window.addEventListener('resize', this.changeDeviceTypes);
+
+    window.addEventListener('offline', this.changeConnection);
+
+    window.addEventListener('online', this.changeConnection);
 
     AuthService.onAuthChanged((user) => {
       this.updateAuth();

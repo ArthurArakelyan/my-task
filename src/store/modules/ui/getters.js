@@ -11,6 +11,9 @@ export default {
   completedTodosOpen(state) {
     return state.completedTodosOpen;
   },
+  connection(state) {
+    return state.connection;
+  },
   isMobile(state) {
     return state.deviceTypes.isMobile;
   },

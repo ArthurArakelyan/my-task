@@ -24,6 +24,9 @@ export default {
   changeDeviceTypes(context) {
     context.commit('setDeviceTypes', initializeDeviceTypes());
   },
+  changeConnection(context) {
+    context.commit('setConnection', navigator.onLine);
+  },
   reset(context) {
     context.commit('setState', getUiState());
   },

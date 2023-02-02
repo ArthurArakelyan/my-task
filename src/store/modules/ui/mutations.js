@@ -13,6 +13,9 @@ export default {
   setCompletedTodosOpen(state, payload) {
     state.completedTodosOpen = payload;
   },
+  setConnection(state, payload) {
+    state.connection = payload;
+  },
   setDeviceTypes(state, payload) {
     state.deviceTypes = payload;
   },
