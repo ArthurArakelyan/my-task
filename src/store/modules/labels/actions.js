@@ -37,14 +37,16 @@ export default {
       context.commit('setLoading', { name: 'addLabel', value: true });
 
       const board = context.rootGetters['boards/selectedBoard'];
+      const user = context.rootGetters['user/user'];
 
-      if (!board) {
+      if (!board || !user) {
         throw new Error('Before create a label, make sure you do have a selected board.');
       }
 
       const data = {
         ...payload,
         boardId: board.id,
+        userId: user.id,
         createdAt: Date.now(),
       };
 
