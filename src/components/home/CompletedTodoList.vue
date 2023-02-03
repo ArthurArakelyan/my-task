@@ -18,6 +18,7 @@
       <todo-item
         v-for="todo in completedTodos"
         :key="todo.id"
+        :item="todo"
         :id="todo.id"
         :name="todo.name"
         :label-id="todo.label"

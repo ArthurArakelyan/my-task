@@ -84,7 +84,7 @@ export default {
     },
   },
   validations: {
-    name: { required, maxLength: maxLength(256) },
+    name: { required, maxLength: maxLength(64) },
   },
   created() {
     if (this.editEntry) {

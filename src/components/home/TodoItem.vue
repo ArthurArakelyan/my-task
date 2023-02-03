@@ -1,6 +1,6 @@
 <template>
   <div class="todo-wrapper" :class="todoClassName">
-    <router-link :to="todoLink" class="todo">
+    <router-link :to="todoLink" class="todo" @click="handleTodoClick">
       <div class="todo__color" :style="{ backgroundColor: label.color }"></div>
 
       <div class="todo__header">
@@ -62,6 +62,10 @@ export default {
     BaseCheckbox,
   },
   props: {
+    item: {
+      type: Object,
+      required: true,
+    },
     id: {
       type: String,
       required: true,
@@ -124,7 +128,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions('todo', ['completeTodo']),
+    ...mapActions('todo', ['completeTodo', 'changeTodoEntry']),
+    handleTodoClick() {
+      this.changeTodoEntry(this.item);
+    },
     async handleComplete(value) {
       this.statusChangeLoading = true;
 
@@ -204,12 +211,15 @@ export default {
   @include flex(row, center, flex-start);
 }
 .todo__header-label {
+  max-width: 75%;
   border-radius: 3.3px;
   padding: 0.4rem 0.75rem;
+  @include flex(row, center, flex-start);
 }
 .todo__header-label-name {
-  word-break: break-word;
+  max-width: 100%;
   line-height: initial;
+  @include ellipsis();
   @include font(0.9rem, 500, initial);
 }
 .todo__header-checkbox {

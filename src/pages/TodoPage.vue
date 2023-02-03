@@ -203,7 +203,9 @@ export default {
     },
   },
   created() {
-    this.getTodo(this.id);
+    if (!this.todoEntry || this.todoEntry.id !== this.id) {
+      this.getTodo(this.id);
+    }
 
     if (!this.hasChecklist) {
       this.getChecklist();

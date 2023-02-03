@@ -33,7 +33,12 @@
 
 <script>
 import { toast } from 'vue3-toastify';
-import {maxFileSize} from "@/constants";
+
+// Utils
+import { compressImage } from '@/utils';
+
+// Constants
+import { maxFileSize } from '@/constants';
 
 export default {
   props: {
@@ -61,7 +66,7 @@ export default {
     };
   },
   methods: {
-    handleInput(e) {
+    async handleInput(e) {
       const file = e.target.files[0];
 
       if (!file || !file.type.includes('image')) {
@@ -71,14 +76,16 @@ export default {
         });
       }
 
-      if (file.size > maxFileSize) {
+      const compressedFile = await compressImage(file, { quality: 0.5, type: file.type })
+
+      if (compressedFile.size > maxFileSize) {
         return toast('The file should be less than 3MB', {
           type: 'error',
           hideProgressBar: true,
         });
       }
 
-      this.$emit('update:modelValue', file);
+      this.$emit('update:modelValue', compressedFile);
     },
     handleClick() {
       this.$refs.input.click();

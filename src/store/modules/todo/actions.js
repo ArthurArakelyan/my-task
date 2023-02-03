@@ -302,6 +302,9 @@ export default {
       });
     }
   },
+  changeTodoEntry(context, payload) {
+    context.commit('setTodoEntry', payload);
+  },
   resetTodoEntry(context) {
     context.commit('setTodoEntry', null);
   },

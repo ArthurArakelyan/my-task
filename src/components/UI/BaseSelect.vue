@@ -166,7 +166,8 @@ export default {
 }
 .select__value {
   user-select: none;
-  line-height: 1.125rem;
+  line-height: initial;
+  @include ellipsis();
   @include font(1rem, 400, $primary-text-color);
 }
 .select__error {
