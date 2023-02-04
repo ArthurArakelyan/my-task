@@ -18,7 +18,7 @@
       <div v-if="isOpen" class="dropdown" :class="dropdownClassName" :style="dropdownStyles">
         <div class="dropdown__content">
           <div
-            v-for="item in items"
+            v-for="item in filteredItems"
             :key="item.name"
             class="dropdown__item"
             @click="handleSelect(item)"
@@ -71,6 +71,9 @@ export default {
     };
   },
   computed: {
+    filteredItems() {
+      return this.items.filter((item) => item.name.trim());
+    },
     dropdownClassName() {
       return {
         ['dropdown--fixed']: this.fixed,

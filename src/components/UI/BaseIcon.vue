@@ -23,6 +23,7 @@ import CheckmarkIcon from '@/components/icons/CheckmarkIcon.vue';
 import ExpandIcon from '@/components/icons/ExpandIcon.vue';
 import TagIcon from '@/components/icons/TagIcon.vue';
 import ChecklistIcon from '@/components/icons/ChecklistIcon.vue';
+import AddCameraIcon from '@/components/icons/AddCameraIcon.vue';
 
 export default {
   components: {
@@ -46,6 +47,7 @@ export default {
     ExpandIcon,
     TagIcon,
     ChecklistIcon,
+    AddCameraIcon,
   },
   props: {
     name: {

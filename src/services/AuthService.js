@@ -1,4 +1,4 @@
-import { getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, signOut, updateEmail, updatePassword, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 class AuthService {
   static login(email, password) {
@@ -11,6 +11,14 @@ class AuthService {
 
   static logout() {
     return signOut(this.auth);
+  }
+
+  static changePassword(password) {
+    return updatePassword(this.auth.currentUser, password);
+  }
+
+  static changeEmail(email) {
+    return updateEmail(this.auth.currentUser, email);
   }
 
   static onAuthChanged(callback) {

@@ -9,6 +9,10 @@ const initialState = {
   user: null,
   loading: {
     user: false,
+    deleteAvatar: false,
+    editUserName: false,
+    editUserPassword: false,
+    editUserEmail: false,
   },
 };
 

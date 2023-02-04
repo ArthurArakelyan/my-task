@@ -16,9 +16,7 @@
         />
       </div>
 
-      <base-dropdown class="header__user" :dropdown-style="{ right: '-0.4rem' }" :items="dropdownItems">
-        <base-avatar :src="userAvatar"></base-avatar>
-      </base-dropdown>
+      <the-header-user></the-header-user>
     </div>
   </header>
 </template>
@@ -27,13 +25,11 @@
 import { mapGetters, mapActions } from 'vuex';
 
 // Components
-import BaseAvatar from '@/components/UI/BaseAvatar.vue';
-import BaseDropdown from '@/components/UI/BaseDropdown.vue';
+import TheHeaderUser from '@/components/layout/TheHeaderUser.vue';
 
 export default {
   components: {
-    BaseDropdown,
-    BaseAvatar,
+    TheHeaderUser,
   },
   methods: {
     ...mapActions('ui', ['openResponsiveSideMenuOpen']),
@@ -43,10 +39,6 @@ export default {
   },
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen', 'isDesktop']),
-    ...mapGetters('user', ['userAvatar']),
-    dropdownItems() {
-      return [];
-    },
   },
 };
 </script>

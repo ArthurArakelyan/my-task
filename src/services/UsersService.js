@@ -1,4 +1,5 @@
 import FirestoreService from './FirestoreService';
+import StorageService from './StorageService';
 
 class UsersService {
   static path = 'users';
@@ -21,6 +22,18 @@ class UsersService {
 
   static deleteUser(id) {
     return FirestoreService.delete(this.path, id);
+  }
+
+  static getAvatar(id) {
+    return StorageService.get(`${this.path}/${id}`);
+  }
+
+  static addAvatar(image, id) {
+    return StorageService.add(`${this.path}/${id}`, image, id);
+  }
+
+  static deleteAvatar(id) {
+    return StorageService.delete(`${this.path}/${id}`);
   }
 }
 
