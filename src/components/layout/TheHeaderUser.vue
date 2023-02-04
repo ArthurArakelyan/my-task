@@ -1,6 +1,10 @@
 <template>
   <div class="header__user">
-    <base-dropdown :dropdown-style="dropdownStyles" :items="dropdownItems">
+    <base-dropdown
+      :dropdown-style="dropdownStyles"
+      :items="dropdownItems"
+      :trigger-click="isMobile"
+    >
       <base-avatar :src="userAvatar"></base-avatar>
     </base-dropdown>
 
@@ -83,6 +87,7 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['userAvatar', 'deleteAvatarLoading']),
+    ...mapGetters('ui', ['isMobile']),
     dropdownStyles() {
       return {
         right: '-0.4rem',
