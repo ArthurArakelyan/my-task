@@ -56,7 +56,10 @@ import { toast } from 'vue3-toastify';
 import BaseDropdown from '@/components/UI/BaseDropdown.vue';
 import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
 import TodoLabelAdd from '@/components/modals/TodoLabelAdd.vue';
-import ConfirmModal from "@/components/modals/ConfirmModal.vue";
+import ConfirmModal from '@/components/modals/ConfirmModal.vue';
+
+// Utils
+import { compressImage } from '@/utils';
 
 // Constants
 import { maxFileSize } from '@/constants';
@@ -147,7 +150,9 @@ export default {
         return;
       }
 
-      if (file.size > maxFileSize) {
+      const newFile = await (file.type.includes('image') ? compressImage(file, { quality: 0.6, type: file.type }) : file);
+
+      if (newFile.size > maxFileSize) {
         return toast('The file should be less than 3MB', {
           type: 'error',
           hideProgressBar: true,
@@ -155,7 +160,7 @@ export default {
       }
 
       await this.addAttachment({
-        file,
+        file: newFile,
         todoId: this.todoEntry.id,
       });
     },
