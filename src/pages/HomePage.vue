@@ -28,6 +28,9 @@ import TodoAdd from '@/components/modals/TodoAdd.vue';
 import EmptyHomePage from '@/components/home/EmptyHomePage.vue';
 import CompletedTodoList from '@/components/home/CompletedTodoList.vue';
 
+// Constants
+import { pageTitle } from '@/constants';
+
 export default {
   components: {
     EmptyHomePage,
@@ -52,6 +55,11 @@ export default {
       };
     },
   },
+  watch: {
+    selectedBoard(current) {
+      this.changeTitle(current);
+    },
+  },
   methods: {
     openAddModal() {
       this.isAddModalOpen = true;
@@ -59,6 +67,17 @@ export default {
     closeAddModal() {
       this.isAddModalOpen = false;
     },
+    changeTitle(board) {
+      if (!board) {
+        document.title = pageTitle
+        return;
+      }
+
+      document.title = `${board.name} | ${pageTitle}`;
+    },
+  },
+  mounted() {
+    this.changeTitle(this.selectedBoard);
   },
 };
 </script>

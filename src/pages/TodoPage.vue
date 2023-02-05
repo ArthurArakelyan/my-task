@@ -99,7 +99,7 @@ import TodoChecklist from '@/components/todo/TodoChecklist.vue';
 import TodoAttachments from '@/components/todo/TodoAttachments.vue';
 
 // Constants
-import { defaultLabel } from '@/constants';
+import { defaultLabel, pageTitle } from '@/constants';
 
 export default {
   components: {
@@ -152,10 +152,23 @@ export default {
       ];
     },
   },
+  watch: {
+    todoEntry(current) {
+      this.changeTitle(current);
+    },
+  },
   methods: {
     ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo', 'completeTodo']),
     ...mapActions('checklist', ['getChecklist']),
     ...mapActions('attachments', ['getAttachments']),
+    changeTitle(todo) {
+      if (!todo) {
+        document.title = pageTitle
+        return;
+      }
+
+      document.title = `${todo.name} | ${pageTitle}`;
+    },
     changeDescriptionEdit(is) {
       this.isDescriptionEdit = is;
     },
@@ -214,6 +227,9 @@ export default {
     if (!this.hasAttachments) {
       this.getAttachments();
     }
+  },
+  mounted() {
+    this.changeTitle(this.todoEntry);
   },
   unmounted() {
     this.resetTodoEntry();

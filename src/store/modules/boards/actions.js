@@ -126,8 +126,14 @@ export default {
     try {
       context.commit('setLoading', { name: 'deleteBoard', value: true });
 
+      const boards = context.getters.boards;
+      const board = boards.find((b) => b.id === payload);
+
       await BoardsService.deleteBoard(payload);
-      await BoardsService.deleteImage(payload);
+
+      if (board?.image) {
+        await BoardsService.deleteImage(payload);
+      }
 
       await context.dispatch('deleteBoardLabels', payload);
       await context.dispatch('deleteBoardTodos', payload);
@@ -140,9 +146,9 @@ export default {
 
       context.commit('deleteBoard', payload);
 
-      const boards = context.rootGetters['boards/boards'];
+      const newBoard = boards[0];
 
-      if (boards[0]) {
+      if (newBoard && newBoard.id !== payload) {
         await context.dispatch('selectBoard', boards[0]);
       }
 
@@ -194,6 +200,7 @@ export default {
     ]);
   },
   resetSelectedBoard(context) {
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     context.commit('setBoard', null);
   },
   reset(context) {

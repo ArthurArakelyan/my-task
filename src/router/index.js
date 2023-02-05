@@ -10,6 +10,8 @@ import NotFoundPage from '@/pages/NotFoundPage.vue';
 // Store
 import store from '@/store';
 
+import { pageTitle } from '@/constants';
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -17,13 +19,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomePage,
-      meta: { auth: true },
+      meta: { auth: true, dontChangeTitle: true },
     },
     {
       path: '/todos/:id',
       props: true,
       component: TodoPage,
-      meta: { auth: true },
+      meta: { auth: true, dontChangeTitle: true },
     },
     {
       path: '/login',
@@ -52,6 +54,10 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.auth === false && store.getters['auth/isAuth']) {
     return next('/');
+  }
+
+  if (!to.meta.dontChangeTitle) {
+    document.title = pageTitle;
   }
 
   next();
