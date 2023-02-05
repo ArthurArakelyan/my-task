@@ -17,7 +17,10 @@
     ></todo-checklist-item-input>
 
     <button class="todo-checklist-item__delete" @click="handleDelete">
-      <base-icon name="CloseIcon" class="todo-checklist-item__delete-icon"></base-icon>
+      <base-icon
+        name="CloseIcon"
+        class="todo-checklist-item__delete-icon"
+      ></base-icon>
     </button>
   </div>
 </template>
@@ -84,9 +87,9 @@ export default {
 .todo-checklist-item {
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid #A2ACC0;
+  border-bottom: 1px solid #a2acc0;
   @include flex(row, center, flex-start);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 
   &:first-of-type {
     padding-top: 0.5rem;

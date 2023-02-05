@@ -6,11 +6,20 @@ class ChecklistService {
   static path = 'checklist';
 
   static getChecklist(boardId, userId) {
-    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
+    return FirestoreService.get(
+      this.path,
+      where('userId', '==', userId),
+      where('boardId', '==', boardId),
+      orderBy('createdAt', 'asc')
+    );
   }
 
   static getTodoChecklist(todoId) {
-    return FirestoreService.get(this.path, where('todoId', '==', todoId), orderBy('createdAt', 'asc'));
+    return FirestoreService.get(
+      this.path,
+      where('todoId', '==', todoId),
+      orderBy('createdAt', 'asc')
+    );
   }
 
   static addChecklistItem(item, id) {

@@ -80,7 +80,7 @@ export default {
   margin-left: 1rem;
   font-size: 1rem;
   font-weight: 400;
-  transition: color .15s ease-in-out;
+  transition: color 0.15s ease-in-out;
 
   &:active {
     color: $primary-text-color;

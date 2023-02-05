@@ -45,7 +45,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { useVuelidate } from '@vuelidate/core';
-import { required, helpers, email, minLength, maxLength } from '@vuelidate/validators';
+import {
+  required,
+  helpers,
+  email,
+  minLength,
+  maxLength,
+} from '@vuelidate/validators';
 
 import AuthContainer from '@/components/auth/AuthContainer.vue';
 
@@ -91,7 +97,13 @@ export default {
     name: { required, maxLength: maxLength(256) },
     email: { required, email, maxLength: maxLength(256) },
     password: { required, minLength: minLength(6), maxLength: maxLength(256) },
-    confirmPassword: { required, custom: helpers.withMessage('Value should be the same as password', (value, fields) => value === fields.password) },
+    confirmPassword: {
+      required,
+      custom: helpers.withMessage(
+        'Value should be the same as password',
+        (value, fields) => value === fields.password
+      ),
+    },
   },
 };
 </script>

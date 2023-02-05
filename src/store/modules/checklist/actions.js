@@ -41,7 +41,9 @@ export default {
       const user = context.rootGetters['user/user'];
 
       if (!board || !user) {
-        throw new Error('Before create a checklist item, make sure you do have a selected board.');
+        throw new Error(
+          'Before create a checklist item, make sure you do have a selected board.'
+        );
       }
 
       const data = {
@@ -104,7 +106,10 @@ export default {
   },
   async deleteChecklistItem(context, payload) {
     try {
-      context.commit('setLoading', { name: 'deleteChecklistItem', value: true });
+      context.commit('setLoading', {
+        name: 'deleteChecklistItem',
+        value: true,
+      });
 
       await ChecklistService.deleteChecklistItem(payload);
 
@@ -125,7 +130,10 @@ export default {
         hideProgressBar: true,
       });
     } finally {
-      context.commit('setLoading', { name: 'deleteChecklistItem', value: false });
+      context.commit('setLoading', {
+        name: 'deleteChecklistItem',
+        value: false,
+      });
     }
   },
   async completeChecklistItem(context, payload) {
@@ -151,43 +159,80 @@ export default {
     if (!fromTodo) {
       const todos = context.rootGetters['todo/todos'];
       const completedTodos = context.rootGetters['todo/completedTodos'];
-      const todoChecklist = checklist.filter((item) => item.todoId === found.todoId);
-      const notCompletedChecklist = todoChecklist.filter((item) => !item.completed);
-      const foundTodo = todos.find((todo) => todo.id === found.todoId) || completedTodos.find((todo) => todo.id === found.todoId);
+      const todoChecklist = checklist.filter(
+        (item) => item.todoId === found.todoId
+      );
+      const notCompletedChecklist = todoChecklist.filter(
+        (item) => !item.completed
+      );
+      const foundTodo =
+        todos.find((todo) => todo.id === found.todoId) ||
+        completedTodos.find((todo) => todo.id === found.todoId);
 
       if (notCompletedChecklist.length === 1 && completed) {
-        await context.dispatch('todo/completeTodo', { id: foundTodo.id, completed: true, fromChecklist: true }, { root: true });
+        await context.dispatch(
+          'todo/completeTodo',
+          { id: foundTodo.id, completed: true, fromChecklist: true },
+          { root: true }
+        );
       } else if (notCompletedChecklist.length === 0 && !completed) {
-        await context.dispatch('todo/completeTodo', { id: foundTodo.id, completed: false, fromChecklist: true }, { root: true });
+        await context.dispatch(
+          'todo/completeTodo',
+          { id: foundTodo.id, completed: false, fromChecklist: true },
+          { root: true }
+        );
       }
     }
 
     context.commit('changeChecklistItem', data);
 
-    toast(`Check list item has been ${completed ? '' : 'un'}completed successfully.`, {
-      type: 'success',
-      hideProgressBar: true,
-    });
+    toast(
+      `Check list item has been ${
+        completed ? '' : 'un'
+      }completed successfully.`,
+      {
+        type: 'success',
+        hideProgressBar: true,
+      }
+    );
 
     return data;
   },
   async checkTodoCompletionAfterDeleteAdd(context, payload) {
     const checklist = context.getters.checklist;
-    const todoChecklist = checklist.filter((item) => item.todoId === payload.todoId);
+    const todoChecklist = checklist.filter(
+      (item) => item.todoId === payload.todoId
+    );
     const completedChecklist = todoChecklist.filter((item) => item.completed);
 
     if (completedChecklist.length === todoChecklist.length) {
-      await context.dispatch('todo/completeTodo', { id: payload.todoId, completed: false, fromChecklist: true }, { root: true });
+      await context.dispatch(
+        'todo/completeTodo',
+        { id: payload.todoId, completed: false, fromChecklist: true },
+        { root: true }
+      );
     }
   },
   async checkTodoCompletionAfterDelete(context, payload) {
     const checklist = context.getters.checklist;
     const checklistItem = checklist.find((item) => item.id === payload);
-    const todoChecklist = checklist.filter((item) => item.todoId === checklistItem.todoId);
-    const notCompletedChecklist = todoChecklist.filter((item) => !item.completed);
+    const todoChecklist = checklist.filter(
+      (item) => item.todoId === checklistItem.todoId
+    );
+    const notCompletedChecklist = todoChecklist.filter(
+      (item) => !item.completed
+    );
 
-    if (todoChecklist.length > 1 && notCompletedChecklist.length === 1 && notCompletedChecklist[0].id === checklistItem.id) {
-      await context.dispatch('todo/completeTodo', { id: checklistItem.todoId, completed: true, fromChecklist: true }, { root: true });
+    if (
+      todoChecklist.length > 1 &&
+      notCompletedChecklist.length === 1 &&
+      notCompletedChecklist[0].id === checklistItem.id
+    ) {
+      await context.dispatch(
+        'todo/completeTodo',
+        { id: checklistItem.todoId, completed: true, fromChecklist: true },
+        { root: true }
+      );
     }
   },
   reset(context) {

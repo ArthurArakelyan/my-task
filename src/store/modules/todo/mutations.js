@@ -21,19 +21,29 @@ export default {
     state.todos = state.todos.filter((todo) => todo.id !== payload);
   },
   deleteCompletedTodo(state, payload) {
-    state.completedTodos = state.completedTodos.filter((todo) => todo.id !== payload);
+    state.completedTodos = state.completedTodos.filter(
+      (todo) => todo.id !== payload
+    );
   },
   changeTodos(state, payload) {
-    state.todos = state.todos.map((todo) => todo.id === payload.id ? {
-      ...todo,
-      ...payload,
-    } : todo);
+    state.todos = state.todos.map((todo) =>
+      todo.id === payload.id
+        ? {
+            ...todo,
+            ...payload,
+          }
+        : todo
+    );
   },
   changeCompletedTodos(state, payload) {
-    state.completedTodos = state.completedTodos.map((todo) => todo.id === payload.id ? {
-      ...todo,
-      ...payload,
-    } : todo);
+    state.completedTodos = state.completedTodos.map((todo) =>
+      todo.id === payload.id
+        ? {
+            ...todo,
+            ...payload,
+          }
+        : todo
+    );
   },
   setLoading,
   setState,

@@ -5,9 +5,7 @@
         There are no to-dos in <b>{{ selectedBoard.name }}</b> board.
       </p>
 
-      <base-button @click="handleAdd">
-        Add To-do
-      </base-button>
+      <base-button @click="handleAdd"> Add To-do </base-button>
     </div>
     <transition-group v-else tag="div" name="todo" class="todo-list">
       <todo-item
@@ -35,10 +33,21 @@ export default {
   },
   emits: ['add'],
   computed: {
-    ...mapGetters('todo', ['todos', 'hasTodos', 'getTodosLoading', 'hasCompletedTodos', 'getCompletedTodosLoading']),
+    ...mapGetters('todo', [
+      'todos',
+      'hasTodos',
+      'getTodosLoading',
+      'hasCompletedTodos',
+      'getCompletedTodosLoading',
+    ]),
     ...mapGetters('boards', ['selectedBoard']),
     emptyCondition() {
-      return (!this.hasTodos && !this.getTodosLoading) && (!this.hasCompletedTodos && !this.getCompletedTodosLoading);
+      return (
+        !this.hasTodos &&
+        !this.getTodosLoading &&
+        !this.hasCompletedTodos &&
+        !this.getCompletedTodosLoading
+      );
     },
   },
   methods: {
@@ -81,7 +90,7 @@ export default {
 }
 .list-enter-active,
 .list-leave-active {
-  transition: opacity .5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 .list-enter-to,
 .list-leave-from {
@@ -94,7 +103,7 @@ export default {
 }
 .todo-enter-active,
 .todo-leave-active {
-  transition: opacity .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 }
 .todo-enter-to,
 .todo-leave-from {
@@ -102,6 +111,6 @@ export default {
 }
 
 .todo-move {
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 </style>

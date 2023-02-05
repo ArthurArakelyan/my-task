@@ -79,7 +79,10 @@ export default {
       this.name = '';
 
       setTimeout(() => {
-        this.$refs.input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        this.$refs.input.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
       }, 100);
     },
   },
@@ -102,9 +105,9 @@ export default {
 .todo-checklist-add {
   width: 100%;
   padding: 0.5rem 0;
-  border-bottom: 1px solid #A2ACC0;
+  border-bottom: 1px solid #a2acc0;
   @include flex(row, center, flex-start);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 
   &--loading {
     opacity: 0.6;

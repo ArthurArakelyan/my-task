@@ -8,7 +8,9 @@ export default {
     state.attachments.push(payload);
   },
   deleteAttachment(state, payload) {
-    state.attachments = state.attachments.filter((attachment) => attachment.id !== payload);
+    state.attachments = state.attachments.filter(
+      (attachment) => attachment.id !== payload
+    );
   },
   setLoading,
   setState,

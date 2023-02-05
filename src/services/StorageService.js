@@ -1,4 +1,10 @@
-import { getStorage, ref, deleteObject, getDownloadURL, uploadBytes } from 'firebase/storage';
+import {
+  getStorage,
+  ref,
+  deleteObject,
+  getDownloadURL,
+  uploadBytes,
+} from 'firebase/storage';
 
 class StorageService {
   static get(path) {

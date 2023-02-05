@@ -48,7 +48,9 @@ export default {
     ...mapGetters('attachments', ['attachments', 'deleteAttachmentLoading']),
     ...mapGetters('todo', ['todoEntry']),
     todoAttachments() {
-      return this.attachments.filter((attachment) => attachment.todoId === this.todoEntry.id);
+      return this.attachments.filter(
+        (attachment) => attachment.todoId === this.todoEntry.id
+      );
     },
   },
   methods: {
@@ -85,7 +87,7 @@ export default {
 }
 .attachment-enter-active,
 .attachment-leave-active {
-  transition: opacity .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 }
 .attachment-enter-to,
 .attachment-leave-from {
@@ -93,6 +95,6 @@ export default {
 }
 
 .attachment-move {
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 </style>

@@ -174,9 +174,11 @@ export default {
     return Promise.all(
       labels.map((label) => {
         if (label.boardId === payload) {
-          return context.dispatch('labels/deleteLabel', label.id, { root: true });
+          return context.dispatch('labels/deleteLabel', label.id, {
+            root: true,
+          });
         }
-      }),
+      })
     );
   },
   async deleteBoardTodos(context, payload) {
@@ -187,7 +189,7 @@ export default {
         if (todo.boardId === payload) {
           return context.dispatch('todo/deleteTodo', todo.id, { root: true });
         }
-      }),
+      })
     );
   },
   async selectBoard(context, payload) {

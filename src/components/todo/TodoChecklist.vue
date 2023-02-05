@@ -11,7 +11,10 @@
       ></todo-checklist-item>
     </transition-group>
 
-    <todo-checklist-add v-if="addOpen" @close="handleAddClose"></todo-checklist-add>
+    <todo-checklist-add
+      v-if="addOpen"
+      @close="handleAddClose"
+    ></todo-checklist-add>
     <base-button v-else class="todo-checklist__add" @click="handleAddOpen">
       Add Item
     </base-button>
@@ -34,8 +37,8 @@ import { mapGetters, mapActions } from 'vuex';
 // Components
 import TodoChecklistAdd from '@/components/todo/TodoChecklistAdd.vue';
 import TodoChecklistItem from '@/components/todo/TodoChecklistItem.vue';
-import BaseModalWrapper from "@/components/UI/BaseModalWrapper.vue";
-import ConfirmModal from "@/components/modals/ConfirmModal.vue";
+import BaseModalWrapper from '@/components/UI/BaseModalWrapper.vue';
+import ConfirmModal from '@/components/modals/ConfirmModal.vue';
 
 export default {
   components: {
@@ -67,7 +70,10 @@ export default {
   watch: {
     isScroll(current) {
       if (current) {
-        this.$refs.checklist.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        this.$refs.checklist.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
         this.$emit('stopScroll');
       }
     },
@@ -125,7 +131,7 @@ export default {
 }
 .check-enter-active,
 .check-leave-active {
-  transition: opacity .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 }
 .check-enter-to,
 .check-leave-from {
@@ -133,6 +139,6 @@ export default {
 }
 
 .check-move {
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 </style>

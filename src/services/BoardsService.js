@@ -7,7 +7,11 @@ class BoardsService {
   static path = 'boards';
 
   static getBoards(userId) {
-    return FirestoreService.get(this.path, where('userId', '==', userId), orderBy('createdAt', 'asc'));
+    return FirestoreService.get(
+      this.path,
+      where('userId', '==', userId),
+      orderBy('createdAt', 'asc')
+    );
   }
 
   static getBoard(id) {

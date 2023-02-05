@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="side-menu__board"
-    :class="className"
-    @click="handleSelectBoard"
-  >
+  <div class="side-menu__board" :class="className" @click="handleSelectBoard">
     <img
       v-if="board.image"
       class="side-menu__board-image"
@@ -88,9 +84,9 @@ export default {
   height: 3.75rem;
   min-height: 3.75rem;
   border-radius: 6.6px;
-  background-color: #145BC3;
+  background-color: #145bc3;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &--active {
     background-color: #274e85 !important;
@@ -128,7 +124,7 @@ export default {
   height: 1.25rem;
   opacity: 0;
   @include flex(row, center, center);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 .side-menu__board-menu-icon {
   width: 1rem;

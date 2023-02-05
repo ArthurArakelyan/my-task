@@ -1,10 +1,23 @@
-import { doc, collection, query, getDocs, setDoc, getDoc, addDoc, updateDoc, deleteDoc, getFirestore } from 'firebase/firestore';
+import {
+  doc,
+  collection,
+  query,
+  getDocs,
+  setDoc,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  getFirestore,
+} from 'firebase/firestore';
 
 class FirestoreService {
   static async get(path, ...getQuery) {
     const dbCollection = collection(this.db, path);
 
-    const pathWithQuery = getQuery.length ? query(dbCollection, ...getQuery) : dbCollection;
+    const pathWithQuery = getQuery.length
+      ? query(dbCollection, ...getQuery)
+      : dbCollection;
 
     const response = await getDocs(pathWithQuery);
 

@@ -1,20 +1,30 @@
 <template>
   <div class="completed-todo-list-wrapper">
     <div v-if="hasCompletedTodos" class="completed-todo-list__header">
-      <h3 class="completed-todo-list__header-title">
-        Completed
-      </h3>
+      <h3 class="completed-todo-list__header-title">Completed</h3>
 
       <span class="completed-todo-list__header-count">
         {{ completedTodosCount }}
       </span>
 
-      <div class="completed-todo-list__header-toggle" :class="toggleClassName" @click="toggleCompletedTodosOpen">
-        <base-icon name="ExpandIcon" class="completed-todo-list__header-toggle-icon"></base-icon>
+      <div
+        class="completed-todo-list__header-toggle"
+        :class="toggleClassName"
+        @click="toggleCompletedTodosOpen"
+      >
+        <base-icon
+          name="ExpandIcon"
+          class="completed-todo-list__header-toggle-icon"
+        ></base-icon>
       </div>
     </div>
 
-    <transition-group v-if="completedTodosOpen" tag="div" name="todo" class="completed-todo-list">
+    <transition-group
+      v-if="completedTodosOpen"
+      tag="div"
+      name="todo"
+      class="completed-todo-list"
+    >
       <todo-item
         v-for="todo in completedTodos"
         :key="todo.id"
@@ -40,7 +50,11 @@ export default {
   },
   computed: {
     ...mapGetters('ui', ['completedTodosOpen']),
-    ...mapGetters('todo', ['completedTodos', 'completedTodosCount', 'hasCompletedTodos']),
+    ...mapGetters('todo', [
+      'completedTodos',
+      'completedTodosCount',
+      'hasCompletedTodos',
+    ]),
     toggleClassName() {
       return {
         ['completed-todo-list__header-toggle--close']: !this.completedTodosOpen,
@@ -81,7 +95,7 @@ export default {
   cursor: pointer;
   border-radius: 50%;
   @include flex(row, center, center);
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 
   &--close {
     transform: rotate(180deg);
@@ -106,7 +120,7 @@ export default {
 }
 .todo-enter-active,
 .todo-leave-active {
-  transition: opacity .8s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 }
 .todo-enter-to,
 .todo-leave-from {
@@ -114,6 +128,6 @@ export default {
 }
 
 .todo-move {
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 </style>

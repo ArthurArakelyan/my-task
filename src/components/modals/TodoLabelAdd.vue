@@ -12,7 +12,10 @@
         :list="labels"
       >
         <template #beforeItem="beforeItemProps">
-          <div class="todo-label-add__label" :style="{ backgroundColor: beforeItemProps.item.color }" />
+          <div
+            class="todo-label-add__label"
+            :style="{ backgroundColor: beforeItemProps.item.color }"
+          />
         </template>
       </base-select>
 

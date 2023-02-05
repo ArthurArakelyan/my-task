@@ -1,4 +1,12 @@
-import { getAuth, signOut, updateEmail, updatePassword, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import {
+  getAuth,
+  signOut,
+  updateEmail,
+  updatePassword,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from 'firebase/auth';
 
 class AuthService {
   static login(email, password) {

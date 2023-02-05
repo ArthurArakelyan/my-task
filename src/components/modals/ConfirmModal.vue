@@ -1,8 +1,5 @@
 <template>
-  <base-modal
-    title="Confirm"
-    @close="close"
-  >
+  <base-modal title="Confirm" @close="close">
     <div class="confirm-modal">
       <h2 class="confirm-modal__title">
         {{ content }}
@@ -13,7 +10,11 @@
           Cancel
         </base-button>
 
-        <base-button :loading="loading" @click="$emit('submit')" class="confirm-modal__footer-submit">
+        <base-button
+          :loading="loading"
+          @click="$emit('submit')"
+          class="confirm-modal__footer-submit"
+        >
           Confirm
         </base-button>
       </div>

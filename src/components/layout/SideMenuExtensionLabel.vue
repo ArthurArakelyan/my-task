@@ -4,14 +4,23 @@
       {{ label.name }}
     </p>
 
-    <div class="side-menu-extension__label-count" :style="{ backgroundColor: label.color }">
+    <div
+      class="side-menu-extension__label-count"
+      :style="{ backgroundColor: label.color }"
+    >
       <span class="side-menu-extension__label-count-text">
         {{ label.count }}
       </span>
     </div>
 
-    <base-dropdown class="side-menu-extension__label-menu" :items="dropdownItems">
-      <base-icon class="side-menu-extension__label-menu-icon" name="MenuIcon"></base-icon>
+    <base-dropdown
+      class="side-menu-extension__label-menu"
+      :items="dropdownItems"
+    >
+      <base-icon
+        class="side-menu-extension__label-menu-icon"
+        name="MenuIcon"
+      ></base-icon>
     </base-dropdown>
   </div>
 </template>
@@ -67,7 +76,7 @@ export default {
     }
     .side-menu-extension__label-menu {
       opacity: 1;
-      transition-delay: .3s;
+      transition-delay: 0.3s;
     }
   }
 }
@@ -82,7 +91,7 @@ export default {
   width: 2rem;
   height: 1.2rem;
   @include flex(row, center, center);
-  transition: margin-right .3s ease-in-out;
+  transition: margin-right 0.3s ease-in-out;
 }
 .side-menu-extension__label-count-text {
   line-height: 1.063rem;
@@ -92,7 +101,7 @@ export default {
   opacity: 0;
   position: absolute;
   right: 0.75rem;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 .side-menu-extension__label-menu-icon {
   cursor: pointer;

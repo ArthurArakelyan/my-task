@@ -21,11 +21,17 @@
         :error="v$.label.$errors[0]?.$message"
       >
         <template #beforeItem="beforeItemProps">
-          <div class="todo-add__label" :style="{ backgroundColor: beforeItemProps.item.color }" />
+          <div
+            class="todo-add__label"
+            :style="{ backgroundColor: beforeItemProps.item.color }"
+          />
         </template>
       </base-select>
 
-      <base-button :loading="addTodoLoading || addLabelLoading" class="todo-add__submit">
+      <base-button
+        :loading="addTodoLoading || addLabelLoading"
+        class="todo-add__submit"
+      >
         {{ editEntry ? 'Edit' : 'Add' }}
       </base-button>
     </form>
@@ -82,7 +88,9 @@ export default {
         return;
       }
 
-      let previousLabel = this.labels.find((label) => label.id === previousLabelId);
+      let previousLabel = this.labels.find(
+        (label) => label.id === previousLabelId
+      );
       let nextLabel = this.labels.find((label) => label.id === nextLabelId);
 
       if (!previousLabel || !nextLabel) {

@@ -4,12 +4,14 @@
     <div v-if="!hasBoards && !getBoardsLoading" class="home-empty__info">
       <p class="home-empty__info-text">You have no boards</p>
 
-      <base-button @click="open">
-        Create Board
-      </base-button>
+      <base-button @click="open"> Create Board </base-button>
 
       <base-modal-wrapper>
-        <board-add v-if="isAddModalOpen" @close="close" :edit-entry="null"></board-add>
+        <board-add
+          v-if="isAddModalOpen"
+          @close="close"
+          :edit-entry="null"
+        ></board-add>
       </base-modal-wrapper>
     </div>
   </div>

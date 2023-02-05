@@ -1,5 +1,9 @@
 <template>
-  <div class="aside-overlay" ref="overlay" @click.self="closeResponsiveSideMenuOpen">
+  <div
+    class="aside-overlay"
+    ref="overlay"
+    @click.self="closeResponsiveSideMenuOpen"
+  >
     <div class="aside-responsive">
       <slot></slot>
     </div>
@@ -55,13 +59,13 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
   background-color: rgba(0, 0, 0, 0.6);
 }
 .aside-responsive {
   width: calc(6.25rem + 12.5rem);
   transform: translateX(0);
-  transition: transform .3s ease-in-out, opacity .3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   @include flex(row, flex-start, flex-start);
 }
 

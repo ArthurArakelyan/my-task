@@ -41,7 +41,9 @@ export default {
       const user = context.rootGetters['user/user'];
 
       if (!board || !user) {
-        throw new Error('Before create a label, make sure you do have a selected board.');
+        throw new Error(
+          'Before create a label, make sure you do have a selected board.'
+        );
       }
 
       const data = {

@@ -9,7 +9,11 @@
       {{ placeholder }}
     </span>
 
-    <div v-if="type === 'color'" class="input__color" :style="{ backgroundColor: this.modelValue }"></div>
+    <div
+      v-if="type === 'color'"
+      class="input__color"
+      :style="{ backgroundColor: this.modelValue }"
+    ></div>
 
     <input
       class="input"
@@ -135,18 +139,18 @@ export default {
   z-index: 1;
   width: 100%;
   padding: 1rem 0.75rem;
-  border: 1px solid #A2ACC0;
+  border: 1px solid #a2acc0;
   border-radius: 3.3px;
   cursor: text;
   @include flex(row, center, flex-start);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-  transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &--color {
-    border-color: #A2ACC0 !important;
+    border-color: #a2acc0 !important;
 
     .input__placeholder {
-      color: #A2ACC0 !important;
+      color: #a2acc0 !important;
     }
   }
 
@@ -179,8 +183,8 @@ export default {
   position: absolute;
   user-select: none;
   line-height: 1.125rem;
-  @include font(1rem, 400, #A2ACC0);
-  transition: all .2s ease-in-out;
+  @include font(1rem, 400, #a2acc0);
+  transition: all 0.2s ease-in-out;
 }
 .input {
   border: none;
@@ -207,7 +211,7 @@ export default {
   top: calc(100% + 0.2rem);
   left: 0;
   @include font(0.8rem, 400, red);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .error-enter-from,
@@ -226,6 +230,8 @@ export default {
   animation-name: onAutoFillCancel;
 }
 
-@keyframes onAutoFillStart {}
-@keyframes onAutoFillCancel {}
+@keyframes onAutoFillStart {
+}
+@keyframes onAutoFillCancel {
+}
 </style>

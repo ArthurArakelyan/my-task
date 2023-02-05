@@ -5,10 +5,14 @@ export default {
     state.boards = payload;
   },
   changeBoards(state, payload) {
-    state.boards = state.boards.map((board) => board.id === payload.id ? {
-      ...state,
-      ...payload,
-    } : board);
+    state.boards = state.boards.map((board) =>
+      board.id === payload.id
+        ? {
+            ...state,
+            ...payload,
+          }
+        : board
+    );
 
     if (state.board?.id === payload.id) {
       state.board = payload;

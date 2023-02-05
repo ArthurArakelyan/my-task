@@ -18,7 +18,10 @@ export default {
         return;
       }
 
-      const response = await AttachmentService.getAttachments(board.id, user.id);
+      const response = await AttachmentService.getAttachments(
+        board.id,
+        user.id
+      );
 
       context.commit('setAttachments', response);
 
@@ -43,7 +46,9 @@ export default {
       const userId = context.rootGetters['auth/id'];
 
       if (!board || !userId) {
-        throw new Error('Before attach a file, make sure you do have a selected board.');
+        throw new Error(
+          'Before attach a file, make sure you do have a selected board.'
+        );
       }
 
       const data = {

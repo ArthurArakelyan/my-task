@@ -62,7 +62,12 @@ export default {
       return this.size / 2;
     },
     radius() {
-      return this.center - (this.trackWidth > this.indicatorWidth ? this.trackWidth : this.indicatorWidth);
+      return (
+        this.center -
+        (this.trackWidth > this.indicatorWidth
+          ? this.trackWidth
+          : this.indicatorWidth)
+      );
     },
     dashArray() {
       return 2 * Math.PI * this.radius;

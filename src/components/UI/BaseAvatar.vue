@@ -1,10 +1,5 @@
 <template>
-  <img
-    class="avatar"
-    alt="Avatar"
-    :src="avatarSrc"
-    @error="handleError"
-  />
+  <img class="avatar" alt="Avatar" :src="avatarSrc" @error="handleError" />
 </template>
 
 <script>

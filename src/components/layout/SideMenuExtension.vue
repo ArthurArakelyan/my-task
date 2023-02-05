@@ -8,7 +8,10 @@
       </div>
 
       <div v-if="selectedBoard" class="side-menu-extension__content">
-        <p v-if="!getLabelsLoading && !hasLabels" class="side-menu-extension__empty">
+        <p
+          v-if="!getLabelsLoading && !hasLabels"
+          class="side-menu-extension__empty"
+        >
           There are no labels
         </p>
 
@@ -21,12 +24,19 @@
         ></side-menu-extension-label>
 
         <div class="side-menu-extension__label-add" @click="openAddModal">
-          <base-icon class="side-menu-extension__label-add-icon" name="PlusIcon"></base-icon>
+          <base-icon
+            class="side-menu-extension__label-add-icon"
+            name="PlusIcon"
+          ></base-icon>
         </div>
       </div>
 
       <base-modal-wrapper>
-        <label-add v-if="isAddModalOpen" @close="closeAddModal" :edit-entry="editEntry"></label-add>
+        <label-add
+          v-if="isAddModalOpen"
+          @close="closeAddModal"
+          :edit-entry="editEntry"
+        ></label-add>
       </base-modal-wrapper>
 
       <base-modal-wrapper>
@@ -68,7 +78,12 @@ export default {
   computed: {
     ...mapGetters('ui', ['isSideMenuOpen']),
     ...mapGetters('boards', ['selectedBoard']),
-    ...mapGetters('labels', ['labels', 'hasLabels', 'getLabelsLoading', 'deleteLabelLoading']),
+    ...mapGetters('labels', [
+      'labels',
+      'hasLabels',
+      'getLabelsLoading',
+      'deleteLabelLoading',
+    ]),
   },
   methods: {
     ...mapActions('labels', ['deleteLabel']),
@@ -102,15 +117,15 @@ export default {
   left: 6.25rem;
   width: 12.5rem;
   height: 100vh;
-  background-color: #E9EEF6;
-  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+  background-color: #e9eef6;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .side-menu-extension__header {
   width: 100%;
   height: 6.25rem;
-  border-bottom: 1px solid #E0E6F0;
-  background-color: #E3EAF5;
+  border-bottom: 1px solid #e0e6f0;
+  background-color: #e3eaf5;
   padding: 0.75rem;
   @include flex(row, center, flex-start);
 }
@@ -143,7 +158,7 @@ export default {
   cursor: pointer;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: $primary-color;
@@ -160,8 +175,8 @@ export default {
 .side-menu-extension__label-add-icon {
   width: 1.2rem;
   height: 1.2rem;
-  fill: #A2ACC0;
-  transition: fill .3s ease-in-out;
+  fill: #a2acc0;
+  transition: fill 0.3s ease-in-out;
 }
 
 .menu-enter-from,

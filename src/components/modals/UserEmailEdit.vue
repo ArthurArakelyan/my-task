@@ -1,8 +1,5 @@
 <template>
-  <base-modal
-    title="Edit Email"
-    @close="handleClose"
-  >
+  <base-modal title="Edit Email" @close="handleClose">
     <form class="user-email-edit" @submit.prevent="handleSubmit">
       <base-input
         v-model="email"
@@ -21,7 +18,10 @@
         :error="v$.password.$errors[0]?.$message"
       ></base-input>
 
-      <base-button :loading="editUserEmailLoading" class="user-email-edit__submit">
+      <base-button
+        :loading="editUserEmailLoading"
+        class="user-email-edit__submit"
+      >
         Edit
       </base-button>
     </form>

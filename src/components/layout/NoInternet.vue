@@ -1,15 +1,11 @@
 <template>
   <div class="no-internet">
-    <p class="no-internet__text">
-      You have no internet connection
-    </p>
+    <p class="no-internet__text">You have no internet connection</p>
   </div>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 <style scoped lang="scss">

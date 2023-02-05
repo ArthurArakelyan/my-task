@@ -88,7 +88,9 @@ export default {
       const label = labels.find((label) => label.id === payload.label);
 
       if (!user || !board) {
-        throw new Error('Before create a to-do, make sure you do have a selected board.');
+        throw new Error(
+          'Before create a to-do, make sure you do have a selected board.'
+        );
       }
 
       const data = {
@@ -105,10 +107,14 @@ export default {
       data.id = response.id;
 
       if (label) {
-        await context.dispatch('labels/editLabel', {
-          ...label,
-          count: label.count + 1,
-        }, { root: true });
+        await context.dispatch(
+          'labels/editLabel',
+          {
+            ...label,
+            count: label.count + 1,
+          },
+          { root: true }
+        );
       }
 
       toast('To-do has been added successfully.', {
@@ -174,13 +180,19 @@ export default {
       const labels = context.rootGetters['labels/labels'];
       const todos = context.rootGetters['todo/todos'];
       const targetTodo = todos.find((todo) => todo.id === payload);
-      const label = targetTodo ? labels.find((label) => label.id === targetTodo.label) : null;
+      const label = targetTodo
+        ? labels.find((label) => label.id === targetTodo.label)
+        : null;
 
       if (label) {
-        await context.dispatch('labels/editLabel', {
-          ...label,
-          count: label.count > 1 ? label.count - 1 : 0,
-        }, { root: true });
+        await context.dispatch(
+          'labels/editLabel',
+          {
+            ...label,
+            count: label.count > 1 ? label.count - 1 : 0,
+          },
+          { root: true }
+        );
       }
 
       await Promise.all([
@@ -237,12 +249,20 @@ export default {
       data.id = id;
 
       if (!fromChecklist) {
-        const todoChecklist = checklist.filter((item) => (item.todoId === id) && (item.completed !== completed))
+        const todoChecklist = checklist.filter(
+          (item) => item.todoId === id && item.completed !== completed
+        );
 
         if (todoChecklist.length) {
-          await Promise.all(todoChecklist.map((item) => {
-            return context.dispatch('checklist/completeChecklistItem', { id: item.id, completed, fromTodo: true }, { root: true });
-          }));
+          await Promise.all(
+            todoChecklist.map((item) => {
+              return context.dispatch(
+                'checklist/completeChecklistItem',
+                { id: item.id, completed, fromTodo: true },
+                { root: true }
+              );
+            })
+          );
         }
       }
 
@@ -275,9 +295,13 @@ export default {
       const checklist = context.rootGetters['checklist/checklist'];
       const todoChecklist = checklist.filter((item) => item.todoId === payload);
 
-      return Promise.all(todoChecklist.map((item) => {
-        return context.dispatch('checklist/deleteChecklistItem', item.id, { root: true });
-      }));
+      return Promise.all(
+        todoChecklist.map((item) => {
+          return context.dispatch('checklist/deleteChecklistItem', item.id, {
+            root: true,
+          });
+        })
+      );
     } catch (e) {
       console.log('deleteTodoChecklist', e);
       toast(e.message, {
@@ -289,11 +313,19 @@ export default {
   deleteTodoAttachments(context, payload) {
     try {
       const attachments = context.rootGetters['attachments/attachments'];
-      const todoAttachments = attachments.filter((attachment) => attachment.todoId === payload);
+      const todoAttachments = attachments.filter(
+        (attachment) => attachment.todoId === payload
+      );
 
-      return Promise.all(todoAttachments.map((attachment) => {
-        return context.dispatch('attachments/deleteAttachment', attachment.id, { root: true });
-      }));
+      return Promise.all(
+        todoAttachments.map((attachment) => {
+          return context.dispatch(
+            'attachments/deleteAttachment',
+            attachment.id,
+            { root: true }
+          );
+        })
+      );
     } catch (e) {
       console.log('deleteTodoAttachments', e);
       toast(e.message, {

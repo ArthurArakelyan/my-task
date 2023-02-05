@@ -42,14 +42,21 @@ export default {
     try {
       context.commit('setLoading', { name: 'signup', value: true });
 
-      const response = await AuthService.signup(payload.email, payload.password);
+      const response = await AuthService.signup(
+        payload.email,
+        payload.password
+      );
 
-      await context.dispatch('user/addUser', {
-        id: response.user.uid,
-        name: payload.name,
-        email: payload.email,
-        avatar: '',
-      }, { root: true });
+      await context.dispatch(
+        'user/addUser',
+        {
+          id: response.user.uid,
+          name: payload.name,
+          email: payload.email,
+          avatar: '',
+        },
+        { root: true }
+      );
 
       await context.dispatch('updateAuth');
 

@@ -1,6 +1,10 @@
-@import "./variables";
+@import './variables';
 
-@mixin flex($flexDirection: row, $alignItems: stretch, $justifyContent: flex-start) {
+@mixin flex(
+  $flexDirection: row,
+  $alignItems: stretch,
+  $justifyContent: flex-start
+) {
   display: flex;
   flex-direction: $flexDirection;
   align-items: $alignItems;
@@ -55,7 +59,8 @@
     background-clip: padding-box;
     border-radius: 6px;
     background-color: $color;
-    box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05),
+      inset 1px 1px 0px rgba(0, 0, 0, 0.05);
   }
 
   &::-webkit-scrollbar-button {
@@ -71,24 +76,24 @@
 
 @mixin mobile-media {
   @media (max-width: 450px) {
-    @content
+    @content;
   }
 }
 
 @mixin tablet-media {
   @media (max-width: 992px) {
-    @content
+    @content;
   }
 }
 
 @mixin small-desktop-media {
   @media (max-width: 1250px) {
-    @content
+    @content;
   }
 }
 
 @mixin desktop-media {
   @media (max-width: 1440px) {
-    @content
+    @content;
   }
 }

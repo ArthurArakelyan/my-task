@@ -23,7 +23,10 @@
     </div>
 
     <div class="todo-attachment__delete" @click="handleDelete">
-      <base-icon class="todo-attachment__delete-icon" name="DeleteIcon"></base-icon>
+      <base-icon
+        class="todo-attachment__delete-icon"
+        name="DeleteIcon"
+      ></base-icon>
     </div>
   </a>
 </template>
@@ -74,7 +77,7 @@ export default {
   transform: scale(1);
   text-decoration: none;
   @include flex(row, center, flex-start);
-  transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &:hover {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);

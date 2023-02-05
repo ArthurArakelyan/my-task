@@ -1,15 +1,28 @@
 <template>
-  <div v-if="!todoEntry.description && !isEdit" class="todo__description-empty" @click="handleEdit">
+  <div
+    v-if="!todoEntry.description && !isEdit"
+    class="todo__description-empty"
+    @click="handleEdit"
+  >
     <p class="todo__description-empty-text">
       Add a more detailed description...
     </p>
   </div>
-  <div v-if="todoEntry.description && !isEdit" class="todo__description-text-wrapper" @click="handleEdit">
+  <div
+    v-if="todoEntry.description && !isEdit"
+    class="todo__description-text-wrapper"
+    @click="handleEdit"
+  >
     <p class="todo__description-text">
       {{ todoEntry.description }}
     </p>
   </div>
-  <form v-if="isEdit" class="todo__description-form" @submit.prevent="handleSave" v-click-outside="handleSave">
+  <form
+    v-if="isEdit"
+    class="todo__description-form"
+    @submit.prevent="handleSave"
+    v-click-outside="handleSave"
+  >
     <textarea-auto-resize
       class="todo__description-form-textarea"
       :class="textareaClassName"
@@ -20,14 +33,21 @@
     ></textarea-auto-resize>
 
     <transition name="error-message">
-      <p v-if="v$.description.$errors[0]?.$message" class="todo__description-form-error">
+      <p
+        v-if="v$.description.$errors[0]?.$message"
+        class="todo__description-form-error"
+      >
         {{ v$.description.$errors[0].$message }}
       </p>
     </transition>
 
     <div class="todo__description-form-actions">
       <base-button :loading="addTodoLoading">Save</base-button>
-      <base-button class="todo__description-form-actions-cancel" type="button" @click="handleCancelEdit">
+      <base-button
+        class="todo__description-form-actions-cancel"
+        type="button"
+        @click="handleCancelEdit"
+      >
         Cancel
       </base-button>
     </div>
@@ -70,7 +90,8 @@ export default {
     ...mapGetters('todo', ['todoEntry', 'addTodoLoading']),
     textareaClassName() {
       return {
-        ['todo__description-form-textarea--error']: this.v$.description.$errors[0]?.$message,
+        ['todo__description-form-textarea--error']:
+          this.v$.description.$errors[0]?.$message,
       };
     },
   },
@@ -123,7 +144,7 @@ export default {
   min-height: 5.625rem;
   background-color: #e6e6e6;
   cursor: pointer;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: #dcdcdc;
@@ -164,7 +185,7 @@ export default {
   overflow: hidden;
   border: 1px solid $primary-text-color;
   @include font(0.875rem, 400, $primary-text-color);
-  transition: border-color .3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
 
   &::placeholder {
     @include font(1rem, 400, $secondary-text-color);
@@ -177,7 +198,7 @@ export default {
 .todo__description-form-error {
   margin-top: 0.25rem;
   @include font(1rem, 400, red);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 .todo__description-form-actions {
   width: 100%;

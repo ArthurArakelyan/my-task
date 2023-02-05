@@ -7,7 +7,10 @@
             <h2 class="modal__header-title">{{ title }}</h2>
 
             <div class="modal__header-close" @click="close">
-              <base-icon class="modal__header-close-icon" name="CloseIcon"></base-icon>
+              <base-icon
+                class="modal__header-close-icon"
+                name="CloseIcon"
+              ></base-icon>
             </div>
           </div>
 
@@ -69,7 +72,7 @@ export default {
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   overflow-y: auto;
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
   @include scroll();
 }
 .modal__overlay {
@@ -88,7 +91,7 @@ export default {
   z-index: 1000;
   background-color: $white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   @include flex(column, center, center);
 }
 .modal__header {
@@ -108,7 +111,7 @@ export default {
   border-radius: 50%;
   background-color: transparent;
   transform: translateX(0.5rem);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
   @include flex(row, center, center);
 
   &:hover {

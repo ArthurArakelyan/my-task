@@ -1,10 +1,6 @@
 <template>
   <div class="select-wrapper" ref="selectWrapper" v-click-outside="close">
-    <div
-      class="select"
-      :class="selectClassName"
-      @click="open"
-    >
+    <div class="select" :class="selectClassName" @click="open">
       <span class="select__placeholder" ref="placeholder">
         {{ placeholder }}
       </span>
@@ -28,7 +24,9 @@
             v-for="item in list"
             :key="item[this.keyName]"
             class="select-item"
-            :class="{ ['select-item--active']: item[this.keyName] === modelValue }"
+            :class="{
+              ['select-item--active']: item[this.keyName] === modelValue,
+            }"
             @click="handleSelect(item[this.keyName])"
           >
             <slot name="beforeItem" :item="item"></slot>
@@ -111,7 +109,7 @@ export default {
     const top = rect.top + window.scrollY + 192;
     const screenHeight = window.screen.height;
 
-    this.reverse = top > (screenHeight / 2);
+    this.reverse = top > screenHeight / 2;
   },
 };
 </script>
@@ -129,12 +127,12 @@ export default {
   min-height: 3.25rem;
   max-height: 3.25rem;
   padding: 1rem 0.75rem;
-  border: 1px solid #A2ACC0;
+  border: 1px solid #a2acc0;
   border-radius: 3.3px;
   cursor: pointer;
   @include flex(row, center, flex-start);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-  transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &--open {
     border-radius: 3.3px 3.3px 0 0;
@@ -161,8 +159,8 @@ export default {
   position: absolute;
   user-select: none;
   line-height: 1.125rem;
-  @include font(1rem, 400, #A2ACC0);
-  transition: all .2s ease-in-out;
+  @include font(1rem, 400, #a2acc0);
+  transition: all 0.2s ease-in-out;
 }
 .select__value {
   user-select: none;
@@ -175,7 +173,7 @@ export default {
   top: calc(100% + 0.2rem);
   left: 0;
   @include font(0.8rem, 400, red);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .select-list {
@@ -187,7 +185,7 @@ export default {
   min-height: 7rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 0 0 6px 6px;
-  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &--reverse {
     top: initial;
@@ -210,7 +208,7 @@ export default {
   cursor: pointer;
   padding: 0.5rem 1rem;
   @include flex(row, center, flex-start);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);

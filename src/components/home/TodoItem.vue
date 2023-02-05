@@ -4,7 +4,10 @@
       <div class="todo__color" :style="{ backgroundColor: label.color }"></div>
 
       <div class="todo__header">
-        <div class="todo__header-label" :style="{ backgroundColor: `${label.color}33` }">
+        <div
+          class="todo__header-label"
+          :style="{ backgroundColor: `${label.color}33` }"
+        >
           <span class="todo__header-label-name" :style="{ color: label.color }">
             {{ label.name }}
           </span>
@@ -30,15 +33,29 @@
       <h3 class="todo__name">{{ name }}</h3>
 
       <div class="todo__footer">
-        <div class="todo__footer-counter" title="Check List" v-if="hasChecklist">
-          <base-icon class="todo__footer-counter-icon" name="ChecklistIcon"></base-icon>
+        <div
+          class="todo__footer-counter"
+          title="Check List"
+          v-if="hasChecklist"
+        >
+          <base-icon
+            class="todo__footer-counter-icon"
+            name="ChecklistIcon"
+          ></base-icon>
           <span class="todo__footer-counter-text">
             {{ todoCompletedChecklist.length }}/{{ todoChecklist.length }}
           </span>
         </div>
 
-        <div class="todo__footer-counter" title="Attachments" v-if="attachmentsCount">
-          <base-icon class="todo__footer-counter-icon" name="AttachmentIcon"></base-icon>
+        <div
+          class="todo__footer-counter"
+          title="Attachments"
+          v-if="attachmentsCount"
+        >
+          <base-icon
+            class="todo__footer-counter-icon"
+            name="AttachmentIcon"
+          ></base-icon>
           <span class="todo__footer-counter-text">{{ attachmentsCount }}</span>
         </div>
       </div>
@@ -102,7 +119,9 @@ export default {
       };
     },
     label() {
-      return this.labels.find((label) => label.id === this.labelId) || defaultLabel;
+      return (
+        this.labels.find((label) => label.id === this.labelId) || defaultLabel
+      );
     },
     progressColor() {
       if (!this.label || this.label.color === '#bebebe') {
@@ -121,10 +140,14 @@ export default {
       return !!this.todoChecklist.length;
     },
     percent() {
-      return (this.todoCompletedChecklist.length / this.todoChecklist.length) * 100;
+      return (
+        (this.todoCompletedChecklist.length / this.todoChecklist.length) * 100
+      );
     },
     attachmentsCount() {
-      return this.attachments.filter((attachment) => attachment.todoId === this.id).length;
+      return this.attachments.filter(
+        (attachment) => attachment.todoId === this.id
+      ).length;
     },
   },
   methods: {
@@ -149,7 +172,7 @@ export default {
 <style scoped lang="scss">
 .todo-wrapper {
   height: 12.5rem;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 
   &--grid {
     width: calc(25% - 0.8rem);
@@ -182,7 +205,7 @@ export default {
   background-color: $white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
   @include flex(column, flex-start, flex-start);
 
   &:hover {

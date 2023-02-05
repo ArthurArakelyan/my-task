@@ -7,7 +7,12 @@ class AttachmentService {
   static path = 'attachments';
 
   static getAttachments(boardId, userId) {
-    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
+    return FirestoreService.get(
+      this.path,
+      where('userId', '==', userId),
+      where('boardId', '==', boardId),
+      orderBy('createdAt', 'asc')
+    );
   }
 
   static getAttachment(id) {

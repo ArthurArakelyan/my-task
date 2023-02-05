@@ -2,10 +2,19 @@
   <div class="todo">
     <base-back class="todo__back" to="/"></base-back>
 
-    <base-loader v-if="getTodoLoading" class="todo__loader" size="large"></base-loader>
-    <p v-if="!getTodoLoading && !todoEntry" class="todo__error">Something went wrong</p>
+    <base-loader
+      v-if="getTodoLoading"
+      class="todo__loader"
+      size="large"
+    ></base-loader>
+    <p v-if="!getTodoLoading && !todoEntry" class="todo__error">
+      Something went wrong
+    </p>
     <div v-if="!getTodoLoading && todoEntry" class="todo__content">
-      <base-dropdown-button class="todo__dropdown" :items="dropdownItems"></base-dropdown-button>
+      <base-dropdown-button
+        class="todo__dropdown"
+        :items="dropdownItems"
+      ></base-dropdown-button>
 
       <div class="todo__header">
         <base-checkbox
@@ -26,11 +35,18 @@
       <div class="todo__section">
         <div class="todo__section-header">
           <h3 class="todo__section-header-title">Description</h3>
-          <base-icon class="todo__description-header-icon" name="EditIcon" @click="changeDescriptionEdit(true)"></base-icon>
+          <base-icon
+            class="todo__description-header-icon"
+            name="EditIcon"
+            @click="changeDescriptionEdit(true)"
+          ></base-icon>
         </div>
 
         <div class="todo__section-content">
-          <todo-description :is-edit="isDescriptionEdit" @edit="changeDescriptionEdit"></todo-description>
+          <todo-description
+            :is-edit="isDescriptionEdit"
+            @edit="changeDescriptionEdit"
+          ></todo-description>
         </div>
       </div>
 
@@ -58,9 +74,7 @@
         </div>
       </div>
 
-      <todo-actions-bar
-        @checklist="handleChecklistOpen"
-      ></todo-actions-bar>
+      <todo-actions-bar @checklist="handleChecklistOpen"></todo-actions-bar>
     </div>
 
     <base-modal-wrapper>
@@ -143,7 +157,10 @@ export default {
         return null;
       }
 
-      return this.labels.find((label) => label.id === this.todoEntry.label) || defaultLabel;
+      return (
+        this.labels.find((label) => label.id === this.todoEntry.label) ||
+        defaultLabel
+      );
     },
     dropdownItems() {
       return [
@@ -158,12 +175,17 @@ export default {
     },
   },
   methods: {
-    ...mapActions('todo', ['getTodo', 'resetTodoEntry', 'deleteTodo', 'completeTodo']),
+    ...mapActions('todo', [
+      'getTodo',
+      'resetTodoEntry',
+      'deleteTodo',
+      'completeTodo',
+    ]),
     ...mapActions('checklist', ['getChecklist']),
     ...mapActions('attachments', ['getAttachments']),
     changeTitle(todo) {
       if (!todo) {
-        document.title = pageTitle
+        document.title = pageTitle;
         return;
       }
 
@@ -186,7 +208,7 @@ export default {
     },
     handleChecklistOpen() {
       if (this.isChecklistOpen || this.hasTodoChecklistItem) {
-        return this.scrollToChecklist = true;
+        return (this.scrollToChecklist = true);
       }
 
       this.isChecklistOpen = true;

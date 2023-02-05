@@ -1,8 +1,5 @@
 <template>
-  <base-modal
-    title="Edit Name"
-    @close="handleClose"
-  >
+  <base-modal title="Edit Name" @close="handleClose">
     <form class="user-name-edit" @submit.prevent="handleSubmit">
       <base-input
         v-model="name"
@@ -13,7 +10,10 @@
         :error="v$.name.$errors[0]?.$message"
       ></base-input>
 
-      <base-button :loading="editUserNameLoading" class="user-name-edit__submit">
+      <base-button
+        :loading="editUserNameLoading"
+        class="user-name-edit__submit"
+      >
         Edit
       </base-button>
     </form>

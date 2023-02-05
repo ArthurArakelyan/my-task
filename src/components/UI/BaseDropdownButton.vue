@@ -35,7 +35,7 @@ export default {
   border-radius: 50%;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: rgb(248, 248, 248);

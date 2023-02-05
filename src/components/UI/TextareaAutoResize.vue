@@ -1,9 +1,5 @@
 <template>
-  <textarea
-    ref="textarea"
-    @input="handleInput"
-    :value="modelValue"
-  ></textarea>
+  <textarea ref="textarea" @input="handleInput" :value="modelValue"></textarea>
 </template>
 
 <script>

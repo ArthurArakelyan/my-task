@@ -1,12 +1,20 @@
 <template>
   <header class="header" :class="{ ['header--menu-closed']: !isSideMenuOpen }">
-    <div v-if="!isDesktop" class="header__menu" @click="openResponsiveSideMenuOpen">
+    <div
+      v-if="!isDesktop"
+      class="header__menu"
+      @click="openResponsiveSideMenuOpen"
+    >
       <base-icon class="header__menu-icon" name="BurgerMenuIcon"></base-icon>
     </div>
 
     <div class="header__content">
       <div class="header__search">
-        <base-icon @click="handleSearchIcon" class="header__search-icon" name="SearchIcon"></base-icon>
+        <base-icon
+          @click="handleSearchIcon"
+          class="header__search-icon"
+          name="SearchIcon"
+        ></base-icon>
 
         <input
           type="text"
@@ -51,10 +59,10 @@ export default {
   width: calc(100% - 6.25rem - 12.5rem);
   height: 6.25rem;
   padding: 0 2rem;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   box-shadow: 3px -2px 5px rgba(0, 0, 0, 0.2);
   @include flex(row, center, center);
-  transition: width .3s ease-in-out;
+  transition: width 0.3s ease-in-out;
 
   &--menu-closed {
     width: calc(100% - 6.25rem);
@@ -85,7 +93,7 @@ export default {
 .header__search-icon {
   width: 2rem;
   height: 2rem;
-  fill: #9FA9BE;
+  fill: #9fa9be;
   margin-right: 0.75rem;
 }
 .header__search-input {
@@ -97,14 +105,14 @@ export default {
   margin-top: 0.2rem;
   border-bottom: 1px solid transparent;
   @include font(1rem, 400, $primary-text-color);
-  transition: border .3s ease-in-out;
+  transition: border 0.3s ease-in-out;
 
   &:focus {
-    border-bottom: 1px solid #9FA9BE;
+    border-bottom: 1px solid #9fa9be;
   }
 
   &::placeholder {
-    @include font(1rem, 400, #9FA9BE);
+    @include font(1rem, 400, #9fa9be);
   }
 }
 

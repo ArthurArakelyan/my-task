@@ -96,8 +96,16 @@ export default {
     },
     dropdownItems() {
       return [
-        { name: 'Upload Avatar', icon: 'AddCameraIcon', action: this.handleUploadAvatar },
-        { name: this.userAvatar ? 'Delete Avatar' : '', icon: 'DeleteIcon', action: this.handleDeleteAvatar },
+        {
+          name: 'Upload Avatar',
+          icon: 'AddCameraIcon',
+          action: this.handleUploadAvatar,
+        },
+        {
+          name: this.userAvatar ? 'Delete Avatar' : '',
+          icon: 'DeleteIcon',
+          action: this.handleDeleteAvatar,
+        },
         { name: 'Name', icon: 'EditIcon', action: this.handleEditName },
         { name: 'Password', icon: 'EditIcon', action: this.handleEditPassword },
         { name: 'Email', icon: 'EditIcon', action: this.handleEditEmail },
@@ -119,7 +127,10 @@ export default {
         });
       }
 
-      const compressedFile = await compressImage(file, { quality: 0.6, type: file.type });
+      const compressedFile = await compressImage(file, {
+        quality: 0.6,
+        type: file.type,
+      });
 
       if (compressedFile.size > maxFileSize) {
         return toast('The file should be less than 3MB', {

@@ -2,7 +2,13 @@
   <aside class="side-menu">
     <div class="side-menu__header">
       <div @click="toggleSideMenu" class="side-menu__header-logo">
-        <img class="side-menu__header-logo-img" :src="logoSrc" alt="Logo" width="60" height="60" />
+        <img
+          class="side-menu__header-logo-img"
+          :src="logoSrc"
+          alt="Logo"
+          width="60"
+          height="60"
+        />
       </div>
     </div>
 
@@ -15,19 +21,33 @@
         @delete="handleDelete"
       ></side-menu-item>
 
-      <div @click="openAddModal" class="side-menu__content-add" title="Add a Board">
-        <base-icon class="side-menu__content-add-icon" name="PlusIcon"></base-icon>
+      <div
+        @click="openAddModal"
+        class="side-menu__content-add"
+        title="Add a Board"
+      >
+        <base-icon
+          class="side-menu__content-add-icon"
+          name="PlusIcon"
+        ></base-icon>
       </div>
     </div>
 
     <div class="side-menu__footer">
       <div @click="logout" class="side-menu__footer-logout">
-        <base-icon name="LogoutIcon" class="side-menu__footer-logout-icon"></base-icon>
+        <base-icon
+          name="LogoutIcon"
+          class="side-menu__footer-logout-icon"
+        ></base-icon>
       </div>
     </div>
 
     <base-modal-wrapper>
-      <board-add v-if="isAddModalOpen" @close="closeAddModal" :edit-entry="editEntry"></board-add>
+      <board-add
+        v-if="isAddModalOpen"
+        @close="closeAddModal"
+        :edit-entry="editEntry"
+      ></board-add>
     </base-modal-wrapper>
 
     <base-modal-wrapper>
@@ -114,7 +134,7 @@ export default {
 .side-menu__header {
   width: 100%;
   height: 6.25rem;
-  border-bottom: 1px solid #2D74DC;
+  border-bottom: 1px solid #2d74dc;
   @include flex(column, center, center);
 }
 .side-menu__header-logo {
@@ -142,9 +162,9 @@ export default {
   height: 3.75rem;
   min-height: 3.75rem;
   border-radius: 6.6px;
-  background-color: #145BC3;
+  background-color: #145bc3;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: #1854a8;
@@ -164,7 +184,7 @@ export default {
   margin-top: auto;
   width: 100%;
   height: 6.25rem;
-  border-top: 1px solid #2D74DC;
+  border-top: 1px solid #2d74dc;
   @include flex(column, center, center);
 }
 .side-menu__footer-logout {
@@ -173,10 +193,10 @@ export default {
   height: 3.75rem;
   border-radius: 6.6px;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
-    background-color: #2D74DC;
+    background-color: #2d74dc;
 
     .side-menu__footer-logout-icon {
       stroke: $white;
@@ -190,8 +210,8 @@ export default {
 .side-menu__footer-logout-icon {
   width: 2rem;
   height: 2rem;
-  stroke: #6EA0E7;
-  transition: stroke .3s ease-in-out;
+  stroke: #6ea0e7;
+  transition: stroke 0.3s ease-in-out;
 }
 
 @include small-desktop-media {

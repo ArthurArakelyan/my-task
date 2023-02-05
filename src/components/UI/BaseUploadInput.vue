@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="input-wrapper"
-    :class="wrapperClassName"
-    @click="handleClick"
-  >
+  <div class="input-wrapper" :class="wrapperClassName" @click="handleClick">
     <div class="input__icon-wrapper">
       <base-icon class="input__icon" name="AddPhotoIcon"></base-icon>
     </div>
@@ -76,7 +72,10 @@ export default {
         });
       }
 
-      const compressedFile = await compressImage(file, { quality: 0.5, type: file.type })
+      const compressedFile = await compressImage(file, {
+        quality: 0.5,
+        type: file.type,
+      });
 
       if (compressedFile.size > maxFileSize) {
         return toast('The file should be less than 3MB', {
@@ -127,12 +126,12 @@ export default {
   z-index: 1;
   width: 100%;
   padding: 1rem 0.75rem;
-  border: 1px solid #A2ACC0;
+  border: 1px solid #a2acc0;
   border-radius: 3.3px;
   cursor: pointer;
   @include flex(row, center, flex-start);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-  transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &--divided {
     .input__placeholder {
@@ -168,8 +167,8 @@ export default {
   user-select: none;
   line-height: 1.125rem;
   left: 2.8rem;
-  @include font(1rem, 400, #A2ACC0);
-  transition: all .2s ease-in-out;
+  @include font(1rem, 400, #a2acc0);
+  transition: all 0.2s ease-in-out;
 }
 .input__value {
   margin-left: 2rem;
@@ -185,7 +184,7 @@ export default {
   top: calc(100% + 0.2rem);
   left: 0;
   @include font(0.8rem, 400, red);
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .error-enter-from,
@@ -204,6 +203,8 @@ export default {
   animation-name: onAutoFillCancel;
 }
 
-@keyframes onAutoFillStart {}
-@keyframes onAutoFillCancel {}
+@keyframes onAutoFillStart {
+}
+@keyframes onAutoFillCancel {
+}
 </style>

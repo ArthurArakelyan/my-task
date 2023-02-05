@@ -8,10 +8,14 @@ export default {
     state.checklist.push(payload);
   },
   changeChecklistItem(state, payload) {
-    state.checklist = state.checklist.map((item) => item.id === payload.id ? {
-      ...item,
-      ...payload,
-    } : item);
+    state.checklist = state.checklist.map((item) =>
+      item.id === payload.id
+        ? {
+            ...item,
+            ...payload,
+          }
+        : item
+    );
   },
   deleteChecklistItem(state, payload) {
     state.checklist = state.checklist.filter((item) => item.id !== payload);

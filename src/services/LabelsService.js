@@ -7,7 +7,12 @@ class LabelsService {
   static path = 'labels';
 
   static getLabels(boardId, userId) {
-    return FirestoreService.get(this.path, where('userId', '==', userId), where('boardId', '==', boardId), orderBy('createdAt', 'asc'));
+    return FirestoreService.get(
+      this.path,
+      where('userId', '==', userId),
+      where('boardId', '==', boardId),
+      orderBy('createdAt', 'asc')
+    );
   }
 
   static getLabel(id) {

@@ -1,8 +1,5 @@
 <template>
-  <base-modal
-    title="Edit Password"
-    @close="handleClose"
-  >
+  <base-modal title="Edit Password" @close="handleClose">
     <form class="user-password-edit" @submit.prevent="handleSubmit">
       <base-input
         v-model="oldPassword"
@@ -21,7 +18,10 @@
         :error="v$.newPassword.$errors[0]?.$message"
       ></base-input>
 
-      <base-button :loading="editUserPasswordLoading" class="user-password-edit__submit">
+      <base-button
+        :loading="editUserPasswordLoading"
+        class="user-password-edit__submit"
+      >
         Edit
       </base-button>
     </form>
@@ -77,8 +77,16 @@ export default {
     },
   },
   validations: {
-    oldPassword: { required, minLength: minLength(6), maxLength: maxLength(256) },
-    newPassword: { required, minLength: minLength(6), maxLength: maxLength(256) },
+    oldPassword: {
+      required,
+      minLength: minLength(6),
+      maxLength: maxLength(256),
+    },
+    newPassword: {
+      required,
+      minLength: minLength(6),
+      maxLength: maxLength(256),
+    },
   },
 };
 </script>

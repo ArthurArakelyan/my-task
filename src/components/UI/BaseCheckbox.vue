@@ -9,7 +9,11 @@
     />
 
     <transition name="checkmark">
-      <base-icon v-if="checked" name="CheckmarkIcon" class="checkbox__icon"></base-icon>
+      <base-icon
+        v-if="checked"
+        name="CheckmarkIcon"
+        class="checkbox__icon"
+      ></base-icon>
     </transition>
   </label>
 </template>
@@ -65,13 +69,14 @@ export default {
   border-radius: 3.3px;
   cursor: pointer;
   background-color: $white;
-  border: 2px solid #1C0D1F29;
-  transition: background-color .15s ease-in-out, border-color .15s ease-in-out, opacity .15s ease-in-out;
+  border: 2px solid #1c0d1f29;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    opacity 0.15s ease-in-out;
   @include flex(row, center, center);
 
   &--checked {
-    background-color: #5678FA;
-    border-color: #4365E8;
+    background-color: #5678fa;
+    border-color: #4365e8;
   }
 
   &--disabled {
@@ -88,7 +93,7 @@ export default {
   width: 0.625rem;
   height: 0.625rem;
   fill: $white;
-  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .checkmark-enter-from,

@@ -7,15 +7,30 @@
         :dropdown-style="labelDropdownStyles"
       >
         <button class="todo-actions-bar__action" title="Label">
-          <base-icon name="TagIcon" class="todo-actions-bar__action-icon"></base-icon>
+          <base-icon
+            name="TagIcon"
+            class="todo-actions-bar__action-icon"
+          ></base-icon>
         </button>
       </base-dropdown>
 
-      <button class="todo-actions-bar__action" title="Check List" @click="handleChecklist">
-        <base-icon name="ChecklistIcon" class="todo-actions-bar__action-icon"></base-icon>
+      <button
+        class="todo-actions-bar__action"
+        title="Check List"
+        @click="handleChecklist"
+      >
+        <base-icon
+          name="ChecklistIcon"
+          class="todo-actions-bar__action-icon"
+        ></base-icon>
       </button>
 
-      <button class="todo-actions-bar__action" :class="attachmentButtonClassName" title="Attachments" @click="handleAttachment">
+      <button
+        class="todo-actions-bar__action"
+        :class="attachmentButtonClassName"
+        title="Attachments"
+        @click="handleAttachment"
+      >
         <input
           v-show="false"
           type="file"
@@ -24,7 +39,10 @@
           @change="handleFileChange"
         />
 
-        <base-icon name="AttachmentIcon" class="todo-actions-bar__action-icon"></base-icon>
+        <base-icon
+          name="AttachmentIcon"
+          class="todo-actions-bar__action-icon"
+        ></base-icon>
       </button>
     </div>
 
@@ -89,13 +107,26 @@ export default {
     labelDropdownItems() {
       if (this.label) {
         return [
-          { icon: 'EditIcon', name: 'Edit Label', action: this.handleEditLabel },
-          { icon: 'DeleteIcon', name: 'Delete Label', action: this.handleOpenDeleteLabel },
+          {
+            icon: 'EditIcon',
+            name: 'Edit Label',
+            action: this.handleEditLabel,
+          },
+          {
+            icon: 'DeleteIcon',
+            name: 'Delete Label',
+            action: this.handleOpenDeleteLabel,
+          },
         ];
       }
 
       return [
-        { icon: 'PlusIcon', iconFill: true, name: 'Add Label', action: this.handleOpenLabelModal },
+        {
+          icon: 'PlusIcon',
+          iconFill: true,
+          name: 'Add Label',
+          action: this.handleOpenLabelModal,
+        },
       ];
     },
     labelDropdownStyles() {
@@ -150,7 +181,9 @@ export default {
         return;
       }
 
-      const newFile = await (file.type.includes('image') ? compressImage(file, { quality: 0.6, type: file.type }) : file);
+      const newFile = await (file.type.includes('image')
+        ? compressImage(file, { quality: 0.6, type: file.type })
+        : file);
 
       if (newFile.size > maxFileSize) {
         return toast('The file should be less than 3MB', {
@@ -165,7 +198,9 @@ export default {
       });
     },
     async handleOkDeleteLabel() {
-      const label = this.labels.find((label) => label.id === this.todoEntry.label);
+      const label = this.labels.find(
+        (label) => label.id === this.todoEntry.label
+      );
 
       if (!label) {
         return this.handleCloseDeleteLabel();
@@ -194,9 +229,9 @@ export default {
   right: 0;
   width: calc(100% - 6.25rem - 12.5rem);
   height: 4rem;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-  transition: width .3s ease-in-out;
+  transition: width 0.3s ease-in-out;
 
   &--menu-closed {
     width: calc(100% - 6.25rem);
@@ -218,7 +253,7 @@ export default {
   border: none;
   background-color: transparent;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out, opacity .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);

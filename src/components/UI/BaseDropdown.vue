@@ -6,16 +6,17 @@
     @mouseenter="open"
     @mouseleave="handleMouseLeave"
   >
-    <div
-      class="dropdown-wrapper__content"
-      ref="content"
-      @click="toggle"
-    >
+    <div class="dropdown-wrapper__content" ref="content" @click="toggle">
       <slot></slot>
     </div>
 
     <transition name="dropdown">
-      <div v-if="isOpen" class="dropdown" :class="dropdownClassName" :style="dropdownStyles">
+      <div
+        v-if="isOpen"
+        class="dropdown"
+        :class="dropdownClassName"
+        :style="dropdownStyles"
+      >
         <div class="dropdown__content">
           <div
             v-for="item in filteredItems"
@@ -152,7 +153,6 @@ export default {
   @include flex(row, center, center);
 }
 .dropdown-wrapper__content {
-
 }
 
 .dropdown {
@@ -164,7 +164,7 @@ export default {
   border-radius: 6px;
   background-color: $white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   &--fixed {
     position: fixed !important;
@@ -181,7 +181,7 @@ export default {
   width: 100%;
   background-color: $white;
   @include flex(row, center, flex-start);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.15);

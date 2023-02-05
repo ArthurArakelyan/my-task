@@ -3,11 +3,17 @@
     <div class="home-actions__content">
       <div class="home-actions__filters">
         <button class="home-actions__action" @click="$emit('add')">
-          <base-icon class="home-actions__action-icon" name="PlusIcon"></base-icon>
+          <base-icon
+            class="home-actions__action-icon"
+            name="PlusIcon"
+          ></base-icon>
         </button>
 
         <button class="home-actions__action">
-          <base-icon class="home-actions__action-icon" name="FilterIcon"></base-icon>
+          <base-icon
+            class="home-actions__action-icon"
+            name="FilterIcon"
+          ></base-icon>
         </button>
       </div>
 
@@ -19,7 +25,10 @@
           class="home-actions__action"
           :class="{ ['home-actions__action--active']: layout === 'grid' }"
         >
-          <base-icon class="home-actions__action-icon" name="GridViewIcon"></base-icon>
+          <base-icon
+            class="home-actions__action-icon"
+            name="GridViewIcon"
+          ></base-icon>
         </button>
 
         <button
@@ -27,7 +36,10 @@
           class="home-actions__action"
           :class="{ ['home-actions__action--active']: layout === 'agenda' }"
         >
-          <base-icon class="home-actions__action-icon" name="AgendaViewIcon"></base-icon>
+          <base-icon
+            class="home-actions__action-icon"
+            name="AgendaViewIcon"
+          ></base-icon>
         </button>
 
         <button
@@ -35,7 +47,10 @@
           class="home-actions__action home-actions__action--column"
           :class="{ ['home-actions__action--active']: layout === 'column' }"
         >
-          <base-icon class="home-actions__action-icon" name="ColumnViewIcon"></base-icon>
+          <base-icon
+            class="home-actions__action-icon"
+            name="ColumnViewIcon"
+          ></base-icon>
         </button>
       </div>
     </div>
@@ -77,7 +92,7 @@ export default {
   width: 1px;
   height: 2rem;
   margin: 0 1.5rem;
-  background-color: #ECEEF1;
+  background-color: #eceef1;
 }
 
 .home-actions__layout-actions,
@@ -97,7 +112,7 @@ export default {
   border: none;
   padding: 0;
   @include flex(row, center, center);
-  transition: background-color .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 
   &--active {
     background-color: $primary-color;
@@ -126,8 +141,8 @@ export default {
 .home-actions__action-icon {
   width: 1.5rem;
   height: 1.5rem;
-  fill: #A2ACC0;
-  transition: stroke .3s ease-in-out;
+  fill: #a2acc0;
+  transition: stroke 0.3s ease-in-out;
 }
 
 @media (max-width: 600px) {

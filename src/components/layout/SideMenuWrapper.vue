@@ -20,7 +20,11 @@ export default {
     SideMenuResponsive,
   },
   computed: {
-    ...mapGetters('ui', ['isSideMenuOpen', 'isResponsiveSideMenuOpen', 'isDesktop']),
+    ...mapGetters('ui', [
+      'isSideMenuOpen',
+      'isResponsiveSideMenuOpen',
+      'isDesktop',
+    ]),
     asideClassName() {
       return {
         ['aside--close']: !this.isSideMenuOpen,
@@ -46,7 +50,7 @@ export default {
   z-index: 1;
   width: calc(6.25rem + 12.5rem);
   height: 100vh;
-  transition: width .3s ease-in-out;
+  transition: width 0.3s ease-in-out;
   @include flex(row, flex-start, flex-start);
 
   &--close {

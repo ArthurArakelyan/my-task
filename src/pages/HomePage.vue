@@ -11,7 +11,7 @@
     <completed-todo-list></completed-todo-list>
 
     <base-modal-wrapper>
-      <todo-add v-if="isAddModalOpen"  @close="closeAddModal"></todo-add>
+      <todo-add v-if="isAddModalOpen" @close="closeAddModal"></todo-add>
     </base-modal-wrapper>
   </div>
   <empty-home-page v-else></empty-home-page>
@@ -69,7 +69,7 @@ export default {
     },
     changeTitle(board) {
       if (!board) {
-        document.title = pageTitle
+        document.title = pageTitle;
         return;
       }
 
@@ -90,7 +90,7 @@ export default {
 
 .home__title {
   opacity: 1;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   @include font(2.25rem, 300, $primary-text-color);
 
   &--hide {

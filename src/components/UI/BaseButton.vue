@@ -45,7 +45,8 @@ export default {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   @include flex(row, center, center);
   @include font(1rem, 400, $white, center);
-  transition: background-color .3s ease-in-out, opacity .3s ease-in-out, padding-left .3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
 
   &:hover {
     background-color: $primary-color-hover;
@@ -72,7 +73,7 @@ export default {
 .button__loader {
   position: absolute;
   left: 0.75rem;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .loader-enter-from,
@@ -80,7 +81,7 @@ export default {
   opacity: 0;
 }
 .loader-enter-active {
-  transition-delay: .3s;
+  transition-delay: 0.3s;
 }
 .loader-enter-to,
 .loader-leave-from {
