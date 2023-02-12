@@ -3,6 +3,5 @@
   "target": {
     "namespace": "android_app",
     "package_name": "my.task.app.mobile",
-    "sha256_cert_fingerprints":  ["CD:D5:D1:54:AC:8F:17:0B:8A:E6:5D:0F:C2:07:1D:FC:D7:2C:16:EE:66:A4:D9:F6:DA:1C:57:12:1B:57:A5:F9"]
   }
 }]
