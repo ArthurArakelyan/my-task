@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "my_task",
+    "package_name": "my.task.app",
+    "sha256_cert_fingerprints": ""
+  }
+}]
